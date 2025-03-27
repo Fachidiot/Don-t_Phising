@@ -13,8 +13,11 @@ public enum Language
 }
 
 //[ExecuteAlways]
-public class OSManager : MonoBehaviour
+public class OSManager : Subject
 {
+    private static OSManager m_Instance;
+    public static OSManager Instance { get { return m_Instance; } }
+
     [SerializeField]
     private Image m_Brightness;
     [SerializeField]
@@ -33,20 +36,31 @@ public class OSManager : MonoBehaviour
     [SerializeField]
     private bool m_Debug;
 
-    void Start()
+    private void Awake()
+    {
+        if (m_Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        m_Instance = this;
+        DontDestroyOnLoad(gameObject.transform.parent.gameObject);
+    }
+
+    private void Start()
     {
         //InitLanguage();
         SetDate(m_Language);
     }
 
-    void Update()
+    private void Update()
     {
         SetTime();
 #if UNITY_EDITOR
         if (m_Backgrounds[0].Index != m_BackgroundIndex)
             ChangeBackground(m_BackgroundIndex);
 #endif
-        m_Brightness.gameObject.transform.parent = m_Brightness.gameObject.transform.parent;
+        //m_Brightness.gameObject.transform.parent = m_Brightness.gameObject.transform.parent;
     }
 
     private void SetTime()
@@ -61,6 +75,12 @@ public class OSManager : MonoBehaviour
     {
         m_Language = (Language)language;
         SetDate(m_Language);
+        NotifyObservers();
+    }
+
+    public Language GetLanguage()
+    {
+        return m_Language;
     }
 
     public void SetDate(Language language)

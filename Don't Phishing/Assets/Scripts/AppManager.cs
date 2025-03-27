@@ -1,8 +1,22 @@
+using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AppManager : MonoBehaviour
+[Serializable]
+public class Text
+{
+    public Language m_Language;
+    public string[] m_Text;
+
+    public string GetText(Language language)
+    {
+        return m_Text[(int)language];
+    }
+}
+
+public class AppManager : Observer
 {
     [SerializeField]
     private Image m_Image;
@@ -10,7 +24,9 @@ public class AppManager : MonoBehaviour
     private Sprite m_Source;
     [Header("Title")]
     [SerializeField]
-    private string m_Title;
+    private bool m_Title;
+    [SerializeField]
+    private Text m_Text;
     [SerializeField]
     private TMP_Text m_TitleText;
     [Header("Stack")]
@@ -23,13 +39,11 @@ public class AppManager : MonoBehaviour
 
     private void Start()
     {
-        m_Image.sprite = m_Source;
-        m_TitleText.text = m_Title;
+        OSManager.Instance.Attach(this);
 
-        if (m_Count != 0)
-            OnStack(m_Count);
-        else
-            EraseStack();
+        m_Image.sprite = m_Source;
+        UpdateText();
+        UpdateStack();
     }
 
     public void OnStack(int count)
@@ -39,9 +53,30 @@ public class AppManager : MonoBehaviour
         m_StackText.text = count.ToString();
     }
 
+    private void UpdateText()
+    {
+        if (m_Title)
+            m_TitleText.text = m_Text.GetText(OSManager.Instance.GetLanguage());
+        else
+            m_TitleText.text = "";
+    }
+
+    private void UpdateStack()
+    {
+        if (m_Count != 0)
+            OnStack(m_Count);
+        else
+            EraseStack();
+    }
+
     public void EraseStack()
     {
         m_Stack.SetActive(false);
         m_StackText.text = 1.ToString();
+    }
+
+    public override void Notify(Subject subject)
+    {
+        UpdateText();
     }
 }
