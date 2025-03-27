@@ -19,6 +19,14 @@ public class OSManager : Subject
     public static OSManager Instance { get { return m_Instance; } }
 
     [SerializeField]
+    private GameObject m_OS;
+    public GameObject OS { get { return m_OS; } }
+    [SerializeField]
+    private GameObject m_App;
+    public GameObject App { get { return m_App; } }
+    [SerializeField]
+    private GameObject m_Notification;
+    [SerializeField]
     private Image m_Brightness;
     [SerializeField]
     private Language m_Language;
@@ -26,8 +34,6 @@ public class OSManager : Subject
     private BackgroundManager[] m_Backgrounds;
     public int m_BackgroundIndex = 0;
     [Header("Text Mesh Pro")]
-    [SerializeField]
-    private TMP_Text[] m_Times;
     [SerializeField]
     private TMP_Text m_TDate;
     [SerializeField]
@@ -50,12 +56,14 @@ public class OSManager : Subject
     private void Start()
     {
         //InitLanguage();
+        m_Notification.SetActive(true);
+        OS.SetActive(true);
+        App.SetActive(false);
         SetDate(m_Language);
     }
 
     private void Update()
     {
-        SetTime();
 #if UNITY_EDITOR
         if (m_Backgrounds[0].Index != m_BackgroundIndex)
             ChangeBackground(m_BackgroundIndex);
@@ -63,12 +71,9 @@ public class OSManager : Subject
         //m_Brightness.gameObject.transform.parent = m_Brightness.gameObject.transform.parent;
     }
 
-    private void SetTime()
+    public string GetTime()
     {
-        foreach (var time in m_Times)
-        {
-            time.text = TimeUtils.GetTime();
-        }
+        return TimeUtils.GetTime();
     }
 
     public void SetLanguage(int language)

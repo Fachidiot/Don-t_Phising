@@ -3,9 +3,10 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.UI.Button;
 
 [Serializable]
-public class Text
+public class LText
 {
     public Language m_Language;
     public string[] m_Text;
@@ -22,11 +23,13 @@ public class AppManager : Observer
     private Image m_Image;
     [SerializeField]
     private Sprite m_Source;
+    [SerializeField]
+    private Button m_Button;
     [Header("Title")]
     [SerializeField]
     private bool m_Title;
     [SerializeField]
-    private Text m_Text;
+    private LText m_Text;
     [SerializeField]
     private TMP_Text m_TitleText;
     [Header("Stack")]
@@ -40,6 +43,8 @@ public class AppManager : Observer
     private void Start()
     {
         OSManager.Instance.Attach(this);
+
+        m_Button.onClick.AddListener(RunApp);
 
         m_Image.sprite = m_Source;
         UpdateText();
@@ -67,6 +72,18 @@ public class AppManager : Observer
             OnStack(m_Count);
         else
             EraseStack();
+    }
+
+    private void RunApp()
+    {
+        OSManager.Instance.OS.gameObject.SetActive(false);
+        OSManager.Instance.App.gameObject.SetActive(true);
+    }
+
+    private void CloseApp()
+    {
+        OSManager.Instance.OS.gameObject.SetActive(true);
+        OSManager.Instance.App.gameObject.SetActive(false);
     }
 
     public void EraseStack()
