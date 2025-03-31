@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,8 +35,10 @@ public class ScrollSnap : MonoBehaviour
     [SerializeField]
     private bool m_IsSnapped;
     private float m_SnapSpeed;
+    [SerializeField]
     private int m_CurrentItem;
     public int CurrentItem { get { return m_CurrentItem; } }
+    private bool m_Popup = false;
 
     void Start()
     {
@@ -48,6 +47,15 @@ public class ScrollSnap : MonoBehaviour
 
     void Update()
     {
+        if (m_Popup)
+        {
+            if (m_CurrentItem == 0)
+            {
+                m_ContentPanel.localPosition = new Vector3(m_ContentPanel.localPosition.x, m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing, m_ContentPanel.localPosition.z);
+                gameObject.SetActive(false);
+            }
+        }
+
         if (m_HorizontalLayoutGroup != null)
             Horizontal();
         if (m_VerticalLayoutGroup != null)
@@ -58,9 +66,22 @@ public class ScrollSnap : MonoBehaviour
 #endif
     }
 
-    private void Horizontal()
+    public void SetContentPosition(int item)
     {
-        m_CurrentItem = Mathf.RoundToInt(0 - m_ContentPanel.localPosition.x / (m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing));
+        m_Popup = true;
+        m_CurrentItem = item;
+        if (m_HorizontalLayoutGroup != null)
+            Horizontal(item);
+        if (m_VerticalLayoutGroup != null)
+            Vertical(item);
+    }
+
+    private void Horizontal(int item = 0)
+    {
+        if (item == 0)
+            m_CurrentItem = Mathf.RoundToInt(0 - m_ContentPanel.localPosition.x / (m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing));
+        else
+            m_CurrentItem = item;
 
         if (m_ScrollRect.velocity.magnitude < 200 && !m_IsSnapped)
         {
@@ -84,9 +105,12 @@ public class ScrollSnap : MonoBehaviour
         }
     }
 
-    private void Vertical()
+    private void Vertical(int item = 0)
     {
-        m_CurrentItem = Mathf.RoundToInt(0 - m_ContentPanel.localPosition.y / (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing));
+        if (item == 0)
+            m_CurrentItem = Mathf.RoundToInt(0 - m_ContentPanel.localPosition.y / (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing));
+        else
+            m_CurrentItem = item;
 
         if (m_ScrollRect.velocity.magnitude < 200 && !m_IsSnapped)
         {

@@ -8,7 +8,6 @@ using static UnityEngine.UI.Button;
 [Serializable]
 public class LText
 {
-    public Language m_Language;
     public string[] m_Text;
 
     public string GetText(Language language)
@@ -17,7 +16,7 @@ public class LText
     }
 }
 
-public class AppManager : Observer
+public class App : Observer
 {
     [SerializeField]
     private Image m_Image;
@@ -25,6 +24,8 @@ public class AppManager : Observer
     private Sprite m_Source;
     [SerializeField]
     private Button m_Button;
+    [SerializeField]
+    private GameObject m_Target;
     [Header("Title")]
     [SerializeField]
     private bool m_Title;
@@ -76,14 +77,11 @@ public class AppManager : Observer
 
     private void RunApp()
     {
-        OSManager.Instance.OS.gameObject.SetActive(false);
         OSManager.Instance.App.gameObject.SetActive(true);
-    }
-
-    private void CloseApp()
-    {
-        OSManager.Instance.OS.gameObject.SetActive(true);
-        OSManager.Instance.App.gameObject.SetActive(false);
+        AppManager.Instance.ResetView();
+        OSManager.Instance.OS.gameObject.SetActive(false);
+        if (m_Target != null)
+            m_Target.gameObject.SetActive(true);
     }
 
     public void EraseStack()

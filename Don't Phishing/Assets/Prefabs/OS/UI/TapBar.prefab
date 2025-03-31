@@ -440,10 +440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Image: {fileID: 8487135457923957224}
   m_Sprite: {fileID: 0}
-  m_Title: {fileID: 4469645022267693023}
-  m_Text:
-    m_Language: 0
-    m_Text: []
+  m_Button: {fileID: 2092103286797978111}
+  m_View: {fileID: 0}
 --- !u!1 &2325408272781375760
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,10 +494,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Image: {fileID: 6502998034257920734}
   m_Sprite: {fileID: 0}
-  m_Title: {fileID: 1968576562210502197}
-  m_Text:
-    m_Language: 0
-    m_Text: []
+  m_Button: {fileID: 1430414095964860763}
+  m_View: {fileID: 0}
 --- !u!1 &2495999659199503600
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,10 +548,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Image: {fileID: 3117180521736755162}
   m_Sprite: {fileID: 0}
-  m_Title: {fileID: 7451683400597618365}
-  m_Text:
-    m_Language: 0
-    m_Text: []
+  m_Button: {fileID: 8471640294798248610}
+  m_View: {fileID: 0}
 --- !u!1 &2731144529607862478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1195,6 +1189,7 @@ GameObject:
   - component: {fileID: 8473586046114602}
   - component: {fileID: 2332443054633178919}
   - component: {fileID: 4793906588943657493}
+  - component: {fileID: 4489106531907274703}
   m_Layer: 5
   m_Name: TapBar
   m_TagString: Untagged
@@ -1223,7 +1218,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1175}
+  m_AnchoredPosition: {x: 0, y: -1140}
   m_SizeDelta: {x: 1200, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2332443054633178919
@@ -1260,6 +1255,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4489106531907274703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278347939436303126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98b974a56340c1542ac7b95a408dc0cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Views: []
+  m_InitIndex: 0
 --- !u!1 &6834340424524719455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,10 +1321,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Image: {fileID: 5772613257113985129}
   m_Sprite: {fileID: 0}
-  m_Title: {fileID: 3740122235276386968}
-  m_Text:
-    m_Language: 0
-    m_Text: []
+  m_Button: {fileID: 3427783061190737522}
+  m_View: {fileID: 0}
 --- !u!1 &7297189823760629998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1622,7 +1629,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Image: {fileID: 506402312409320484}
   m_Sprite: {fileID: 0}
-  m_Title: {fileID: 5213300867828795217}
-  m_Text:
-    m_Language: 0
-    m_Text: []
+  m_Button: {fileID: 2517203708267194057}
+  m_View: {fileID: 0}

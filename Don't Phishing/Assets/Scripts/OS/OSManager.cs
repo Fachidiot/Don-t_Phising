@@ -68,7 +68,6 @@ public class OSManager : Subject
         if (m_Backgrounds[0].Index != m_BackgroundIndex)
             ChangeBackground(m_BackgroundIndex);
 #endif
-        //m_Brightness.gameObject.transform.parent = m_Brightness.gameObject.transform.parent;
     }
 
     public string GetTime()

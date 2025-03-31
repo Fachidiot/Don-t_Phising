@@ -15,6 +15,7 @@ public class NavigationAction : MonoBehaviour
 
     private void EndApp()
     {
+        AppManager.Instance.ResetView();
         OSManager.Instance.OS.gameObject.SetActive(true);
         OSManager.Instance.App.gameObject.SetActive(false);
     }
