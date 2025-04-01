@@ -1,91 +1,165 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class CallManager : Observer
+[Serializable]
+public class Contact
 {
-    [Header("Favorites")]
-    [SerializeField]
-    private TMP_Text m_Favorite;
-    [SerializeField]
-    private TMP_Text m_FavoriteTab;
-    [SerializeField]
-    private LText m_FavoriteText;
-    [Header("Recents")]
-    [SerializeField]
-    private TMP_Text m_Recents;
-    [SerializeField]
-    private TMP_Text m_RecentsTab;
-    [SerializeField]
-    private LText m_RecentsText;
+    public string name;
+    public string number;
+    public string memo;
+
+    public Contact(string name, string number, string memo)
+    {
+        this.name = name;
+        this.number = number;
+        this.memo = memo;
+    }
+}
+public class ContactDB
+{
+    public List<Contact> contacts = new List<Contact>();
+}
+
+public class CallManager : BaseAppManager
+{
     [Header("Contacts")]
     [SerializeField]
-    private TMP_Text m_Contacts;
+    private GameObject m_ContactParent;
     [SerializeField]
-    private TMP_Text m_ContactsTab;
+    private GameObject m_ContactPrefab;
+    [Header("Keypads")]
     [SerializeField]
-    private LText m_ContactsText;
-    [Header("Keypad")]
+    private TMP_Text m_InputNumber;
     [SerializeField]
-    private TMP_Text m_KeypadTab;
+    private TabManager m_TabManager;
     [SerializeField]
-    private LText m_KeypadText;
+    private NavigationBar m_NavigationBar;
     [SerializeField]
-    private TMP_Text m_Number;
-    [Header("Voicemail")]
+    private GameObject m_PopupView;
     [SerializeField]
-    private TMP_Text m_Voicemail;
+    private SearchBar m_NumInput;
     [SerializeField]
-    private TMP_Text m_VoicemailTab;
-    [SerializeField]
-    private LText m_VoicemailText;
+    private SearchBar[] m_SearchBars;
 
-    private string m_SNumber = "";
-    private Dictionary<string, string> m_DContacts;
+    // TODO : 추후 게임 전체(휴대폰 제외) Localization을 위해 Contacts-en, Contacts-kr, Contacts-jp이런식으로 구현하면 좋을듯 싶음.
+    private string m_FileName = "Contacts.json";
+    private string m_Path = Application.dataPath + "/Json/Contacts/";
+
+    private ContactDB m_ContactDB = new ContactDB();
+    private Dictionary<Contact, DateTime> m_Recents;
 
     private void Start()
     {
-        UpdateText();
-        OSManager.Instance.Attach(this);
+        SetText();
+        ResetApp();
+        Init();
+    }
+
+    private void Init()
+    {
+        m_ContactDB = new ContactDB();
+        m_Recents = new Dictionary<Contact, DateTime>();
+        LoadContacts();
+    }
+
+    public override void SetText()
+    {
+        m_TabManager.SetText();
+        m_NavigationBar.SetText();
+        m_NumInput.SetText();
+        foreach (SearchBar searchBar in m_SearchBars)
+        {
+            searchBar.SetText();
+        }
+    }
+
+    public override void ResetApp()
+    {
+        m_TabManager.ResetTab();
+        m_PopupView.SetActive(false);
     }
 
     #region Keypad
+    public void GetNumber()
+    {
+        m_NumInput.SetText(m_InputNumber.text);
+    }
+
     public void SetNumber(TMP_Text text)
     {
         switch (text.text)
         {
             case "X":
-                m_SNumber = m_SNumber.Substring(0, m_SNumber.Length - 1);
+                if (m_InputNumber.text.Length > 0)
+                    m_InputNumber.text = m_InputNumber.text.Substring(0, m_InputNumber.text.Length - 1);
                 break;
             default:
-                m_SNumber += text.text;
+                m_InputNumber.text += text.text;
                 break;
         }
-        m_Number.text = m_SNumber;
+    }
+
+    public void AddContact()
+    {
+        string number = m_InputNumber.text;
+        string name = m_SearchBars[0].GetText();
+        string memo = m_SearchBars[1].GetText();
+        Contact newCont = new Contact(name, number, memo);
+
+        m_ContactDB.contacts.Add(newCont);
+
+        m_NumInput.ResetText();
+        foreach (SearchBar searchBar in m_SearchBars)
+        {
+            searchBar.ResetText();
+        }
+
+        InstantiateContact(newCont);
+        SaveContacts();
+    }
+
+    public void RemoveContact()
+    {
+
     }
 
     public void CallButton()
     {
 
     }
+
+    private void InstantiateContact(Contact contact)
+    {
+        GameObject go = Instantiate(m_ContactPrefab, m_ContactParent.transform);
+        go.GetComponent<Contact_Layout>().SetUp(contact);
+    }
     #endregion
 
-    private void UpdateText()
+    #region JSON
+    private void LoadContacts()
     {
-        Language currentLanguage = OSManager.Instance.GetLanguage();
-        m_Favorite.text = m_FavoriteText.GetText(currentLanguage);
-        m_FavoriteTab.text = m_Favorite.text;
-        m_Recents.text = m_RecentsText.GetText(currentLanguage);
-        m_RecentsTab.text = m_Recents.text;
-        m_Contacts.text = m_ContactsText.GetText(currentLanguage);
-        m_ContactsTab.text = m_Contacts.text;
-        m_KeypadTab.text = m_KeypadText.GetText(currentLanguage);
-        m_Voicemail.text = m_VoicemailText.GetText(currentLanguage);
+        if (File.Exists(m_Path + m_FileName))
+        {
+            string data = File.ReadAllText(m_Path + m_FileName);
+            m_ContactDB = JsonUtility.FromJson<ContactDB>(data);
+
+            foreach (var contact in m_ContactDB.contacts)
+            {
+                InstantiateContact(contact);
+            }
+
+            print("불러오기 완료");
+        }
     }
 
-    public override void Notify(Subject subject)
+    private void SaveContacts()
     {
-        UpdateText();
+        string data = JsonUtility.ToJson(m_ContactDB, true /* prettyPrint */);
+        File.WriteAllText(m_Path + m_FileName, data);
+        Debug.Log(data);
     }
+    #endregion
 }

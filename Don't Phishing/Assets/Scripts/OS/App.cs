@@ -1,9 +1,7 @@
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.UI.Button;
 
 [Serializable]
 public class LText
@@ -77,8 +75,7 @@ public class App : Observer
 
     private void RunApp()
     {
-        OSManager.Instance.App.gameObject.SetActive(true);
-        AppManager.Instance.ResetView();
+        AppManager.Instance.ResetApps();
         OSManager.Instance.OS.gameObject.SetActive(false);
         if (m_Target != null)
             m_Target.gameObject.SetActive(true);

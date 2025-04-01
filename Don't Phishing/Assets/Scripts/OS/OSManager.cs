@@ -22,10 +22,11 @@ public class OSManager : Subject
     private GameObject m_OS;
     public GameObject OS { get { return m_OS; } }
     [SerializeField]
-    private GameObject m_App;
-    public GameObject App { get { return m_App; } }
+    private GameObject m_HomeScreen;
+    public GameObject HomeScreen { get { return m_HomeScreen; } }
     [SerializeField]
-    private GameObject m_Notification;
+    private GameObject m_ControlScreen;
+    public GameObject ControlScreen { get { return m_ControlScreen; } }
     [SerializeField]
     private Image m_Brightness;
     [SerializeField]
@@ -56,9 +57,7 @@ public class OSManager : Subject
     private void Start()
     {
         //InitLanguage();
-        m_Notification.SetActive(true);
-        OS.SetActive(true);
-        App.SetActive(false);
+        m_HomeScreen.SetActive(true);
         SetDate(m_Language);
     }
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +11,9 @@ public class NavigationAction : MonoBehaviour
         m_Button.onClick.AddListener(EndApp);
     }
 
-    private void EndApp()
+    public void EndApp()
     {
-        AppManager.Instance.ResetView();
+        AppManager.Instance.ResetApps();
         OSManager.Instance.OS.gameObject.SetActive(true);
-        OSManager.Instance.App.gameObject.SetActive(false);
     }
 }

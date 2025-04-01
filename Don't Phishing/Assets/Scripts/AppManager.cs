@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AppManager : MonoBehaviour
+public class AppManager : Observer
 {
     private static AppManager m_Instance;
     public static AppManager Instance { get { return m_Instance; } }
 
     [SerializeField]
-    private GameObject[] m_Views;
+    private GameObject[] m_Apps;
 
     private void Awake()
     {
@@ -22,14 +22,31 @@ public class AppManager : MonoBehaviour
 
     private void Start()
     {
-        ResetView();
+        OSManager.Instance.Attach(this);
+        ResetApps();
+
     }
 
-    public void ResetView()
+    private void SetText()
     {
-        foreach (var view in m_Views)
+        foreach (var view in m_Apps)
         {
-            view.gameObject.SetActive(false);
+            var tmp = view.GetComponent<BaseAppManager>();
+            if (tmp)
+                view.GetComponent<BaseAppManager>().SetText();
         }
+    }
+
+    public void ResetApps()
+    {
+        foreach (var app in m_Apps)
+        {
+            app.gameObject.SetActive(false);
+        }
+    }
+
+    public override void Notify(Subject subject)
+    {
+        SetText();
     }
 }

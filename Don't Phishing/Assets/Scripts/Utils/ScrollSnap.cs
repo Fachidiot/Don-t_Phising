@@ -13,6 +13,11 @@ public class ScrollSnap : MonoBehaviour
     private RectTransform m_SampleListItme;
     [SerializeField]
     private float m_SnapForce;
+    [SerializeField]
+    private bool m_Popup = false;
+    [SerializeField]
+    private bool m_NonRayCast = false;
+    public bool NonRayCast { set {  m_NonRayCast = value; } }
     [Header("Horizontal")]
     [SerializeField]
     private HorizontalLayoutGroup m_HorizontalLayoutGroup;
@@ -38,7 +43,6 @@ public class ScrollSnap : MonoBehaviour
     [SerializeField]
     private int m_CurrentItem;
     public int CurrentItem { get { return m_CurrentItem; } }
-    private bool m_Popup = false;
 
     void Start()
     {
@@ -47,11 +51,16 @@ public class ScrollSnap : MonoBehaviour
 
     void Update()
     {
-        if (m_Popup)
+        if (m_Popup && m_IsSnapped)
         {
-            if (m_CurrentItem == 0)
+            if (m_CurrentItem == 2 && m_VerticalLayoutGroup != null)
             {
                 m_ContentPanel.localPosition = new Vector3(m_ContentPanel.localPosition.x, m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing, m_ContentPanel.localPosition.z);
+                gameObject.SetActive(false);
+            }
+            else if (m_CurrentItem == 2 && m_HorizontalLayoutGroup != null)
+            {
+                m_ContentPanel.localPosition = new Vector3(m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing, m_ContentPanel.localPosition.y, m_ContentPanel.localPosition.z);
                 gameObject.SetActive(false);
             }
         }
@@ -60,28 +69,29 @@ public class ScrollSnap : MonoBehaviour
             Horizontal();
         if (m_VerticalLayoutGroup != null)
             Vertical();
-#if UNITY_EDITOR
-        if (m_Debug)
-            Debug.Log(m_CurrentItem);
-#endif
     }
 
     public void SetContentPosition(int item)
     {
-        m_Popup = true;
+        if (m_Debug)
+            Debug.Log(item);
         m_CurrentItem = item;
+        m_IsSnapped = false;
         if (m_HorizontalLayoutGroup != null)
-            Horizontal(item);
+            Horizontal(m_CurrentItem);
         if (m_VerticalLayoutGroup != null)
-            Vertical(item);
+            Vertical(m_CurrentItem);
     }
 
-    private void Horizontal(int item = 0)
+    private void Horizontal(int item = -1)
     {
-        if (item == 0)
-            m_CurrentItem = Mathf.RoundToInt(0 - m_ContentPanel.localPosition.x / (m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing));
-        else
-            m_CurrentItem = item;
+        if (!m_NonRayCast)
+        {
+            if (item == -1)
+                m_CurrentItem = Mathf.RoundToInt(0 - m_ContentPanel.localPosition.x / (m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing));
+            else
+                m_CurrentItem = item;
+        }
 
         if (m_ScrollRect.velocity.magnitude < 200 && !m_IsSnapped)
         {
@@ -95,7 +105,10 @@ public class ScrollSnap : MonoBehaviour
             if (m_Indicator != null)
                 m_Indicator.ChangeIndicator(m_CurrentItem);
             if (m_ContentPanel.localPosition.x == 0 - (m_CurrentItem * (m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing)))
+            {
+                m_SnapSpeed = 0;
                 m_IsSnapped = true;
+            }
         }
         if (m_ScrollRect.velocity.magnitude > 200)
         {
@@ -107,10 +120,13 @@ public class ScrollSnap : MonoBehaviour
 
     private void Vertical(int item = 0)
     {
-        if (item == 0)
-            m_CurrentItem = Mathf.RoundToInt(0 - m_ContentPanel.localPosition.y / (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing));
-        else
-            m_CurrentItem = item;
+        if (!m_NonRayCast)
+        {
+            if (item == 0)
+                m_CurrentItem = Mathf.RoundToInt(0 - m_ContentPanel.localPosition.y / (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing));
+            else
+                m_CurrentItem = item;
+        }
 
         if (m_ScrollRect.velocity.magnitude < 200 && !m_IsSnapped)
         {
@@ -129,7 +145,10 @@ public class ScrollSnap : MonoBehaviour
             //    m_BackgroundManager.ChangeAlpha(0 - m_ContentPanel.localPosition.y / (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing));
 
             if (m_ContentPanel.localPosition.y == 0 - (m_CurrentItem * (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing)))
+            {
+                m_SnapSpeed = 0;
                 m_IsSnapped = true;
+            }
         }
         if (m_ScrollRect.velocity.magnitude > 200)
         {

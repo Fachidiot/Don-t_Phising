@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Youtube : Observer
+public class Youtube : BaseAppManager
 {
     // Start is called before the first frame update
     void Start()
@@ -16,8 +16,8 @@ public class Youtube : Observer
 
     }
 
-    public override void Notify(Subject subject)
+    public override void SetText()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Youtube localization");
     }
 }

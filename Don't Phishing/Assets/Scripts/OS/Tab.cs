@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,9 @@ public class Tab : MonoBehaviour
     private Button m_Button;
     [SerializeField]
     private GameObject m_View;
+    [Header("Text")]
+    [SerializeField]
+    private TMP_Text m_Title;
     [Header("Options")]
     [SerializeField]
     private bool m_Popup;
@@ -34,7 +38,7 @@ public class Tab : MonoBehaviour
 
     private void EnableView()
     {
-        m_TabManager.ResetView();
+        m_TabManager.ResetTab();
         m_View.gameObject.SetActive(true);
     }
 
@@ -42,5 +46,10 @@ public class Tab : MonoBehaviour
     {
         m_View.gameObject.SetActive(true);
         m_View.GetComponent<ScrollSnap>().SetContentPosition(m_Index);
+    }
+
+    public void SetText(string text)
+    {
+        m_Title.text = text;
     }
 }
