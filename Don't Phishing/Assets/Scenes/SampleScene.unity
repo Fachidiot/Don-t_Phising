@@ -7140,36 +7140,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4fd50c8ded2f241aaf7cab62c1695c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Favorite: {fileID: 1826619776}
-  m_FavoriteTab: {fileID: 5423312817560635111}
+  m_TMPFavorite: {fileID: 0}
+  m_TMPFavoriteTab: {fileID: 0}
   m_FavoriteText:
     m_Text:
     - Favorites
     - "\uC990\uACA8\uCC3E\uAE30"
     - "\u3088\u304F\u4F7F\u3046\u9805\u76EE"
-  m_Recents: {fileID: 1246455467}
-  m_RecentsTab: {fileID: 7238293200801513227}
+  m_TMPRecents: {fileID: 0}
+  m_TMPRecentsTab: {fileID: 0}
   m_RecentsText:
     m_Text:
     - Recents
     - "\uCD5C\uADFC\uD1B5\uD654"
     - "\u5C65\u6B74"
-  m_Contacts: {fileID: 1870203475}
-  m_ContactsTab: {fileID: 4403809832742049385}
+  m_TMPContacts: {fileID: 0}
+  m_TMPContactsTab: {fileID: 0}
   m_ContactsText:
     m_Text:
     - Contacts
     - "\uC5F0\uB77D\uCC98"
     - "\u9023\u7D61\u5148"
-  m_KeypadTab: {fileID: 1750754798495004547}
+  m_TMPKeypadTab: {fileID: 0}
   m_KeypadText:
     m_Text:
     - Keypad
     - "\uD0A4\uD328\uB4DC"
     - "\u30AD\u30FC\u30D1\u30C3\u30C9"
-  m_Number: {fileID: 1746598105}
-  m_Voicemail: {fileID: 1326428451}
-  m_VoicemailTab: {fileID: 3530174057164956462}
+  m_TMPNumber: {fileID: 0}
+  m_TMPVoicemail: {fileID: 0}
+  m_TMPVoicemailTab: {fileID: 0}
   m_VoicemailText:
     m_Text:
     - Voicemail

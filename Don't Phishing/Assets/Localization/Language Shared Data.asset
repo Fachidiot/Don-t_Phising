@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TableCollectionName: Language
   m_TableCollectionNameGuidString: 189150574e64bbb438d8e9fb98dace06
-  m_Entries: []
+  m_Entries:
+  - m_Id: 28949700608
+    m_Key: Language
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
