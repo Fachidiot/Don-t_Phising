@@ -341,13 +341,13 @@ MonoBehaviour:
   m_Image: {fileID: 3984281621569852403}
   m_Source: {fileID: 21300000, guid: 01cac9ffb95e6a64fbf2e6197003f45b, type: 3}
   m_Button: {fileID: 946075195918274119}
+  m_Target: {fileID: 0}
   m_Title: 1
   m_Text:
-    m_Language: 0
     m_Text:
-    - Setting
-    - "\uC124\uC815"
-    - "\u8A2D\u5B9A"
+    - English
+    - "\uD55C\uAD6D\uC5B4"
+    - "\u65E5\u672C\u8A9E"
   m_TitleText: {fileID: 5240465300177341415}
   m_Stack: {fileID: 1645731739181056602}
   m_StackText: {fileID: 3834238409192007717}

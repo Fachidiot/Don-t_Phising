@@ -442,6 +442,8 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 2092103286797978111}
   m_View: {fileID: 0}
+  m_Popup: 0
+  m_Index: 0
 --- !u!1 &2325408272781375760
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,6 +498,8 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 1430414095964860763}
   m_View: {fileID: 0}
+  m_Popup: 0
+  m_Index: 0
 --- !u!1 &2495999659199503600
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +554,8 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 8471640294798248610}
   m_View: {fileID: 0}
+  m_Popup: 0
+  m_Index: 0
 --- !u!1 &2731144529607862478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,6 +1329,8 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 3427783061190737522}
   m_View: {fileID: 0}
+  m_Popup: 0
+  m_Index: 0
 --- !u!1 &7297189823760629998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,7 +1397,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 01cac9ffb95e6a64fbf2e6197003f45b, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1631,3 +1639,5 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 2517203708267194057}
   m_View: {fileID: 0}
+  m_Popup: 0
+  m_Index: 0
