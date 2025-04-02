@@ -23,6 +23,23 @@ public class ContactDB
     public List<Contact> contacts = new List<Contact>();
 }
 
+[Serializable]
+public class Recent
+{
+    public string name;
+    public string Date;
+
+    public Recent(string name, string date)
+    {
+        this.name = name;
+        this.Date = date;
+    }
+}
+public class RecentDB
+{
+    public List<Recent> recents = new List<Recent>();
+}
+
 public class CallManager : BaseAppManager
 {
     [Header("Contacts")]
@@ -150,8 +167,10 @@ public class CallManager : BaseAppManager
             {
                 InstantiateContact(contact);
             }
-
-            print("불러오기 완료");
+        }
+        else
+        {
+            Debug.LogWarning("There is no Contacts");
         }
     }
 
