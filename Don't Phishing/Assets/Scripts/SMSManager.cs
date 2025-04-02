@@ -108,8 +108,10 @@ public class SMSManager : BaseAppManager
             {
                 InstantiateTopMessage(message);
             }
-
-            print("불러오기 완료");
+        }
+        else
+        {
+            Debug.LogWarning("There is no Messages");
         }
     }
 

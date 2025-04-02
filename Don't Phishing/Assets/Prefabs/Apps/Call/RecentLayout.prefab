@@ -531,6 +531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6963503547438317316}
+  - component: {fileID: 8592645621778101869}
   m_Layer: 5
   m_Name: RecentLayout
   m_TagString: Untagged
@@ -562,6 +563,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1100, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8592645621778101869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854930572485376193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc81d1c6a8506b46bcca6b1f4279ab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Source: {fileID: 0}
+  m_Image: {fileID: 7949520728939064733}
+  m_TMPName: {fileID: 3477259288718267108}
+  m_TMPType: {fileID: 827543887229369360}
+  m_TMPTime: {fileID: 3028800079250325162}
 --- !u!1 &8524056421872744607
 GameObject:
   m_ObjectHideFlags: 0
