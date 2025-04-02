@@ -8,24 +8,21 @@ using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
-    // 싱글톤 인스턴스
     public static DialogueManager Instance { get; private set; }
 
-    [Header("Dialogue UI")]
+    [Header("UI")]
     [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private GameObject continueIcon;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private GameObject continueIcon;
     [SerializeField] private GameObject[] choices;
-
-    [Header("Animation")]
-    [SerializeField] private Animator dialogueAnimator;
 
     private TextMeshProUGUI[] choicesText;
     private Story currentStory;
-    public bool dialogueIsPlaying { get; private set; } = false;
 
     private Coroutine displayLineCoroutine;
     private bool canContinueToNextLine = false;
+
+    public bool dialogueIsPlaying { get; private set; } = false;
 
     private void Awake()
     {
@@ -42,9 +39,8 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         dialoguePanel.SetActive(false);
-
-        // 버튼 안의 Text 할당
         choicesText = new TextMeshProUGUI[choices.Length];
+
         for (int i = 0; i < choices.Length; i++)
         {
             choicesText[i] = choices[i].GetComponentInChildren<TextMeshProUGUI>();
@@ -57,28 +53,26 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-        dialogueAnimator.Play("DialogueBox_Open");
 
         ContinueStory();
     }
 
-    // 다음 줄 출력 또는 종료
+    // 줄 계속 출력
     public void ContinueStory()
     {
         if (currentStory.canContinue)
         {
             string nextLine = currentStory.Continue();
 
-            // 이 시점에서 선택지가 없다면 숨긴다
-            if (currentStory.currentChoices.Count == 0)
-            {
-                HideChoices();
-            }
-
             if (displayLineCoroutine != null)
                 StopCoroutine(displayLineCoroutine);
 
             displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
+        }
+        else if (currentStory.currentChoices.Count > 0)
+        {
+            // 줄은 없지만 선택지가 있는 경우 → 선택지 강제 표시
+            DisplayChoices();
         }
         else
         {
@@ -86,15 +80,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    // 한 줄 출력 (타자 효과)
     private IEnumerator DisplayLine(string line)
     {
         dialogueText.text = line;
         dialogueText.maxVisibleCharacters = 0;
-
         continueIcon.SetActive(false);
 
         canContinueToNextLine = false;
+
+        // 텍스트 출력 전 선택지 숨기기
+        HideChoices();
 
         foreach (char letter in line.ToCharArray())
         {
@@ -102,39 +97,46 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
 
-        continueIcon.SetActive(true);
-        DisplayChoices(); // 선택지 표시
-
         canContinueToNextLine = true;
+        continueIcon.SetActive(true);
+
+        if (currentStory.currentChoices.Count > 0)
+        {
+            DisplayChoices();
+        }
     }
 
-    // 선택지 비활성화
-    private void HideChoices()
-    {
-        foreach (var choice in choices)
-            choice.SetActive(false);
-    }
-
-    // 선택지 표시
     private void DisplayChoices()
     {
         List<Choice> currentChoices = currentStory.currentChoices;
 
+        if (currentChoices.Count > choices.Length)
+        {
+            Debug.LogError("선택지가 UI에서 처리 가능한 개수보다 많습니다.");
+        }
+
         for (int i = 0; i < currentChoices.Count; i++)
         {
-            choices[i].SetActive(true);
+            choices[i].gameObject.SetActive(true);
             choicesText[i].text = currentChoices[i].text;
         }
 
         for (int i = currentChoices.Count; i < choices.Length; i++)
         {
-            choices[i].SetActive(false);
+            choices[i].gameObject.SetActive(false);
         }
 
         StartCoroutine(SelectFirstChoice());
     }
 
-    // 기본 선택 포커싱
+    private void HideChoices()
+    {
+        foreach (GameObject choice in choices)
+        {
+            choice.SetActive(false);
+        }
+    }
+
     private IEnumerator SelectFirstChoice()
     {
         EventSystem.current.SetSelectedGameObject(null);
@@ -142,31 +144,21 @@ public class DialogueManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(choices[0]);
     }
 
-    // 선택 반영 → 1프레임 후 → 다음 줄
     public void MakeChoice(int choiceIndex)
     {
-        if (canContinueToNextLine)
-        {
-            currentStory.ChooseChoiceIndex(choiceIndex);
-            StartCoroutine(WaitAndContinue());
-        }
-    }
+        if (!canContinueToNextLine) return;
 
-    private IEnumerator WaitAndContinue()
-    {
-        yield return null;
+        currentStory.ChooseChoiceIndex(choiceIndex);
+        canContinueToNextLine = false;
         ContinueStory();
     }
 
-    // 대화 종료 처리
     private IEnumerator ExitDialogueMode()
     {
-        dialogueAnimator.Play("DialogueBox_Close");
-        yield return new WaitForSeconds(0.3f);
-
-        dialogueIsPlaying = false;
+        yield return new WaitForSeconds(0.2f);
         HideChoices();
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        dialogueIsPlaying = false;
     }
 }

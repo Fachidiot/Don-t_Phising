@@ -1,40 +1,38 @@
 -> start
 
 === start ===
-눈을 뜨자마자 핸드폰 화면이 켜졌다. 알람이 와있다.
+눈을 떠보니 휴대폰에 이상한 메시지가 도착해 있었다.
 
-+ 알람을 확인한다
-    -> check_alarm
++ [메시지를 확인한다]
+    -> suspicious_link
 
-+ 그냥 무시한다
-    -> ignore_alarm
-
-
-=== check_alarm ===
-긴급: 당신의 계좌에서 이체가 발생했습니다.
-
-+ 확인 링크를 눌러볼까?
-    -> phishing_trap
-
-+ 무시하고 은행 앱을 켠다
-    -> safe_choice
++ [그냥 무시하고 학교에 간다]
+    -> go_to_school
 
 
-=== ignore_alarm ===
-너는 알람을 무시하고 다시 잠에 들었다.
-#ENDING_SLEEP
--> END
+=== suspicious_link ===
+링크를 누르자마자 이상한 앱 설치 화면이 떴다.
+
++ [설치한다]
+    -> installed_phishing_app
+
++ [앱을 닫고 검색해본다]
+    -> safe_research
 
 
-=== phishing_trap ===
-링크를 눌렀더니 이상한 앱이 깔렸다.
-잠시 후, 핸드폰이 꺼졌다.
+=== installed_phishing_app ===
+잠시 후, 휴대폰이 꺼졌고 은행에서 돈이 빠져나갔다.
 #ENDING_BAD
 -> END
 
 
-=== safe_choice ===
-은행 앱을 열어보니 이상한 이체 내역이 있었다.
-곧바로 신고해 계좌를 잠궜다.
+=== safe_research ===
+검색 결과, 피싱 앱이었다! 다행히도 설치 전에 막았다.
 #ENDING_GOOD
+-> END
+
+
+=== go_to_school ===
+메시지를 무시하고 학교에 도착했다. 평범한 하루가 시작되었다.
+#ENDING_NEUTRAL
 -> END
