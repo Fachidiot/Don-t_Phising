@@ -10,18 +10,25 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
 
-    [Header("UI")]
+    [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] private GameObject continueIcon;
     [SerializeField] private GameObject[] choices;
+    [SerializeField] private Transform messageContainer;
+
+    [Header("Prefabs")]
+    [SerializeField] private GameObject npcMessagePrefab;
+    [SerializeField] private GameObject playerMessagePrefab;
+
+    [Header("Scroll")]
+    [SerializeField] private ScrollRect scrollRect;
+
+    [Header("Animation")]
+    [SerializeField] private Animator dialogueAnimator;
 
     private TextMeshProUGUI[] choicesText;
     private Story currentStory;
-
     private Coroutine displayLineCoroutine;
     private bool canContinueToNextLine = false;
-
     public bool dialogueIsPlaying { get; private set; } = false;
 
     private void Awake()
@@ -39,25 +46,23 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         dialoguePanel.SetActive(false);
-        choicesText = new TextMeshProUGUI[choices.Length];
 
+        choicesText = new TextMeshProUGUI[choices.Length];
         for (int i = 0; i < choices.Length; i++)
         {
             choicesText[i] = choices[i].GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 
-    // 대화 시작
     public void EnterDialogueMode(TextAsset inkJSON)
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-
+        dialogueAnimator.Play("DialogueBox_Open");
         ContinueStory();
     }
 
-    // 줄 계속 출력
     public void ContinueStory()
     {
         if (currentStory.canContinue)
@@ -69,11 +74,6 @@ public class DialogueManager : MonoBehaviour
 
             displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
         }
-        else if (currentStory.currentChoices.Count > 0)
-        {
-            // 줄은 없지만 선택지가 있는 경우 → 선택지 강제 표시
-            DisplayChoices();
-        }
         else
         {
             StartCoroutine(ExitDialogueMode());
@@ -82,59 +82,57 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator DisplayLine(string line)
     {
-        dialogueText.text = line;
-        dialogueText.maxVisibleCharacters = 0;
-        continueIcon.SetActive(false);
-
-        canContinueToNextLine = false;
-
-        // 텍스트 출력 전 선택지 숨기기
         HideChoices();
 
-        foreach (char letter in line.ToCharArray())
-        {
-            dialogueText.maxVisibleCharacters++;
-            yield return new WaitForSeconds(0.02f);
-        }
+        SpawnNPCMessage(line);
+        ScrollToBottom();
 
+        yield return new WaitForSeconds(0.4f); // 딜레이 후 선택지 뜨게
+        DisplayChoices();
         canContinueToNextLine = true;
-        continueIcon.SetActive(true);
+    }
 
-        if (currentStory.currentChoices.Count > 0)
+    public void MakeChoice(int choiceIndex)
+    {
+        if (canContinueToNextLine)
         {
-            DisplayChoices();
+            string selectedText = currentStory.currentChoices[choiceIndex].text;
+            SpawnPlayerMessage(selectedText);
+            ScrollToBottom();
+
+            currentStory.ChooseChoiceIndex(choiceIndex);
+            StartCoroutine(WaitAndContinue());
         }
+    }
+
+    private IEnumerator WaitAndContinue()
+    {
+        yield return null;
+        ContinueStory();
+    }
+
+    private void HideChoices()
+    {
+        foreach (var choice in choices)
+            choice.SetActive(false);
     }
 
     private void DisplayChoices()
     {
         List<Choice> currentChoices = currentStory.currentChoices;
 
-        if (currentChoices.Count > choices.Length)
-        {
-            Debug.LogError("선택지가 UI에서 처리 가능한 개수보다 많습니다.");
-        }
-
         for (int i = 0; i < currentChoices.Count; i++)
         {
-            choices[i].gameObject.SetActive(true);
+            choices[i].SetActive(true);
             choicesText[i].text = currentChoices[i].text;
         }
 
         for (int i = currentChoices.Count; i < choices.Length; i++)
         {
-            choices[i].gameObject.SetActive(false);
+            choices[i].SetActive(false);
         }
 
         StartCoroutine(SelectFirstChoice());
-    }
-
-    private void HideChoices()
-    {
-        foreach (GameObject choice in choices)
-        {
-            choice.SetActive(false);
-        }
     }
 
     private IEnumerator SelectFirstChoice()
@@ -144,21 +142,31 @@ public class DialogueManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(choices[0]);
     }
 
-    public void MakeChoice(int choiceIndex)
-    {
-        if (!canContinueToNextLine) return;
-
-        currentStory.ChooseChoiceIndex(choiceIndex);
-        canContinueToNextLine = false;
-        ContinueStory();
-    }
-
     private IEnumerator ExitDialogueMode()
     {
-        yield return new WaitForSeconds(0.2f);
+        dialogueAnimator.Play("DialogueBox_Close");
+        yield return new WaitForSeconds(0.3f);
+
+        dialogueIsPlaying = false;
         HideChoices();
         dialoguePanel.SetActive(false);
-        dialogueText.text = "";
-        dialogueIsPlaying = false;
+    }
+
+    private void ScrollToBottom()
+    {
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 0f;
+    }
+
+    private void SpawnNPCMessage(string message)
+    {
+        GameObject go = Instantiate(npcMessagePrefab, messageContainer);
+        go.GetComponentInChildren<TextMeshProUGUI>().text = message;
+    }
+
+    private void SpawnPlayerMessage(string message)
+    {
+        GameObject go = Instantiate(playerMessagePrefab, messageContainer);
+        go.GetComponentInChildren<TextMeshProUGUI>().text = message;
     }
 }
