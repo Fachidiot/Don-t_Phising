@@ -32,9 +32,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6562531458779275420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1800, y: -1070}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1200, y: 2140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1774595831046886168
@@ -180,9 +180,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6562531458779275420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 600, y: -1070}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1200, y: 2140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7093118654836976781
@@ -400,6 +400,8 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 6562531458779275420}
   m_SampleListItme: {fileID: 8537536354080880063}
   m_SnapForce: 1000
+  m_Popup: 0
+  m_NonRayCast: 0
   m_HorizontalLayoutGroup: {fileID: 8424037184051836758}
   m_Indicator: {fileID: 0}
   m_VerticalLayoutGroup: {fileID: 0}

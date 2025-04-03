@@ -21,11 +21,13 @@ public class TabManager : MonoBehaviour
     public void SetText()
     {
         Language currentLanguage = OSManager.Instance.GetLanguage();
+        View view;
         for (int i = 0; i < m_Tabs.Length; i++)
         {
             var text = m_TabsText[i].GetText(currentLanguage);
             m_Tabs[i].SetText(text);
-            m_Views[i].GetComponent<View>().SetText(text);
+            if (m_Views[i].TryGetComponent<View>(out view))
+                view.SetText(text);
         }
     }
 

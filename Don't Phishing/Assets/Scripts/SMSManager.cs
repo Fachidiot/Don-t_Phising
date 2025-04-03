@@ -31,6 +31,8 @@ public class SMSManager : BaseAppManager
     private GameObject m_PopupView;
     [SerializeField]
     private GameObject m_HorizontalSnapScrollView;
+    [SerializeField]
+    private Profile m_SMSProfile;
     [Space]
     [Header("Text")]
     [SerializeField]
@@ -162,6 +164,8 @@ public class SMSManager : BaseAppManager
         {
             InstantiateMessage(list[i]);
         }
+
+        m_SMSProfile.SetProfile(list[0].name);
     }
 
     private void DeletePrev()

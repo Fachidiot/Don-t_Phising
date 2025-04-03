@@ -185,7 +185,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Tab4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
   m_sharedMaterial: {fileID: -3950186850510248492, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Tab2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
   m_sharedMaterial: {fileID: -3950186850510248492, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
@@ -442,6 +442,7 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 2092103286797978111}
   m_View: {fileID: 0}
+  m_Title: {fileID: 0}
   m_Popup: 0
   m_Index: 0
 --- !u!1 &2325408272781375760
@@ -498,6 +499,7 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 1430414095964860763}
   m_View: {fileID: 0}
+  m_Title: {fileID: 0}
   m_Popup: 0
   m_Index: 0
 --- !u!1 &2495999659199503600
@@ -554,6 +556,7 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 8471640294798248610}
   m_View: {fileID: 0}
+  m_Title: {fileID: 0}
   m_Popup: 0
   m_Index: 0
 --- !u!1 &2731144529607862478
@@ -621,7 +624,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC990\uACA8\uCC3E\uAE30"
+  m_text: Tab1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
   m_sharedMaterial: {fileID: -3950186850510248492, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
@@ -875,7 +878,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Tab5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
   m_sharedMaterial: {fileID: -3950186850510248492, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
@@ -1274,6 +1277,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Views: []
+  m_Tabs:
+  - {fileID: 4417479183221470993}
+  - {fileID: 5440930086662562608}
+  - {fileID: 7641948242957776031}
+  - {fileID: 8555320341902835457}
+  - {fileID: 6483975717221608931}
+  m_TabsText:
+  - m_Text: []
+  - m_Text: []
+  - m_Text: []
+  - m_Text: []
+  - m_Text: []
   m_InitIndex: 0
 --- !u!1 &6834340424524719455
 GameObject:
@@ -1329,6 +1344,7 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 3427783061190737522}
   m_View: {fileID: 0}
+  m_Title: {fileID: 0}
   m_Popup: 0
   m_Index: 0
 --- !u!1 &7297189823760629998
@@ -1516,7 +1532,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Tab3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
   m_sharedMaterial: {fileID: -3950186850510248492, guid: f4c434e1a54835d449dc0d203336b43b, type: 2}
@@ -1639,5 +1655,6 @@ MonoBehaviour:
   m_Sprite: {fileID: 0}
   m_Button: {fileID: 2517203708267194057}
   m_View: {fileID: 0}
+  m_Title: {fileID: 0}
   m_Popup: 0
   m_Index: 0
