@@ -43,6 +43,8 @@ public class OSManager : Subject
     [SerializeField]
     private bool m_Debug;
 
+    private float m_Volume;
+
     private void Awake()
     {
         if (m_Instance != null)
@@ -105,6 +107,12 @@ public class OSManager : Subject
         if (m_Debug)
             Debug.Log($"Volume: {volume}");
 #endif
+        m_Volume = volume;
+    }
+
+    public float GetVolume()
+    {
+        return m_Volume;
     }
 
     public void SetBrightness(float brightness)

@@ -83,6 +83,11 @@ public class ScrollSnap : MonoBehaviour
             Vertical(m_CurrentItem);
     }
 
+    public int GetContentPosition()
+    {
+        return m_CurrentItem;
+    }
+
     private void Horizontal(int item = -1)
     {
         if (!m_NonRayCast)

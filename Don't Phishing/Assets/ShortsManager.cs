@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class ShortsManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private Shorts_Layout[] m_Layouts;
+    [SerializeField]
+    private ScrollSnap m_SnapManager;
+    [SerializeField]
 
-    // Update is called once per frame
-    void Update()
+
+    void Update()   
     {
-        
+        switch (-m_SnapManager.GetContentPosition())
+        {
+            case 0:
+                m_Layouts[0].Play();
+                m_Layouts[1].Stop();
+                m_Layouts[2].Stop();
+                break;
+            case 1:
+                m_Layouts[0].Stop();
+                m_Layouts[1].Play();
+                m_Layouts[2].Stop();
+                break;
+            case 2:
+                m_Layouts[0].Stop();
+                m_Layouts[1].Stop();
+                m_Layouts[2].Play();
+                break;
+        }
     }
 }
