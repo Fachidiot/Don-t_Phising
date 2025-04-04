@@ -18,9 +18,10 @@ public class OSManager : Subject
     private static OSManager m_Instance;
     public static OSManager Instance { get { return m_Instance; } }
 
+    [Header("Screens")]
     [SerializeField]
-    private GameObject m_OS;
-    public GameObject OS { get { return m_OS; } }
+    private GameObject m_MainScreen;
+    public GameObject MainScreen { get { return m_MainScreen; } }
     [SerializeField]
     private GameObject m_HomeScreen;
     public GameObject HomeScreen { get { return m_HomeScreen; } }
@@ -30,7 +31,12 @@ public class OSManager : Subject
     [SerializeField]
     private Image m_Brightness;
     [SerializeField]
+    private GameObject m_ActionBar;
+    [Space]
+    [Header("System Language")]
+    [SerializeField]
     private Language m_Language;
+    [Header("Background")]
     [SerializeField]
     private BackgroundManager[] m_Backgrounds;
     public int m_BackgroundIndex = 0;

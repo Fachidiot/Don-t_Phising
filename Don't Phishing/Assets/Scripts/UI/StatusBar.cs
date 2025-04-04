@@ -8,14 +8,10 @@ public class StatusBar : MonoBehaviour
     [SerializeField]
     private TMP_Text m_Time;
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
-        
+        if (m_Time.text != OSManager.Instance.GetTime())
+            SetTime();
     }
 
     private void SetTime()
