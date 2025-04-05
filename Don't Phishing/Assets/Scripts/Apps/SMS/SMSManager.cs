@@ -133,7 +133,6 @@ public class SMSManager : BaseAppManager
             var layout = m_TopMsgList[i].GetComponent<SMS_Layout>();
             if (layout.GetMessage().name == message.name)
             {
-                Debug.Log("ม฿บน");
                 layout.SetUp(message);
                 return;
             }

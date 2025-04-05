@@ -1630,7 +1630,7 @@ PrefabInstance:
     - target: {fileID: 5986045657523607376, guid: ff808ba72777f454bb169557e4db16f2, type: 3}
       propertyPath: m_VideoClip
       value: 
-      objectReference: {fileID: 32900000, guid: f085cb77732c47441a5269f5925b0693, type: 3}
+      objectReference: {fileID: 32900000, guid: 2d4973ddad8a56a4b88502d6a4c47109, type: 3}
     - target: {fileID: 5986045657523607376, guid: ff808ba72777f454bb169557e4db16f2, type: 3}
       propertyPath: m_DataSource
       value: 0
@@ -14087,7 +14087,7 @@ PrefabInstance:
     - target: {fileID: 5986045657523607376, guid: ff808ba72777f454bb169557e4db16f2, type: 3}
       propertyPath: m_VideoClip
       value: 
-      objectReference: {fileID: 32900000, guid: 6c795f421fa8b7b43bb93df1f14c52cb, type: 3}
+      objectReference: {fileID: 32900000, guid: f085cb77732c47441a5269f5925b0693, type: 3}
     - target: {fileID: 5986045657523607376, guid: ff808ba72777f454bb169557e4db16f2, type: 3}
       propertyPath: m_DataSource
       value: 0
@@ -36558,7 +36558,7 @@ PrefabInstance:
     - target: {fileID: 5986045657523607376, guid: ff808ba72777f454bb169557e4db16f2, type: 3}
       propertyPath: m_VideoClip
       value: 
-      objectReference: {fileID: 32900000, guid: 0075e0f77206e994d849b7c2ca6e6b24, type: 3}
+      objectReference: {fileID: 32900000, guid: f51586fc659c63346b3acd79f35d6c51, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

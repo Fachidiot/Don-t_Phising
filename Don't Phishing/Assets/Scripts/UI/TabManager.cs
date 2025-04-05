@@ -13,8 +13,8 @@ public class TabManager : MonoBehaviour
 
     private void Start()
     {
-        SetText();
         ResetTab();
+        SetText();
         m_Views[m_InitIndex].SetActive(true);
     }
 
@@ -38,6 +38,5 @@ public class TabManager : MonoBehaviour
             if (view.activeSelf)
                 view.SetActive(false);
         }
-        m_Views[m_InitIndex].SetActive(true);
     }
 }

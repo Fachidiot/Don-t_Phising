@@ -95,7 +95,6 @@ public class CallManager : BaseAppManager
 
     public override void ResetApp()
     {
-        m_TabManager.ResetTab();
         m_PopupView.SetActive(false);
     }
 
