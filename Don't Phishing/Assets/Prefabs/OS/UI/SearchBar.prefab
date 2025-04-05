@@ -692,7 +692,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8975951158352751627}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -717,7 +717,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5ac9698a7bae7e4eb4dca6c9f3cc839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TMPText: {fileID: 6614854704183537742}
+  m_TMPText: {fileID: 8221599764761273852}
   m_PlaceholderText: {fileID: 7309846775078567026}
   m_PlaceholderLanguage:
-    m_Text: []
+    m_Text:
+    - Search
+    - "\uAC80\uC0C9"
+    - Search
