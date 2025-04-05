@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -81,6 +82,11 @@ public class ScrollSnap : MonoBehaviour
             Horizontal(m_CurrentItem);
         if (m_VerticalLayoutGroup != null)
             Vertical(m_CurrentItem);
+    }
+
+    public int GetContentPosition()
+    {
+        return m_CurrentItem;
     }
 
     private void Horizontal(int item = -1)

@@ -18,9 +18,12 @@ public class OSManager : Subject
     private static OSManager m_Instance;
     public static OSManager Instance { get { return m_Instance; } }
 
+    [Header("Screens")]
     [SerializeField]
-    private GameObject m_OS;
-    public GameObject OS { get { return m_OS; } }
+    private Mask m_MaskScreen;
+    [SerializeField]
+    private GameObject m_MainScreen;
+    public GameObject MainScreen { get { return m_MainScreen; } }
     [SerializeField]
     private GameObject m_HomeScreen;
     public GameObject HomeScreen { get { return m_HomeScreen; } }
@@ -30,7 +33,12 @@ public class OSManager : Subject
     [SerializeField]
     private Image m_Brightness;
     [SerializeField]
+    private GameObject m_ActionBar;
+    [Space]
+    [Header("System Language")]
+    [SerializeField]
     private Language m_Language;
+    [Header("Background")]
     [SerializeField]
     private BackgroundManager[] m_Backgrounds;
     public int m_BackgroundIndex = 0;
@@ -42,6 +50,8 @@ public class OSManager : Subject
     [Space(10)]
     [SerializeField]
     private bool m_Debug;
+
+    private float m_Volume = 1f;
 
     private void Awake()
     {
@@ -58,6 +68,8 @@ public class OSManager : Subject
     {
         //InitLanguage();
         m_HomeScreen.SetActive(true);
+        if (!m_MaskScreen.IsActive())
+            m_MaskScreen.enabled = true;
         SetDate(m_Language);
     }
 
@@ -105,6 +117,12 @@ public class OSManager : Subject
         if (m_Debug)
             Debug.Log($"Volume: {volume}");
 #endif
+        m_Volume = volume;
+    }
+
+    public float GetVolume()
+    {
+        return m_Volume;
     }
 
     public void SetBrightness(float brightness)
@@ -145,7 +163,7 @@ public class OSManager : Subject
         PlayerPrefs.SetInt("Language", (int)m_Language);
     }
 
-    private CultureInfo GetCulture(Language language)
+    public CultureInfo GetCulture(Language language)
     {
         switch (language)
         {
@@ -167,6 +185,7 @@ public class TimeUtils
     {
         return GetHour() + ":" + GetMinute();
     }
+
     public static string GetDate(CultureInfo cultureInfo)
     {
         switch (cultureInfo.TwoLetterISOLanguageName)
