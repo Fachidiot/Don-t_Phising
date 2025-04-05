@@ -38,5 +38,6 @@ public class TabManager : MonoBehaviour
             if (view.activeSelf)
                 view.SetActive(false);
         }
+        m_Views[m_InitIndex].SetActive(true);
     }
 }

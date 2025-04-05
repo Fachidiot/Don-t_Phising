@@ -20,6 +20,8 @@ public class OSManager : Subject
 
     [Header("Screens")]
     [SerializeField]
+    private Mask m_MaskScreen;
+    [SerializeField]
     private GameObject m_MainScreen;
     public GameObject MainScreen { get { return m_MainScreen; } }
     [SerializeField]
@@ -49,7 +51,7 @@ public class OSManager : Subject
     [SerializeField]
     private bool m_Debug;
 
-    private float m_Volume;
+    private float m_Volume = 1f;
 
     private void Awake()
     {
@@ -66,6 +68,8 @@ public class OSManager : Subject
     {
         //InitLanguage();
         m_HomeScreen.SetActive(true);
+        if (!m_MaskScreen.IsActive())
+            m_MaskScreen.enabled = true;
         SetDate(m_Language);
     }
 
@@ -159,7 +163,7 @@ public class OSManager : Subject
         PlayerPrefs.SetInt("Language", (int)m_Language);
     }
 
-    private CultureInfo GetCulture(Language language)
+    public CultureInfo GetCulture(Language language)
     {
         switch (language)
         {
@@ -181,6 +185,7 @@ public class TimeUtils
     {
         return GetHour() + ":" + GetMinute();
     }
+
     public static string GetDate(CultureInfo cultureInfo)
     {
         switch (cultureInfo.TwoLetterISOLanguageName)

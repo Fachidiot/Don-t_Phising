@@ -21,7 +21,7 @@ public class Tab : MonoBehaviour
     [SerializeField]
     private bool m_Popup;
     [SerializeField]
-    private int m_Index;
+    private int m_Index = 1;
 
     private TabManager m_TabManager;
 
