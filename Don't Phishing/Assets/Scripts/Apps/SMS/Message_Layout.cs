@@ -12,7 +12,7 @@ public class Message_Layout : MonoBehaviour
     public void SetUp(Message message)
     {
         m_TMPMessage.text = message.message;
-        if (message.message.Length < 12)
+        if (message.message.Length < 12 && m_ContentSizeFitter != null)
             m_ContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 }

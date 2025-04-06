@@ -38,7 +38,6 @@ public class DialogueManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -187,8 +186,10 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void SpawnNPCMessage(string message)
     {
-        GameObject go = Instantiate(npcMessagePrefab, messageContainer);
-        go.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        //GameObject go = Instantiate(npcMessagePrefab, messageContainer);
+        //go.GetComponentInChildren<TextMeshProUGUI>().text = message;
+
+        SMSManager.Instance.SaveMessage(message, false);
     }
 
     /// <summary>
@@ -196,7 +197,9 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void SpawnPlayerMessage(string message)
     {
-        GameObject go = Instantiate(playerMessagePrefab, messageContainer);
-        go.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        //GameObject go = Instantiate(playerMessagePrefab, messageContainer);
+        //go.GetComponentInChildren<TextMeshProUGUI>().text = message;
+
+        SMSManager.Instance.SaveMessage(message, true);
     }
 }

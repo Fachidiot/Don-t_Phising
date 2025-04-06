@@ -4,13 +4,30 @@ using System;
 using TMPro;
 using UnityEngine;
 using System.Reflection;
+using UnityEditor;
+using static Message;
 
 [Serializable]
 public class Message
 {
     public string name;
     public string message;
+    public MsgType type;
     public string date;
+
+    public enum MsgType
+    {
+        None,
+        Mine
+    }
+
+    public Message(string name, string message, MsgType type, string date)
+    {
+        this.name = name;
+        this.message = message;
+        this.type = type;
+        this.date = date;
+    }
 }
 public class MessageDB
 {
@@ -64,6 +81,7 @@ public class SMSManager : BaseAppManager
     private MessageDB m_MessageDB;
     private List<GameObject> m_TopMsgList;
     private List<GameObject> m_MessageList;
+    private string m_CurrentName;
 
     private void Awake()
     {
@@ -90,6 +108,35 @@ public class SMSManager : BaseAppManager
         LoadMessages();
     }
 
+    public void SaveMessage(string message, bool isMine)
+    {
+        var type = isMine ? MsgType.Mine : MsgType.None;
+        Message _message = new Message(m_CurrentName, message, type, DateTime.Now.ToString("yyyy-MM-dd-HH:mm"));
+        InstantiateMessage(_message, isMine);
+
+        m_MessageDB.messages.Add(_message);
+        SaveMessages();
+    }
+
+    public void LoadMessage(List<Message> list)
+    {
+        DeletePrev();
+
+        // View 설정
+        m_MainBar.SetActive(false);
+        m_MessageBar.SetActive(true);
+        m_HorizontalSnapScrollView.GetComponent<ScrollSnap>().SetContentPosition(1);
+
+        // 메세지 생성
+        for (int i = 0; i < list.Count; i++)
+        {
+            InstantiateMessage(list[i], list[i].name == "Mine");
+        }
+
+        m_CurrentName = list[0].name;
+        m_SMSProfile.SetProfile(m_CurrentName);
+    }
+
     #region BASE_APP
     public override void SetText()
     {
@@ -110,8 +157,17 @@ public class SMSManager : BaseAppManager
     #endregion
 
     #region JSON
-    private void LoadMessages()
+    public void LoadMessages()
     {
+        if (m_TopMsgList.Count > 0)
+        {
+            foreach (var topmsg in m_TopMsgList)
+            {
+                Destroy(topmsg);
+            }
+            m_TopMsgList.Clear();
+        }
+
         if (File.Exists(m_Path + m_FileName))
         {
             string data = File.ReadAllText(m_Path + m_FileName);
@@ -154,29 +210,17 @@ public class SMSManager : BaseAppManager
         m_TopMsgList.Add(go);
     }
 
-    private void InstantiateMessage(Message message)
+    private void InstantiateMessage(Message message, bool isMine)
     {
-        GameObject go = Instantiate(m_MsgPrefab, m_MsgParent.transform);
+        GameObject go;
+        if (isMine)
+            go = Instantiate(m_MyMsgPrefab, m_MsgParent.transform);
+        else
+            go = Instantiate(m_MsgPrefab, m_MsgParent.transform);
         go.GetComponent<Message_Layout>().SetUp(message);
         m_MessageList.Add(go);
     }
     #endregion
-
-    public void LoadMessage(List<Message> list)
-    {
-        DeletePrev();
-
-        m_MainBar.SetActive(false);
-        m_MessageBar.SetActive(true);
-        m_HorizontalSnapScrollView.GetComponent<ScrollSnap>().SetContentPosition(1);
-
-        for (int i = 0;i < list.Count; i++)
-        {
-            InstantiateMessage(list[i]);
-        }
-
-        m_SMSProfile.SetProfile(list[0].name);
-    }
 
     private void DeletePrev()
     {
