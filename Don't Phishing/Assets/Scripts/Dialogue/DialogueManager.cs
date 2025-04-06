@@ -8,20 +8,25 @@ using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
+    // 싱글톤 패턴
     public static DialogueManager Instance { get; private set; }
 
-    [Header("UI")]
-    [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private TextMeshProUGUI dialogueText;
-    [SerializeField] private GameObject continueIcon;
-    [SerializeField] private GameObject[] choices;
+    [Header("Dialogue UI")]
+    [SerializeField] private GameObject dialoguePanel;         // 전체 대화 패널 
+    [SerializeField] private GameObject[] choices;             // 선택지 버튼들
+    [SerializeField] private Transform messageContainer;       // 메시지 프리팹이 쌓일 위치 (Vertical Layout Group 등 포함)
 
-    private TextMeshProUGUI[] choicesText;
-    private Story currentStory;
+    [Header("Prefabs")]
+    [SerializeField] private GameObject npcMessagePrefab;      // NPC 메시지 프리팹
+    [SerializeField] private GameObject playerMessagePrefab;   // 플레이어 메시지 프리팹
 
+    [Header("Animation")]
+    [SerializeField] private Animator dialogueAnimator;        // 대화창 애니메이션
+
+    private TextMeshProUGUI[] choicesText;                     // 선택지 텍스트 캐싱
+    private Story currentStory;                                // 현재 Ink 스토리
     private Coroutine displayLineCoroutine;
     private bool canContinueToNextLine = false;
-
     public bool dialogueIsPlaying { get; private set; } = false;
 
     private void Awake()
@@ -39,25 +44,31 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         dialoguePanel.SetActive(false);
-        choicesText = new TextMeshProUGUI[choices.Length];
 
+        // 선택지 버튼 텍스트 캐싱
+        choicesText = new TextMeshProUGUI[choices.Length];
         for (int i = 0; i < choices.Length; i++)
         {
             choicesText[i] = choices[i].GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 
-    // 대화 시작
+    /// <summary>
+    /// Ink JSON 받아서 대화 시작
+    /// </summary>
     public void EnterDialogueMode(TextAsset inkJSON)
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
+        //dialogueAnimator.Play("DialogueBox_Open");
 
         ContinueStory();
     }
 
-    // 줄 계속 출력
+    /// <summary>
+    /// 다음 줄로 진행 (or 종료)
+    /// </summary>
     public void ContinueStory()
     {
         if (currentStory.canContinue)
@@ -69,74 +80,88 @@ public class DialogueManager : MonoBehaviour
 
             displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
         }
-        else if (currentStory.currentChoices.Count > 0)
-        {
-            // 줄은 없지만 선택지가 있는 경우 → 선택지 강제 표시
-            DisplayChoices();
-        }
         else
         {
             StartCoroutine(ExitDialogueMode());
         }
     }
 
+    /// <summary>
+    /// 한 줄씩 출력 (타자 효과 제외, 바로 생성)
+    /// </summary>
     private IEnumerator DisplayLine(string line)
     {
-        dialogueText.text = line;
-        dialogueText.maxVisibleCharacters = 0;
-        continueIcon.SetActive(false);
-
-        canContinueToNextLine = false;
-
-        // 텍스트 출력 전 선택지 숨기기
         HideChoices();
 
-        foreach (char letter in line.ToCharArray())
-        {
-            dialogueText.maxVisibleCharacters++;
-            yield return new WaitForSeconds(0.02f);
-        }
+        // NPC 메시지 프리팹 생성
+        SpawnNPCMessage(line);
 
+        yield return new WaitForSeconds(0.4f);
+
+        DisplayChoices(); // 다음 선택지 출력
         canContinueToNextLine = true;
-        continueIcon.SetActive(true);
+    }
 
-        if (currentStory.currentChoices.Count > 0)
+    /// <summary>
+    /// 플레이어 선택 반영
+    /// </summary>
+    public void MakeChoice(int choiceIndex)
+    {
+        if (canContinueToNextLine)
         {
-            DisplayChoices();
+            string selectedText = currentStory.currentChoices[choiceIndex].text;
+
+            // 플레이어 말풍선 생성
+            SpawnPlayerMessage(selectedText);
+
+            // 선택 반영
+            currentStory.ChooseChoiceIndex(choiceIndex);
+            StartCoroutine(WaitAndContinue());
         }
     }
 
+    /// <summary>
+    /// 1프레임 후 Continue 호출
+    /// </summary>
+    private IEnumerator WaitAndContinue()
+    {
+        yield return null;
+        ContinueStory();
+    }
+
+    /// <summary>
+    /// 선택지 숨기기
+    /// </summary>
+    private void HideChoices()
+    {
+        foreach (var choice in choices)
+            choice.SetActive(false);
+    }
+
+    /// <summary>
+    /// 선택지 표시
+    /// </summary>
     private void DisplayChoices()
     {
         List<Choice> currentChoices = currentStory.currentChoices;
 
-        if (currentChoices.Count > choices.Length)
-        {
-            Debug.LogError("선택지가 UI에서 처리 가능한 개수보다 많습니다.");
-        }
-
         for (int i = 0; i < currentChoices.Count; i++)
         {
-            choices[i].gameObject.SetActive(true);
+            choices[i].SetActive(true);
             choicesText[i].text = currentChoices[i].text;
         }
 
         for (int i = currentChoices.Count; i < choices.Length; i++)
         {
-            choices[i].gameObject.SetActive(false);
+            choices[i].SetActive(false);
         }
 
         StartCoroutine(SelectFirstChoice());
     }
 
-    private void HideChoices()
-    {
-        foreach (GameObject choice in choices)
-        {
-            choice.SetActive(false);
-        }
-    }
-
+    /// <summary>
+    /// 첫 번째 선택지 기본 포커싱
+    /// </summary>
     private IEnumerator SelectFirstChoice()
     {
         EventSystem.current.SetSelectedGameObject(null);
@@ -144,21 +169,34 @@ public class DialogueManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(choices[0]);
     }
 
-    public void MakeChoice(int choiceIndex)
-    {
-        if (!canContinueToNextLine) return;
-
-        currentStory.ChooseChoiceIndex(choiceIndex);
-        canContinueToNextLine = false;
-        ContinueStory();
-    }
-
+    /// <summary>
+    /// 대화 종료
+    /// </summary>
     private IEnumerator ExitDialogueMode()
     {
-        yield return new WaitForSeconds(0.2f);
+        dialogueAnimator.Play("DialogueBox_Close");
+        yield return new WaitForSeconds(0.3f);
+
+        dialogueIsPlaying = false;
         HideChoices();
         dialoguePanel.SetActive(false);
-        dialogueText.text = "";
-        dialogueIsPlaying = false;
+    }
+
+    /// <summary>
+    /// NPC 메시지 생성
+    /// </summary>
+    private void SpawnNPCMessage(string message)
+    {
+        GameObject go = Instantiate(npcMessagePrefab, messageContainer);
+        go.GetComponentInChildren<TextMeshProUGUI>().text = message;
+    }
+
+    /// <summary>
+    /// 플레이어 메시지 생성
+    /// </summary>
+    private void SpawnPlayerMessage(string message)
+    {
+        GameObject go = Instantiate(playerMessagePrefab, messageContainer);
+        go.GetComponentInChildren<TextMeshProUGUI>().text = message;
     }
 }

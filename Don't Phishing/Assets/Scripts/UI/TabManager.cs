@@ -24,10 +24,13 @@ public class TabManager : MonoBehaviour
         View view;
         for (int i = 0; i < m_Tabs.Length; i++)
         {
-            var text = m_TabsText[i].GetText(currentLanguage);
-            m_Tabs[i].SetText(text);
-            if (m_Views[i].TryGetComponent<View>(out view))
-                view.SetText(text);
+            if (m_TabsText.Length > 0)
+            {
+                var text = m_TabsText[i].GetText(currentLanguage);
+                m_Tabs[i].SetText(text);
+                if (m_Views[i].TryGetComponent<View>(out view))
+                    view.SetText(text);
+            }
         }
     }
 

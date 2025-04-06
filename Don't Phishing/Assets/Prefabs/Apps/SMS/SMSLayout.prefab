@@ -291,6 +291,8 @@ MonoBehaviour:
   m_TMPName: {fileID: 1519859506402416329}
   m_TMPMessage: {fileID: 2720556350785322720}
   m_TMPDate: {fileID: 9118945988056720551}
+  m_InkFile: {fileID: 4900000, guid: aeb3186897efc3a48a5bebfc54aeca49, type: 3}
+  m_Message: []
 --- !u!1 &3444466328935094412
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +492,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f95e57751d476694ca4e577f4f9cb43b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7079f1818a1677741a8b83bc9f99867c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

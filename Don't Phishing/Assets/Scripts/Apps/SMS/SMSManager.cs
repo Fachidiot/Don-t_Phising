@@ -39,6 +39,12 @@ public class SMSManager : BaseAppManager
     private TMP_Text m_TMPSMS;
     [SerializeField]
     private LText m_SMSText;
+    [SerializeField]
+    private TMP_Text m_TMPEdit;
+    [SerializeField]
+    private LText m_EditText;
+    [SerializeField]
+    private SearchBar[] m_SearchBars;
     [Header("Messages")]
     [SerializeField]
     private GameObject m_TopMsgParent;
@@ -88,6 +94,11 @@ public class SMSManager : BaseAppManager
     public override void SetText()
     {
         m_TMPSMS.text = m_SMSText.GetText(OSManager.Instance.GetLanguage());
+        m_TMPEdit.text = m_EditText.GetText(OSManager.Instance.GetLanguage());
+        foreach (SearchBar searchBar in m_SearchBars)
+        {
+            searchBar.SetText();
+        }
     }
 
     public override void ResetApp()

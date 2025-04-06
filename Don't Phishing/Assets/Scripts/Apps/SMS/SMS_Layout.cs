@@ -15,6 +15,8 @@ public class SMS_Layout : MonoBehaviour
     private TMP_Text m_TMPMessage;
     [SerializeField]
     private TMP_Text m_TMPDate;
+    [SerializeField]
+    private TextAsset m_InkFile;
 
     [SerializeField]
     private List<Message> m_Message;
@@ -23,7 +25,8 @@ public class SMS_Layout : MonoBehaviour
     private void Awake()
     {
         m_Message = new List<Message>();
-        m_Button.onClick.AddListener(()=> SMSManager.Instance.LoadMessage(m_Message));
+        m_Button.onClick.AddListener(() => SMSManager.Instance.LoadMessage(m_Message));
+        m_Button.onClick.AddListener(() => DialogueManager.Instance.EnterDialogueMode(m_InkFile));
     }
 
     public void SetUp(Message message)
