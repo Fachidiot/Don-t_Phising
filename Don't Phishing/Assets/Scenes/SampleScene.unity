@@ -3849,7 +3849,7 @@ MonoBehaviour:
   m_TopMsgPrefab: {fileID: 3201530315209712579, guid: 7f4624ce90c98824797aa82fb3df8698, type: 3}
   m_MsgParent: {fileID: 4609134885051853965}
   m_MsgPrefab: {fileID: 3866570590280776911, guid: 1be7a0a7c6b20314bb03829ef5c5a938, type: 3}
-  m_MyMsgPrefab: {fileID: 9206039614027558346, guid: dc0805dc93b198a42870484be988355f, type: 3}
+  m_MyMsgPrefab: {fileID: 2127931506144988297, guid: 58f304d42fda38f4a975bcc854f92f72, type: 3}
 --- !u!114 &324558522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3868,7 +3868,7 @@ MonoBehaviour:
   - {fileID: 1849443018}
   messageContainer: {fileID: 6333497212494547910}
   npcMessagePrefab: {fileID: 3866570590280776911, guid: 1be7a0a7c6b20314bb03829ef5c5a938, type: 3}
-  playerMessagePrefab: {fileID: 3866570590280776911, guid: 1be7a0a7c6b20314bb03829ef5c5a938, type: 3}
+  playerMessagePrefab: {fileID: 2127931506144988297, guid: 58f304d42fda38f4a975bcc854f92f72, type: 3}
   dialogueAnimator: {fileID: 0}
 --- !u!114 &326768661 stripped
 MonoBehaviour:
