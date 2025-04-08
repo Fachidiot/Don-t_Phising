@@ -13,7 +13,7 @@ public class Message
     public MsgType type;
     public string date;
 
-    public enum MsgType
+    public enum MsgType  // 메시지 타입 (None: NPC 메시지, Mine: 플레이어 메시지)
     {
         None,
         Mine
@@ -51,15 +51,15 @@ public class SMSManager : BaseAppManager
     [Space]
     [Header("Text")]
     [SerializeField]
-    private TMP_Text m_TMPSMS;
+    private TMP_Text m_TMPSMS;  // 상단 타이틀 텍스트
     [SerializeField]
-    private LText m_SMSText;
+    private LText m_SMSText;    // 타이틀 로컬라이징 데이터
     [SerializeField]
-    private TMP_Text m_TMPEdit;
+    private TMP_Text m_TMPEdit; // 입력창 텍스트
     [SerializeField]
-    private LText m_EditText;
+    private LText m_EditText;   // 입력창 로컬라이징 데이터
     [SerializeField]
-    private SearchBar[] m_SearchBars;
+    private SearchBar[] m_SearchBars;  // 검색바 배열
     [Header("Messages")]
     [SerializeField]
     private bool m_AutoSave = true;
