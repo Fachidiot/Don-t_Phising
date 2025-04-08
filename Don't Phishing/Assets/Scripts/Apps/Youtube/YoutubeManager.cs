@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class YoutubeManager : BaseAppManager
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    [SerializeField]
+    private TabManager m_TabManager;
     public override void SetText()
     {
-        Debug.Log("Youtube localization");
+        m_TabManager.SetText();
+    }
+
+    public override void ResetApp()
+    {
+        throw new System.NotImplementedException();
     }
 }

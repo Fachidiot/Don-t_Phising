@@ -2,13 +2,7 @@ using UnityEngine;
 
 public abstract class BaseAppManager : MonoBehaviour
 {
-    public virtual void SetText()
-    {
-        return;
-    }
+    public abstract void SetText();
 
-    public virtual void ResetApp()
-    {
-        return;
-    }
+    public abstract void ResetApp();
 }

@@ -50,6 +50,7 @@ public class Tab : MonoBehaviour
 
     public void SetText(string text)
     {
-        m_Title.text = text;
+        if (m_Title)
+            m_Title.text = text;
     }
 }

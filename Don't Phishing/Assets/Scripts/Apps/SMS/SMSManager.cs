@@ -49,7 +49,7 @@ public class SMSManager : BaseAppManager
     [SerializeField]
     private GameObject m_HorizontalSnapScrollView;
     [SerializeField]
-    private Profile m_SMSProfile;
+    private Profile_Layout m_SMSProfile;
     [Space]
     [Header("Text")]
     [SerializeField]
@@ -134,7 +134,7 @@ public class SMSManager : BaseAppManager
         }
 
         m_CurrentName = list[0].name;
-        m_SMSProfile.SetProfile(m_CurrentName);
+        m_SMSProfile.SetProfile();
     }
 
     #region BASE_APP

@@ -52,6 +52,7 @@ public class OSManager : Subject
     private bool m_Debug;
 
     private float m_Volume = 1f;
+    private Profile m_profile;
 
     private void Awake()
     {
@@ -62,6 +63,9 @@ public class OSManager : Subject
         }
         m_Instance = this;
         DontDestroyOnLoad(gameObject.transform.parent.gameObject);
+
+        // Temp Profile
+        m_profile = new Profile("User", "Sprites/Icons/channels4_profile");
     }
 
     private void Start()
@@ -81,11 +85,12 @@ public class OSManager : Subject
 #endif
     }
 
-    public string GetTime()
+    public Profile GetProfile()
     {
-        return TimeUtils.GetTime();
+        return m_profile;
     }
 
+    #region Language
     public void SetLanguage(int language)
     {
         m_Language = (Language)language;
@@ -97,12 +102,9 @@ public class OSManager : Subject
     {
         return m_Language;
     }
+    #endregion
 
-    public void SetDate(Language language)
-    {
-        m_TDate.text = TimeUtils.GetDate(GetCulture(language));
-    }
-
+    #region Controls
     public void ChangeBackground(int index)
     {
         foreach(var background in m_Backgrounds)
@@ -133,6 +135,18 @@ public class OSManager : Subject
 #endif
         Color color = new Color(0, 0, 0, (1 - Mathf.Clamp(brightness, 0.1f, 1)));
         m_Brightness.color = color;
+    }
+    #endregion
+
+    #region Times
+    public string GetTime()
+    {
+        return TimeUtils.GetTime();
+    }
+
+    public void SetDate(Language language)
+    {
+        m_TDate.text = TimeUtils.GetDate(GetCulture(language));
     }
 
     private void InitLanguage()
@@ -177,6 +191,7 @@ public class OSManager : Subject
                 return new CultureInfo("en-US");
         }
     }
+#endregion
 }
 
 public class TimeUtils
