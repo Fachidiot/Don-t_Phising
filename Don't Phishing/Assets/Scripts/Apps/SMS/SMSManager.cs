@@ -3,8 +3,6 @@ using System.IO;
 using System;
 using TMPro;
 using UnityEngine;
-using System.Reflection;
-using UnityEditor;
 using static Message;
 
 [Serializable]
@@ -64,15 +62,19 @@ public class SMSManager : BaseAppManager
     private SearchBar[] m_SearchBars;
     [Header("Messages")]
     [SerializeField]
-    private GameObject m_TopMsgParent;
+    private bool m_AutoSave = true;
     [SerializeField]
-    private GameObject m_TopMsgPrefab;
+    private GameObject m_MessagePreviewParent;
     [SerializeField]
-    private GameObject m_MsgParent;
+    private GameObject m_MessagePreviewPrefab;
     [SerializeField]
-    private GameObject m_MsgPrefab;
+    private GameObject m_MessageParent;
     [SerializeField]
-    private GameObject m_MyMsgPrefab;
+    private GameObject m_NPCMessagePrefab;
+    [SerializeField]
+    private GameObject m_IMGMessagePrefab;
+    [SerializeField]
+    private GameObject m_PlayerMessagePrefab;
 
     // TODO : 추후 게임 전체(휴대폰 제외) Localization을 위해 Messages-en, Messages-kr, Messages-jp이런식으로 구현하면 좋을듯 싶음.
     private string m_FileName = "Messages.json";
@@ -115,7 +117,8 @@ public class SMSManager : BaseAppManager
         InstantiateMessage(_message, isMine);
 
         m_MessageDB.messages.Add(_message);
-        SaveMessages();
+        if (m_AutoSave)
+            SaveMessages();
     }
 
     public void LoadMessage(List<Message> list)
@@ -134,7 +137,7 @@ public class SMSManager : BaseAppManager
         }
 
         m_CurrentName = list[0].name;
-        m_SMSProfile.SetProfile();
+        m_SMSProfile.SetProfile(m_CurrentName);
     }
 
     #region BASE_APP
@@ -175,7 +178,7 @@ public class SMSManager : BaseAppManager
 
             foreach (var message in m_MessageDB.messages)
             {
-                InstantiateTopMessage(message);
+                InstantiatePreview(message);
             }
         }
         else
@@ -193,7 +196,7 @@ public class SMSManager : BaseAppManager
     #endregion
 
     #region UTILS
-    private void InstantiateTopMessage(Message message)
+    private void InstantiatePreview(Message message)
     {
         for (int i = 0; i < m_TopMsgList.Count; i++)
         {
@@ -205,7 +208,7 @@ public class SMSManager : BaseAppManager
             }
         }
 
-        GameObject go = Instantiate(m_TopMsgPrefab, m_TopMsgParent.transform);
+        GameObject go = Instantiate(m_MessagePreviewPrefab, m_MessagePreviewParent.transform);
         go.GetComponent<SMS_Layout>().SetUp(message);
         m_TopMsgList.Add(go);
     }
@@ -214,9 +217,14 @@ public class SMSManager : BaseAppManager
     {
         GameObject go;
         if (isMine)
-            go = Instantiate(m_MyMsgPrefab, m_MsgParent.transform);
+            go = Instantiate(m_PlayerMessagePrefab, m_MessageParent.transform);
         else
-            go = Instantiate(m_MsgPrefab, m_MsgParent.transform);
+        {
+            if (message.message.Contains('/'))
+                go = Instantiate(m_IMGMessagePrefab, m_MessageParent.transform);
+            else
+                go = Instantiate(m_NPCMessagePrefab, m_MessageParent.transform);
+        }
         go.GetComponent<Message_Layout>().SetUp(message);
         m_MessageList.Add(go);
     }

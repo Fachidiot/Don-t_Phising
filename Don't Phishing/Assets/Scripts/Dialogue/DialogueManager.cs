@@ -16,9 +16,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject[] choices;             // 선택지 버튼들
     [SerializeField] private Transform messageContainer;       // 메시지 프리팹이 쌓일 위치 (Vertical Layout Group 등 포함)
 
-    [Header("Prefabs")]
-    [SerializeField] private GameObject npcMessagePrefab;      // NPC 메시지 프리팹
-    [SerializeField] private GameObject playerMessagePrefab;   // 플레이어 메시지 프리팹
+    //[Header("Prefabs")]
+    //[SerializeField] private GameObject npcMessagePrefab;      // NPC 메시지 프리팹
+    //[SerializeField] private GameObject playerMessagePrefab;   // 플레이어 메시지 프리팹
 
     [Header("Animation")]
     [SerializeField] private Animator dialogueAnimator;        // 대화창 애니메이션

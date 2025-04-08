@@ -39,7 +39,11 @@ public class SMS_Layout : MonoBehaviour
         m_Index++;
 
         m_TMPName.text = m_Message[m_Index].name;
-        m_TMPMessage.text = m_Message[m_Index].message;
+        if (message.message.Contains('/'))
+            m_TMPMessage.text = "Image";
+        else
+            m_TMPMessage.text = m_Message[m_Index].message;
+
         m_TMPDate.text = m_Message[m_Index].date;
     }
 

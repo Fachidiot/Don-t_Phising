@@ -23,6 +23,12 @@
             "message": "2번입니다. 긴 텍스쳐도 되나 한번 볼게요.",
             "type": 0,
             "date": "2025-04-04-19:00"
+        },
+        {
+            "name": "테스트",
+            "message": "Sprites/Icons/channels4_profile",
+            "type": 0,
+            "date": "2025-04-04-19:00"
         }
     ]
 }

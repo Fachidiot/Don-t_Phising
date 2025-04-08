@@ -42,4 +42,10 @@ public class Profile_Layout : MonoBehaviour
             m_Image.sprite = profile.GetImage();
         }
     }
+
+    public void SetProfile(string name)
+    {
+        m_TMPName.text = name;
+        //m_Image.sprite = ;
+    }
 }
