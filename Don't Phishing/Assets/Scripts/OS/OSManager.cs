@@ -150,34 +150,6 @@ public class OSManager : Subject
         m_TDate.text = TimeUtils.GetDate(GetCulture(language));
     }
 
-    private void InitLanguage()
-    {
-        if (PlayerPrefs.GetInt("Language", 9) != 9)
-        {
-            m_Language = (Language)PlayerPrefs.GetInt("Language");
-            return;
-        }
-
-        CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
-
-        switch (cultureInfo.TwoLetterISOLanguageName)
-        {
-            case "en":
-                m_Language = Language.English;
-                break;
-            case "ko":
-                m_Language = Language.Korean;
-                break;
-            case "ja":
-                m_Language = Language.Japanese;
-                break;
-            default:
-                m_Language = Language.English;
-                break;
-        }
-        PlayerPrefs.SetInt("Language", (int)m_Language);
-    }
-
     public CultureInfo GetCulture(Language language)
     {
         switch (language)
