@@ -58,7 +58,8 @@ public class OSManager : Subject
     {
         if (m_Instance != null)
         {
-            Destroy(gameObject);
+            m_Instance.transform.parent.gameObject.SetActive(true);
+            Destroy(transform.parent.gameObject);
             return;
         }
         m_Instance = this;
