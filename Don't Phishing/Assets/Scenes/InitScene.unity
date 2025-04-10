@@ -274,6 +274,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857fc83e02061164881b040928609375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1059176631 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 254987359023237725, guid: 96d4e8c6d581c2943864c7a7c810d240, type: 3}
+  m_PrefabInstance: {fileID: 1624737036883267395}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1060872642
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,9 +765,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OptionData:
     language: 0
-    currentSelectQualityID: 0
-    bgmVolume: 0
-    effectVolume: 0
+    m_CurrentSelectQualityID: 0
+    m_MasterVolume: 0
+    m_BgmVolume: 0
+    m_EffectVolume: 0
 --- !u!114 &1554321631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -769,11 +781,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f188abaeb0f345647bbe92ebf30f1b9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mMenuParent: {fileID: 343088977}
-  mQualityDropdown: {fileID: 154808353}
-  mBGMSoundSlider: {fileID: 1626610529}
-  mEffectSoundSlider: {fileID: 1845709797}
-  mLangDropdown: {fileID: 1405496006}
+  m_MenuParent: {fileID: 343088977}
+  m_QualityDropdown: {fileID: 154808353}
+  m_MasterSoundSlider: {fileID: 1059176631}
+  m_BGMSoundSlider: {fileID: 1626610529}
+  m_EffectSoundSlider: {fileID: 1845709797}
+  m_LanguageDropdown: {fileID: 1405496006}
   mFPSButton: {fileID: 0}
 --- !u!1 &1559958597 stripped
 GameObject:
@@ -1203,11 +1216,19 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1554321629}
     m_Modifications:
+    - target: {fileID: 254987359023237725, guid: 96d4e8c6d581c2943864c7a7c810d240, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1554321631}
     - target: {fileID: 1065098904972050778, guid: 96d4e8c6d581c2943864c7a7c810d240, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2072632148969268494, guid: 96d4e8c6d581c2943864c7a7c810d240, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2101703070279035744, guid: 96d4e8c6d581c2943864c7a7c810d240, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1219,6 +1240,10 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1554321631}
+    - target: {fileID: 2936275401710155654, guid: 96d4e8c6d581c2943864c7a7c810d240, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3030528197980923971, guid: 96d4e8c6d581c2943864c7a7c810d240, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -33,7 +33,7 @@ public class OptionDataManager : MonoBehaviour
         FindObjectOfType<OptionManager>().InitMenuLayouts();
 
         //품질 설정
-        QualitySettings.SetQualityLevel(OptionData.currentSelectQualityID, true);
+        QualitySettings.SetQualityLevel(OptionData.m_CurrentSelectQualityID, true);
     }
 
     private void LoadOptionData()
@@ -114,7 +114,8 @@ public class OptionDataManager : MonoBehaviour
 public class OptionData
 {
     public SystemLanguage language;
-    public int currentSelectQualityID;
-    public float bgmVolume;
-    public float effectVolume;
+    public int m_CurrentSelectQualityID;
+    public float m_MasterVolume;
+    public float m_BgmVolume;
+    public float m_EffectVolume;
 }

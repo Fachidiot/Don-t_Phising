@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,28 @@ public class AppManager : Observer
         }
     }
 
+    public string GetCurrentApp()
+    {
+        foreach (var app in m_Apps)
+        {
+            if (app.activeSelf)
+                return app.name;
+        }
+        return string.Empty;
+    }
+
+    public void RunApp(string name)
+    {
+        foreach (var app in m_Apps)
+        {
+            if (app.name == name)
+            {
+                app.SetActive(true);
+                return;
+            }
+        }
+    }
+
     public void ResetApps()
     {
         foreach (var app in m_Apps)
@@ -48,5 +71,17 @@ public class AppManager : Observer
     public override void Notify(Subject subject)
     {
         SetText();
+    }
+
+    public void RefreshApp(string name)
+    {
+        foreach (var app in m_Apps)
+        {
+            if (app.name == name)
+            {
+                app.GetComponent<BaseAppManager>().ResetApp();
+                return;
+            }
+        }
     }
 }

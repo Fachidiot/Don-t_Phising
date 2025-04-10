@@ -17,6 +17,8 @@ public class ScrollSnap : MonoBehaviour
     [SerializeField]
     private bool m_Popup = false;
     [SerializeField]
+    private bool m_Swaping = false;
+    [SerializeField]
     private bool m_NonRayCast = false;
     public bool NonRayCast { set {  m_NonRayCast = value; } }
     [Header("Horizontal")]
@@ -44,6 +46,7 @@ public class ScrollSnap : MonoBehaviour
     [SerializeField]
     private int m_CurrentItem;
     public int CurrentItem { get { return m_CurrentItem; } }
+    public bool End = false;
 
     void Start()
     {
@@ -63,6 +66,18 @@ public class ScrollSnap : MonoBehaviour
             {
                 m_ContentPanel.localPosition = new Vector3(m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing, m_ContentPanel.localPosition.y, m_ContentPanel.localPosition.z);
                 gameObject.SetActive(false);
+            }
+        }
+
+        else if (m_Swaping && m_IsSnapped)
+        {
+            if (m_CurrentItem == -1 && m_VerticalLayoutGroup != null)
+            {
+                End = true;
+            }
+            else if (m_CurrentItem == -1 && m_HorizontalLayoutGroup != null)
+            {
+                End = true;
             }
         }
 

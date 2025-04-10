@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : BaseAppManager
 {
     [SerializeField]
     private GameObject m_Camera;
@@ -133,5 +133,15 @@ public class CameraManager : MonoBehaviour
 
         if (Application.isPlaying)
             Destroy(texture2D);
+    }
+
+    public override void SetText()
+    {
+        return;
+    }
+
+    public override void ResetApp()
+    {
+        return;
     }
 }

@@ -13,6 +13,6 @@ public class YoutubeManager : BaseAppManager
 
     public override void ResetApp()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 }

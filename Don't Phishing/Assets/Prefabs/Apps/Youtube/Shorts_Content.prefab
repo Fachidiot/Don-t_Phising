@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player: {fileID: 5986045657523607376}
+  m_CurrentVolume: 1
 --- !u!1 &6574476863137979971
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,6 +661,10 @@ PrefabInstance:
     - target: {fileID: 6718828215026585086, guid: f524b8d61ac240643b759d7188b3ecb5, type: 3}
       propertyPath: m_Name
       value: TMPText
+      objectReference: {fileID: 0}
+    - target: {fileID: 8698090861981530614, guid: f524b8d61ac240643b759d7188b3ecb5, type: 3}
+      propertyPath: m_text
+      value: Text
       objectReference: {fileID: 0}
     - target: {fileID: 8698090861981530614, guid: f524b8d61ac240643b759d7188b3ecb5, type: 3}
       propertyPath: m_fontStyle

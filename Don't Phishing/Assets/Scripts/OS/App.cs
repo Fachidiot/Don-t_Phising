@@ -67,6 +67,8 @@ public class App : Observer
 
     private void UpdateStack()
     {
+        if (m_Stack == null)
+            return;
         if (m_Count != 0)
             OnStack(m_Count);
         else
