@@ -17,7 +17,7 @@ public class NavigationAction : MonoBehaviour
     private RenderTexture m_Texture;
 
     private float m_ClickTime;
-    private float m_MinClickTime = 1f;
+    private float m_MinClickTime = 0.7f;
     private bool m_IsClicked;
     private bool m_TaskDone = true;
     private string m_AppName;
@@ -57,7 +57,10 @@ public class NavigationAction : MonoBehaviour
         {
             m_AppName = AppManager.Instance.GetCurrentApp();
             if (m_AppName == string.Empty)
+            {
+                ResetApps();
                 return;
+            }
             StartCoroutine(ScreenCapture());
             m_TaskBar.transform.parent.gameObject.GetComponent<TaskManager>().AddTask(m_AppName);
         }
@@ -92,6 +95,7 @@ public class NavigationAction : MonoBehaviour
 
         if (Application.isPlaying)
             Destroy(texture2D);
+
         m_AppName = string.Empty;
 
         //End App

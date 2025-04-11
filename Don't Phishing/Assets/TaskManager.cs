@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TaskManager : MonoBehaviour
 {
@@ -58,6 +59,6 @@ public class TaskManager : MonoBehaviour
     private void InstantiateTask(string name)
     {
         GameObject go = Instantiate(m_TaskLayout, m_TaskParent);
-        go.GetComponent<Task_Layout>().SetUp(name, this);
+        go.GetComponent<Task_Layout>().SetTaskjLayout(name, this, m_TaskBar.GetComponent<ScrollRect>());
     }
 }

@@ -93,7 +93,9 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 633599885109195696}
   m_SampleListItme: {fileID: 7165226438062487339}
   m_SnapForce: 100
+  m_EndItem: -1
   m_Popup: 1
+  m_Swaping: 0
   m_NonRayCast: 0
   m_HorizontalLayoutGroup: {fileID: 0}
   m_Indicator: {fileID: 0}
@@ -104,6 +106,7 @@ MonoBehaviour:
   m_Debug: 0
   m_IsSnapped: 0
   m_CurrentItem: 0
+  End: 0
 --- !u!1 &5988640507625230530
 GameObject:
   m_ObjectHideFlags: 0

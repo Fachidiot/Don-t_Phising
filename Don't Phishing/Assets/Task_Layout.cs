@@ -28,11 +28,12 @@ public class Task_Layout : MonoBehaviour
         m_TaskManager.RunningApp();
     }
 
-    public void SetUp(string name, TaskManager manager)
+    public void SetTaskjLayout(string name, TaskManager manager, ScrollRect scrollRect)
     {
         m_TaskManager = manager;
         LoadTextures(name);
         m_TMPTitle.text = name;
+        GetComponent<NestedScrollRect>().SetScrollRect(scrollRect);
     }
 
     void Update()

@@ -15,6 +15,8 @@ public class ScrollSnap : MonoBehaviour
     [SerializeField]
     private float m_SnapForce;
     [SerializeField]
+    private int m_EndItem;
+    [SerializeField]
     private bool m_Popup = false;
     [SerializeField]
     private bool m_Swaping = false;
@@ -57,12 +59,12 @@ public class ScrollSnap : MonoBehaviour
     {
         if (m_Popup && m_IsSnapped)
         {
-            if (m_CurrentItem == 2 && m_VerticalLayoutGroup != null)
+            if (m_CurrentItem == m_EndItem && m_VerticalLayoutGroup != null)
             {
                 m_ContentPanel.localPosition = new Vector3(m_ContentPanel.localPosition.x, m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing, m_ContentPanel.localPosition.z);
                 gameObject.SetActive(false);
             }
-            else if (m_CurrentItem == 2 && m_HorizontalLayoutGroup != null)
+            else if (m_CurrentItem == m_EndItem && m_HorizontalLayoutGroup != null)
             {
                 m_ContentPanel.localPosition = new Vector3(m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing, m_ContentPanel.localPosition.y, m_ContentPanel.localPosition.z);
                 gameObject.SetActive(false);
@@ -71,11 +73,11 @@ public class ScrollSnap : MonoBehaviour
 
         else if (m_Swaping && m_IsSnapped)
         {
-            if (m_CurrentItem == -1 && m_VerticalLayoutGroup != null)
+            if (m_CurrentItem == m_EndItem && m_VerticalLayoutGroup != null)
             {
                 End = true;
             }
-            else if (m_CurrentItem == -1 && m_HorizontalLayoutGroup != null)
+            else if (m_CurrentItem == m_EndItem && m_HorizontalLayoutGroup != null)
             {
                 End = true;
             }
