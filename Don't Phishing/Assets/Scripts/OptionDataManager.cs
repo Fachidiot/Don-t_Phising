@@ -42,9 +42,8 @@ public class OptionDataManager : MonoBehaviour
 
         if (File.Exists(filePath))
         {
-            print("옵션 파일 불러오기 성공");
+            //print("옵션 파일 불러오기 성공");
             string FromJsonData = File.ReadAllText(filePath);
-            Debug.Log(FromJsonData);
             OptionData = JsonUtility.FromJson<OptionData>(FromJsonData);
         }
 

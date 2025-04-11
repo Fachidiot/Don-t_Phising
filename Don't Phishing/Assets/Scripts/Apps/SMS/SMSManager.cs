@@ -81,7 +81,7 @@ public class SMSManager : BaseAppManager
     private string m_Path = Application.dataPath + "/Json/Messages/";
 
     private MessageDB m_MessageDB;
-    private List<GameObject> m_TopMsgList;
+    private List<GameObject> m_PreviewMessageList;
     private List<GameObject> m_MessageList;
     private string m_CurrentName;
 
@@ -105,7 +105,7 @@ public class SMSManager : BaseAppManager
     private void Init()
     {
         m_MessageDB = new MessageDB();
-        m_TopMsgList = new List<GameObject>();
+        m_PreviewMessageList = new List<GameObject>();
         m_MessageList = new List<GameObject>();
         LoadMessages();
     }
@@ -162,13 +162,13 @@ public class SMSManager : BaseAppManager
     #region JSON
     public void LoadMessages()
     {
-        if (m_TopMsgList.Count > 0)
+        if (m_PreviewMessageList.Count > 0)
         {
-            foreach (var topmsg in m_TopMsgList)
+            foreach (var topmsg in m_PreviewMessageList)
             {
                 Destroy(topmsg);
             }
-            m_TopMsgList.Clear();
+            m_PreviewMessageList.Clear();
         }
 
         if (File.Exists(m_Path + m_FileName))
@@ -198,9 +198,9 @@ public class SMSManager : BaseAppManager
     #region UTILS
     private void InstantiatePreview(Message message)
     {
-        for (int i = 0; i < m_TopMsgList.Count; i++)
+        for (int i = 0; i < m_PreviewMessageList.Count; i++)
         {
-            var layout = m_TopMsgList[i].GetComponent<SMS_Layout>();
+            var layout = m_PreviewMessageList[i].GetComponent<SMS_Layout>();
             if (layout.GetMessage().name == message.name)
             {
                 layout.SetUp(message);
@@ -210,13 +210,13 @@ public class SMSManager : BaseAppManager
 
         GameObject go = Instantiate(m_MessagePreviewPrefab, m_MessagePreviewParent.transform);
         go.GetComponent<SMS_Layout>().SetUp(message);
-        m_TopMsgList.Add(go);
+        m_PreviewMessageList.Add(go);
     }
 
     private void InstantiateMessage(Message message, bool isMine)
     {
         GameObject go;
-        if (isMine)
+        if (isMine || message.type == Message.MsgType.Mine)
             go = Instantiate(m_PlayerMessagePrefab, m_MessageParent.transform);
         else
         {
