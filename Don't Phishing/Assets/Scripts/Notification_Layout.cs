@@ -8,7 +8,7 @@ public class Notification_Layout : MonoBehaviour
     [SerializeField]
     private ScrollSnap m_ScrollSnap;
     [SerializeField]
-    private NestedScrollRect m_NestedScrollRect;
+    private NestedHorizontalScrollRect m_NestedScrollRect;
     [SerializeField]
     private Button m_Button;
 
@@ -16,7 +16,7 @@ public class Notification_Layout : MonoBehaviour
 
     private void Start()
     {
-        m_NestedScrollRect.SetScrollRect(m_ScrollRect, true);
+        m_NestedScrollRect.SetScrollRect(m_ScrollRect);
     }
 
     private void Update()

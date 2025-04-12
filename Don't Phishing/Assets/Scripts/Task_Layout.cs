@@ -33,7 +33,7 @@ public class Task_Layout : MonoBehaviour
         m_TaskManager = manager;
         LoadTextures(name);
         m_TMPTitle.text = name;
-        GetComponent<NestedScrollRect>().SetScrollRect(scrollRect);
+        GetComponent<NestedVerticalScrollRect>().SetScrollRect(scrollRect);
     }
 
     void Update()

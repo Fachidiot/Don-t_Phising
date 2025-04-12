@@ -554,6 +554,7 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 6908743740189076894}
   m_SampleListItme: {fileID: 3681016056796941739}
   m_SnapForce: 100
+  m_EndItem: 0
   m_Popup: 0
   m_Swaping: 0
   m_NonRayCast: 0
@@ -7573,6 +7574,7 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 6730127528142046511}
   m_SampleListItme: {fileID: 8405397630742709264}
   m_SnapForce: 100
+  m_EndItem: 0
   m_Popup: 0
   m_Swaping: 0
   m_NonRayCast: 0
@@ -11805,6 +11807,7 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 1534975534635882509}
   m_SampleListItme: {fileID: 3023982993088892767}
   m_SnapForce: 100
+  m_EndItem: 0
   m_Popup: 0
   m_Swaping: 0
   m_NonRayCast: 0
@@ -19038,6 +19041,7 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 6800149870682659819}
   m_SampleListItme: {fileID: 3310579524412093601}
   m_SnapForce: 100
+  m_EndItem: 0
   m_Popup: 0
   m_Swaping: 0
   m_NonRayCast: 0
@@ -19609,6 +19613,7 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 1676738600847569471}
   m_SampleListItme: {fileID: 9170499732545981643, guid: 3c5ab30c68d1bc940ae26b676d0b8a28, type: 3}
   m_SnapForce: 100
+  m_EndItem: 0
   m_Popup: 0
   m_Swaping: 0
   m_NonRayCast: 0
@@ -20219,6 +20224,7 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 5421584003855211129}
   m_SampleListItme: {fileID: 6173313934748178328}
   m_SnapForce: 100
+  m_EndItem: 0
   m_Popup: 0
   m_Swaping: 0
   m_NonRayCast: 1
@@ -30279,6 +30285,7 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 2940394902349447102}
   m_SampleListItme: {fileID: 82276884550016041, guid: 8025c906d66e0d84d86179cbb8328de9, type: 3}
   m_SnapForce: 100
+  m_EndItem: 0
   m_Popup: 0
   m_Swaping: 0
   m_NonRayCast: 0
@@ -31065,6 +31072,7 @@ MonoBehaviour:
   m_ContentPanel: {fileID: 367604009032732140}
   m_SampleListItme: {fileID: 1669688792231043391}
   m_SnapForce: 100
+  m_EndItem: 0
   m_Popup: 0
   m_Swaping: 0
   m_NonRayCast: 0
@@ -48041,6 +48049,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Recommend
       objectReference: {fileID: 0}
+    - target: {fileID: 7869881813760708825, guid: 47ecd8db62567c642807e0eec7dbcee0, type: 3}
+      propertyPath: m_ScrollRect
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8537536354080880063, guid: 47ecd8db62567c642807e0eec7dbcee0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -48064,6 +48076,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4839496996965503601, guid: 47ecd8db62567c642807e0eec7dbcee0, type: 3}
     - {fileID: 5113809051651749841, guid: 47ecd8db62567c642807e0eec7dbcee0, type: 3}
+    - {fileID: 7511523964505458943, guid: 47ecd8db62567c642807e0eec7dbcee0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8537536354080880063, guid: 47ecd8db62567c642807e0eec7dbcee0, type: 3}
@@ -48434,20 +48447,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3b7e58d8c35654ea01d1fa4e0e7f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: {fileID: 6469166351343007022}
-  m_ScrollRect: {fileID: 1755830703346950053}
+  m_ScrollSnap: {fileID: 0}
+  m_NestedScrollRect: {fileID: 0}
   m_Button: {fileID: 1163021367036188754}
---- !u!114 &1755830703346950053 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7692242279302641145, guid: e62f30754bc70dd41b4f1709493c6433, type: 3}
-  m_PrefabInstance: {fileID: 8258936657129712220}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1686542913254468565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21a0781b6a0159443b2187b97dd7eab3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3531518068157369752 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4872855047510157252, guid: e62f30754bc70dd41b4f1709493c6433, type: 3}
