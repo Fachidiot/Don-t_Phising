@@ -10,7 +10,7 @@ public class DropdownSizeFilter : MonoBehaviour
 
     void Update()
     {
-        if (m_Dropdown.Dropdown != null)
-            m_Dropdown.Dropdown.GetComponent<RectTransform>().sizeDelta = m_Size;
+/*        if (m_Dropdown.Dropdown != null)
+            m_Dropdown.Dropdown.GetComponent<RectTransform>().sizeDelta = m_Size;*/
     }
 }
