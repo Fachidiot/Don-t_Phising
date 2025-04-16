@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Message_Layout : MonoBehaviour
-{
+{ 
     [SerializeField]
     private TMP_Text m_TMPMessage;
     [SerializeField]
@@ -23,6 +23,13 @@ public class Message_Layout : MonoBehaviour
         {
             if (m_Image)
                 m_Image.sprite = Resources.Load<Sprite>(message.message);
+        }
+    }
+    public void UpdateText(string updated)
+    {
+        if (m_TMPMessage)
+        {
+            m_TMPMessage.text = updated;
         }
     }
 }
