@@ -51,7 +51,7 @@ public class BackgroundManager : MonoBehaviour
         m_BackgroundIndex = m_index;
 
         if (m_Backgrounds.Count > m_BackgroundIndex)
-            m_Image.sprite = m_Backgrounds[m_BackgroundIndex];
+            m_Image.sprite = m_Backgrounds[m_BackgroundIndex];  
     }
 
     public void ChangeAlpha(float alpha)

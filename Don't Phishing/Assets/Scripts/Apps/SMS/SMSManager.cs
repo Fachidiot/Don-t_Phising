@@ -37,6 +37,7 @@ public class SMSManager : BaseAppManager
     private static SMSManager m_Instance;
     public static SMSManager Instance { get { return m_Instance; } }
 
+
     [Header("View & Bar")]
     [SerializeField]
     private GameObject m_MainBar;
@@ -76,6 +77,8 @@ public class SMSManager : BaseAppManager
     [SerializeField]
     private GameObject m_PlayerMessagePrefab;
 
+    private Message_Layout _lastNPCLayout;
+
     // TODO : 추후 게임 전체(휴대폰 제외) Localization을 위해 Messages-en, Messages-kr, Messages-jp이런식으로 구현하면 좋을듯 싶음.
     private string m_FileName = "Messages.json";
     private string m_Path = Application.dataPath + "/Json/Messages/";
@@ -114,11 +117,16 @@ public class SMSManager : BaseAppManager
     {
         var type = isMine ? MsgType.Mine : MsgType.None;
         Message _message = new Message(m_CurrentName, message, type, DateTime.Now.ToString("yyyy-MM-dd-HH:mm"));
-        InstantiateMessage(_message, isMine);
+        
+        GameObject go = InstantiateMessage(_message, isMine);
 
         m_MessageDB.messages.Add(_message);
         if (m_AutoSave)
             SaveMessages();
+
+        // NPC일 경우 마지막 메시지 캐싱
+        if (!isMine && go != null)
+            _lastNPCLayout = go.GetComponent<Message_Layout>();
     }
 
     public void LoadMessage(List<Message> list)
@@ -213,7 +221,7 @@ public class SMSManager : BaseAppManager
         m_TopMsgList.Add(go);
     }
 
-    private void InstantiateMessage(Message message, bool isMine)
+    private GameObject InstantiateMessage(Message message, bool isMine)
     {
         GameObject go;
         if (isMine)
@@ -225,8 +233,14 @@ public class SMSManager : BaseAppManager
             else
                 go = Instantiate(m_NPCMessagePrefab, m_MessageParent.transform);
         }
-        go.GetComponent<Message_Layout>().SetUp(message);
-        m_MessageList.Add(go);
+
+        if (go != null)
+        {
+            go.GetComponent<Message_Layout>().SetUp(message);
+            m_MessageList.Add(go);
+        }
+
+        return go;
     }
     #endregion
 
@@ -239,5 +253,16 @@ public class SMSManager : BaseAppManager
             Destroy(item.gameObject);
         }
         m_MessageList.Clear();
+    }
+
+    // SMSManager.cs 안에 추가
+    public void UpdateLastNPCMessage(string message)
+    {
+        if (m_MessageList.Count == 0)
+            return;
+
+        GameObject lastMessage = m_MessageList[m_MessageList.Count - 1];
+        Message_Layout layout = lastMessage.GetComponent<Message_Layout>();
+        layout.UpdateText(message);
     }
 }

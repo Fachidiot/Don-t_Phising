@@ -8,38 +8,29 @@ using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
-    #region 프리팹
-    //[SerializeField] private Transform messageContainer;       // 메시지 프리팹이 쌓일 위치 (Vertical Layout Group 등 포함)
-    //[Header("Prefabs")]
-    //[SerializeField] private GameObject npcMessagePrefab;      // NPC 메시지 프리팹
-    //[SerializeField] private GameObject playerMessagePrefab;   // 플레이어 메시지 프리팹
-    #endregion
-
-    // 싱글톤 패턴
     public static DialogueManager Instance { get; private set; }
 
     [Header("Dialogue UI")]
-    [SerializeField] private GameObject dialoguePanel;         // 전체 대화 패널 
-    [SerializeField] private GameObject[] choices;             // 선택지 버튼들
+    [SerializeField] private GameObject dialoguePanel;            // 대화 전체 패널
+    [SerializeField] private GameObject[] choices;                // 선택지 버튼들
     [Header("Animation")]
-    [SerializeField] private Animator dialogueAnimator;        // 대화창 애니메이션
-    [SerializeField] private GameObject dialgoueDelayAni;      // ... 애니메이션
+    [SerializeField] private Animator dialogueAnimator;           // 대화창 열고 닫기 애니메이션
+    //[SerializeField] private GameObject dialogueDelayAni;         // ... 애니메이션 오브젝트
 
-    private TextMeshProUGUI[] choicesText;                     // 선택지 텍스트 캐싱
-    private Story currentStory;                                // 현재 Ink 스토리
+    private TextMeshProUGUI[] choicesText;                        // 선택지 버튼 텍스트
+    private Story currentStory;                                   // Ink 스토리
     private Coroutine displayLineCoroutine;
 
     private bool canContinueToNextLine = false;
     public bool dialogueIsPlaying { get; private set; } = false;
 
     private void Awake()
-    {   if (Instance == null) Instance = this;
+    {
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
     }
 
@@ -47,7 +38,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
 
-        // 선택지 버튼 텍스트 캐싱
+        // 선택지 텍스트 초기화
         choicesText = new TextMeshProUGUI[choices.Length];
         for (int i = 0; i < choices.Length; i++)
         {
@@ -56,7 +47,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Ink JSON 받아서 대화 시작
+    /// Ink JSON 파일 받아서 대화 모드 진입
     /// </summary>
     public void EnterDialogueMode(TextAsset inkJSON)
     {
@@ -68,7 +59,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 다음 줄로 진행 (or 종료)
+    /// 다음 대사로 넘어가기
     /// </summary>
     public void ContinueStory()
     {
@@ -88,49 +79,78 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 한 줄씩 출력 (타자 효과 제외, 바로 생성)
+    /// 대사 한 줄 출력 (NPC/플레이어/알림 구분, 타자 효과 포함)
     /// </summary>
     private IEnumerator DisplayLine(string line)
     {
         HideChoices();
-        
-        bool isNpcLine = true; // 추후 Ink tag나 대화 구조를 통해 판단할 수도 있음
 
+        // Ink 태그 분석
+        bool isNpcLine = false;
+        bool isPlayerLine = false;
+        bool isAlarm = false;
+
+        foreach (string tag in currentStory.currentTags)
+        {
+            if (tag == "npc") isNpcLine = true;
+            if (tag == "player") isPlayerLine = true;
+            if (tag.Contains("alarm")) isAlarm = true;
+        }
+
+        // 알림 효과 처리
+        if (isAlarm)
+        {
+            SMSManager.Instance.SaveMessage(line, false); // 알림 처리 (나중에 효과 추가 가능)
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // 플레이어 메시지: 바로 출력
+        if (isPlayerLine)
+        {
+            SMSManager.Instance.SaveMessage(line, true);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // NPC 메시지: 애니메이션 + 천천히 출력
         if (isNpcLine)
         {
-            int wordCount = line.Split(' ').Length;
-            bool isLong = wordCount > 25;
-            float delayTime = isLong ? 6f : 3f;
+            string[] lines = line.Split('\n');
 
-            if (SMSManager.Instance == null)
+            foreach (string singleLine in lines)
             {
-                Debug.Log("SMSManager Instance is null.");
-                yield break;
+                //dialogueDelayAni.SetActive(true);
+                yield return new WaitForSeconds(0.8f);
+                // dialogueDelayAni.SetActive(false);
+
+               // SMSManager.Instance.SaveMessage("", true);
+                yield return StartCoroutine(TypeText(singleLine));
+                yield return new WaitForSeconds(0.5f);
             }
 
-            // 긴 메시지에는 ... 효과 먼저 출력
-            if (isLong)
-            {
-                dialgoueDelayAni.SetActive(true);
-                yield return new WaitForSeconds(1.5f);         // ... 연출 잠깐 보여주기
-                dialgoueDelayAni.SetActive(false);
-
-
-                // 이후 실제 메시지 출력
-                SMSManager.Instance.SaveMessage(line, false);
-            }
-            else
-            {
-                SMSManager.Instance.SaveMessage(line, false);
-            }
-
-            yield return new WaitForSeconds(delayTime);
+            yield return new WaitForSeconds(0.5f);
         }
 
         DisplayChoices();
         canContinueToNextLine = true;
     }
 
+    /// <summary>
+    /// 타이핑 효과: 한 글자씩 출력
+    /// </summary>
+    private IEnumerator TypeText(string fullText)
+    {
+        string temp = "";
+
+        // 일단 NPC 메시지 생성
+        SMSManager.Instance.SaveMessage("", false);
+
+        foreach (char c in fullText)
+        {
+            temp += c;
+            SMSManager.Instance.UpdateLastNPCMessage(temp);
+            yield return new WaitForSeconds(0.03f); // 타자 효과 속도
+        }
+    }
 
     /// <summary>
     /// 플레이어 선택 반영
@@ -139,17 +159,11 @@ public class DialogueManager : MonoBehaviour
     {
         if (canContinueToNextLine)
         {
-            string selectedText = currentStory.currentChoices[choiceIndex].text;
-
-            // 선택 반영
             currentStory.ChooseChoiceIndex(choiceIndex);
             StartCoroutine(WaitAndContinue());
         }
     }
 
-    /// <summary>
-    /// 1프레임 후 Continue 호출
-    /// </summary>
     private IEnumerator WaitAndContinue()
     {
         yield return null;
@@ -186,9 +200,6 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(SelectFirstChoice());
     }
 
-    /// <summary>
-    /// 첫 번째 선택지 기본 포커싱
-    /// </summary>
     private IEnumerator SelectFirstChoice()
     {
         EventSystem.current.SetSelectedGameObject(null);
@@ -209,35 +220,12 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
     }
 
-
-    // wait 해제 함수
+    /// <summary>
+    /// WAIT 태그 해제
+    /// </summary>
     public void ContinueAfterWait()
     {
         DialogueStateManager.Instance.ClearState();
         ContinueStory();
     }
-
-    #region 메시지 생성
-    /*    /// <summary>
-        /// NPC 메시지 생성
-        /// </summary>
-        private void SpawnNPCMessage(string message)
-        {
-            //GameObject go = Instantiate(npcMessagePrefab, messageContainer);
-            //go.GetComponentInChildren<TextMeshProUGUI>().text = message;
-
-            SMSManager.Instance.SaveMessage(message, false);
-        }
-
-        /// <summary>
-        /// 플레이어 메시지 생성
-        /// </summary>
-        private void SpawnPlayerMessage(string message)
-        {
-            //GameObject go = Instantiate(playerMessagePrefab, messageContainer);
-            //go.GetComponentInChildren<TextMeshProUGUI>().text = message;
-
-            SMSManager.Instance.SaveMessage(message, true);
-        }*/
-    #endregion
 }
