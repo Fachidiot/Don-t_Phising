@@ -11,6 +11,11 @@ public class NestedHorizontalScrollRect : ScrollRect
     private ScrollRect m_ScrollRect;
     private bool m_isVerticalDrag;
 
+    public bool HasScrollRect()
+    {
+        return m_ScrollRect != null;
+    }
+
     public void SetScrollRect(ScrollRect scrollRect)
     {
         m_ScrollRect = scrollRect;

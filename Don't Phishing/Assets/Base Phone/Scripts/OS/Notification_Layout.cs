@@ -16,7 +16,8 @@ public class Notification_Layout : MonoBehaviour
 
     private void Start()
     {
-        m_NestedScrollRect.SetScrollRect(m_ScrollRect);
+        if (!m_NestedScrollRect.HasScrollRect())
+            m_NestedScrollRect.SetScrollRect(m_ScrollRect);
     }
 
     private void Update()

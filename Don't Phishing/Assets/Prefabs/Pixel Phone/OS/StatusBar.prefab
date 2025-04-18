@@ -155,7 +155,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2629b4c0e4e41324a9689619869d4e88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 12f5bfb4572cb624fb1175846ea95dd3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -627,8 +627,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 47a3e3bedcd919b499b59e2bb7e6f911, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -848,7 +848,7 @@ GameObject:
   - component: {fileID: 5907245603396408411}
   - component: {fileID: 5392957554324676849}
   - component: {fileID: 1563219991984143917}
-  - component: {fileID: 613306283867847253}
+  - component: {fileID: 7636899088118594201}
   m_Layer: 5
   m_Name: Internet
   m_TagString: Untagged
@@ -904,7 +904,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 27dd42ee092a673489fe8c76b71ef058, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2cf5ffab6430b794aae0188d188dde52, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &613306283867847253
+--- !u!114 &7636899088118594201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

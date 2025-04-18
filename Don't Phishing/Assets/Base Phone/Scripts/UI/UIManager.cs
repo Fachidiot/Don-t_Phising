@@ -38,7 +38,10 @@ public class UIManager : MonoBehaviour
                 m_Init = true;
             }
             m_UsePhone = !m_UsePhone;
-            m_Phone.SetActive(m_UsePhone);
+            if (m_UsePhone)
+                m_Phone.GetComponent<PhoneController>().Enable();
+            else
+                m_Phone.GetComponent<PhoneController>().Disable();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -47,7 +50,8 @@ public class UIManager : MonoBehaviour
                 m_OptionUI.SetActive(false);
             else
             {
-                m_Paused = !m_Paused;
+                if (m_Paused == m_PauseUI.activeSelf)
+                    m_Paused = !m_Paused;
                 m_PauseUI.SetActive(m_Paused);
             }
         }
