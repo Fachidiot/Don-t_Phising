@@ -91,7 +91,7 @@ public class DialogueManager : MonoBehaviour
                 SMSManager.Instance.SaveMessage("", false);
                 yield return StartCoroutine(TypeText(line));
                 yield return new WaitForSeconds(0.4f);
-            }
+            } //ddd
         }
 
         DisplayChoices();
