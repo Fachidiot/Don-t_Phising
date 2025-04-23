@@ -1624,8 +1624,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 675563978}
+  - component: {fileID: 675563979}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: DialogueStateManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1646,6 +1647,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &675563979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675563977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2971e3c44d3d4c4c8d5d412567091fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialoguePanel: {fileID: 761045410}
+  choices: []
+  dialogueAnimator: {fileID: 0}
+  isWaiting: 0
+  currentEnding: 
 --- !u!114 &686831488 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4273379128432203120, guid: 96d4e8c6d581c2943864c7a7c810d240, type: 3}
@@ -2021,6 +2039,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 741531995}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &761045410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6241730231241147379, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+  m_PrefabInstance: {fileID: 3396499080274569386}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &804748673
 GameObject:
   m_ObjectHideFlags: 0

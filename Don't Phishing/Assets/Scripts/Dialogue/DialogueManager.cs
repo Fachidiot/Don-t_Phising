@@ -80,7 +80,8 @@ public class DialogueManager : MonoBehaviour
             // PLAYER ¸Þ½ÃÁö
             if (currentStory.currentTags.Contains("player"))
             {
-                SMSManager.Instance.SaveMessage(line, true);
+                SMSManager.Instance.SaveMessage("", true);
+                yield return StartCoroutine(TypeText(line, true));
                 yield return new WaitForSeconds(0.5f);
                 continue;
             }
@@ -98,9 +99,10 @@ public class DialogueManager : MonoBehaviour
         canContinueToNextLine = true;
     }
 
-    private IEnumerator TypeText(string fullText)
+    private IEnumerator TypeText(string fullText, bool isPlayer = false)
     {
         string temp = "";
+
         foreach (char c in fullText)
         {
             temp += c;
