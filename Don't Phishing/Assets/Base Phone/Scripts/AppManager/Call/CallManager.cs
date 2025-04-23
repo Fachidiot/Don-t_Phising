@@ -47,6 +47,8 @@ public class CallManager : BaseAppManager
     private GameObject m_ContactParent;
     [SerializeField]
     private GameObject m_ContactPrefab;
+    [SerializeField]
+    private ScrollSnap m_Horizontal_Snap;
     [Header("Keypads")]
     [SerializeField]
     private TMP_Text m_InputNumber;
@@ -150,7 +152,7 @@ public class CallManager : BaseAppManager
     private void InstantiateContact(Contact contact)
     {
         GameObject go = Instantiate(m_ContactPrefab, m_ContactParent.transform);
-        go.GetComponent<Contact_Layout>().SetUp(contact);
+        go.GetComponent<Contact_Layout>().SetUp(contact, m_Horizontal_Snap);
     }
     #endregion
 
