@@ -15140,20 +15140,9 @@ PrefabInstance:
       propertyPath: m_TaskBar
       value: 
       objectReference: {fileID: 7107377704820983530}
-    - target: {fileID: 8464735927123124614, guid: f26a5c4a0466b6f46b5c0ada13ef1bb7, type: 3}
-      propertyPath: m_Texture
-      value: 
-      objectReference: {fileID: 8400000, guid: a4f29afefd2a6d248accc95c716e5e29, type: 2}
-    - target: {fileID: 8464735927123124614, guid: f26a5c4a0466b6f46b5c0ada13ef1bb7, type: 3}
-      propertyPath: m_BackgroundCaptureCamera
-      value: 
-      objectReference: {fileID: 7935221876386649025}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4694850541447168431, guid: f26a5c4a0466b6f46b5c0ada13ef1bb7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2535007680538558027}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f26a5c4a0466b6f46b5c0ada13ef1bb7, type: 3}
 --- !u!114 &1604783750243782227
@@ -19190,21 +19179,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!4 &2535007680538558027
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8632740476545359392}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1275, z: -1.294}
-  m_LocalScale: {x: 1785.7142, y: 1785.7142, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 159341881}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2538968199912462408
 GameObject:
   m_ObjectHideFlags: 0
@@ -24169,6 +24143,7 @@ MonoBehaviour:
   m_AppName: 
   m_ContactParent: {fileID: 3369486192348371329}
   m_ContactPrefab: {fileID: 364463310390392794, guid: ac17a16bf828c9441ae9592376dd844c, type: 3}
+  m_Horizontal_Snap: {fileID: 0}
   m_InputNumber: {fileID: 1469561444587915962}
   m_TabManager: {fileID: 8796515393759629325}
   m_NavigationBar: {fileID: 248501850529924790}
@@ -27113,7 +27088,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8871134458767162621}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41589,57 +41564,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!20 &7935221876386649025
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8632740476545359392}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 32
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: a4f29afefd2a6d248accc95c716e5e29, type: 2}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
 --- !u!222 &7935266079996499537
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -45430,23 +45354,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4785172079946842039}
   m_CullTransparentMesh: 1
---- !u!1 &8632740476545359392
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2535007680538558027}
-  - component: {fileID: 7935221876386649025}
-  m_Layer: 0
-  m_Name: Background Capture Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &8644872113963600902
 GameObject:
   m_ObjectHideFlags: 0

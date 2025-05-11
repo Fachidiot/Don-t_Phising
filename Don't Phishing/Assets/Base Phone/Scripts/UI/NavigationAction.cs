@@ -32,6 +32,7 @@ public class NavigationAction : MonoBehaviour
 
     public void ButtonUp()
     {
+        Debug.Log("Button up");
         m_IsClicked = false;
         if (m_ClickTime >= m_MinClickTime)
         {
