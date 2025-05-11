@@ -25,7 +25,7 @@ public class SMS_Layout : MonoBehaviour
     {
         m_Message = new List<Message>();
         m_Button.onClick.AddListener(() => SMSManager.Instance.LoadMessage(m_Message));
-        m_Button.onClick.AddListener(() => DialogueManager.Instance.EnterDialogueMode(m_InkFile));
+        //m_Button.onClick.AddListener(() => DialogueManager.Instance.EnterDialogueMode(m_InkFile));
     }
 
     public void SetInkFile(TextAsset inkFile)
