@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        
+        m_Phone.SetActive(false);
     }
 
     void Update()
