@@ -122,9 +122,9 @@ public class CallManager : BaseAppManager
 
     public void AddContact()
     {
-        string number = m_InputNumber.text;
-        string name = m_SearchBars[0].GetText();
-        string memo = m_SearchBars[1].GetText();
+        string number = m_SearchBars[0].GetText();
+        string name = m_SearchBars[1].GetText();
+        string memo = m_SearchBars[2].GetText();
         Contact newCont = new Contact(name, number, memo);
 
         m_ContactDB.contacts.Add(newCont);
