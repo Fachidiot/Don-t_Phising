@@ -8,7 +8,7 @@ enum Calc
     Minus,
     Multi,
     Subdiv,
-    Percent
+    Modular
 }
 
 public class CalculateManager : MonoBehaviour
@@ -22,7 +22,9 @@ public class CalculateManager : MonoBehaviour
     private double m_result;
     [SerializeField]
     private string m_input;
-    private Calc m_calc = Calc.None;
+    private double m_temp;
+    private Calc m_prevCalc = Calc.None;
+    private Calc m_savedCalc = Calc.None;
 
     public void Start()
     {
@@ -34,12 +36,15 @@ public class CalculateManager : MonoBehaviour
         if (m_input != string.Empty)
         {
             if (m_result == 0)
-                m_result = CalcLastNum();
+                m_result = FindLastNum();
             else
-                m_result *= CalcLastNum();
+            {
+                if (m_prevCalc != Calc.None)
+                    UpdateResult(Calc.Multi); 
+            }
         }
         m_tmpInput.text += "x";
-        m_calc = Calc.Multi;
+        m_prevCalc = Calc.Multi;
     }
 
     public void Subdivide()
@@ -47,12 +52,15 @@ public class CalculateManager : MonoBehaviour
         if (m_input != string.Empty)
         {
             if (m_result == 0)
-                m_result = CalcLastNum();
+                m_result = FindLastNum();
             else
-                m_result /= CalcLastNum();
+            {
+                if (m_prevCalc != Calc.None)
+                    UpdateResult(Calc.Subdiv);
+            }
         }
         m_tmpInput.text += "/";
-        m_calc = Calc.Subdiv;
+        m_prevCalc = Calc.Subdiv;
     }
 
     public void Plus()
@@ -60,12 +68,15 @@ public class CalculateManager : MonoBehaviour
         if (m_input != string.Empty)
         {
             if (m_result == 0)
-                m_result = CalcLastNum();
+                m_result = FindLastNum();
             else
-                m_result += CalcLastNum();
+            {
+                if (m_prevCalc != Calc.None)
+                    UpdateResult(Calc.Plus);
+            }
         }
         m_tmpInput.text += "+";
-        m_calc = Calc.Plus;
+        m_prevCalc = Calc.Plus;
     }
 
     public void Minus()
@@ -73,47 +84,36 @@ public class CalculateManager : MonoBehaviour
         if (m_input != string.Empty)
         {
             if (m_result == 0)
-                m_result = CalcLastNum();
+                m_result = FindLastNum();
             else
-                m_result -= CalcLastNum();
+            {
+                if (m_prevCalc != Calc.None)
+                    UpdateResult(Calc.Minus);
+            }
         }
         m_tmpInput.text += "-";
-        m_calc = Calc.Minus;
+        m_prevCalc = Calc.Minus;
     }
 
-    public void Percent()
+    public void Modular()
     {
         if (m_input != string.Empty)
         {
             if (m_result == 0)
-                m_result = CalcLastNum();
+                m_result = FindLastNum();
             else
-                m_result %= CalcLastNum();
+            {
+                if (m_prevCalc != Calc.None)
+                    UpdateResult(Calc.Modular);
+            }
         }
         m_tmpInput.text += "%";
-        m_calc = Calc.Percent;
+        m_prevCalc = Calc.Modular;
     }
 
     public void Result()
     {
-        switch (m_calc)
-        {
-            case Calc.Plus:
-                m_result += CalcLastNum();
-                break;
-            case Calc.Minus:
-                m_result -= CalcLastNum();
-                break;
-            case Calc.Multi:
-                m_result *= CalcLastNum();
-                break;
-            case Calc.Subdiv:
-                m_result /= CalcLastNum();
-                break;
-            case Calc.Percent:
-                m_result %= CalcLastNum();
-                break;
-        }
+        UpdateResult(Calc.None);
         m_tmpHistory.text = m_tmpInput.text;
         m_tmpInput.text = m_result.ToString();
     }
@@ -143,7 +143,7 @@ public class CalculateManager : MonoBehaviour
         m_input += number;
     }
 
-    private double CalcLastNum()
+    private double FindLastNum()
     {
         double last = 0;
         int length = m_input.Length;
@@ -154,5 +154,50 @@ public class CalculateManager : MonoBehaviour
         m_input = string.Empty;
 
         return last;
+    }
+
+    private void UpdateResult(Calc calc)
+    {
+        if (m_savedCalc != Calc.None)
+        {
+            m_temp = Calculate(m_temp, FindLastNum(), m_prevCalc);
+            m_result = Calculate(m_temp, m_result, m_savedCalc);
+            m_savedCalc = Calc.None;
+            //m_temp = 0;
+            return;
+        }
+
+        // 이전의 연산자와 현재 연산자를 비교
+        if (m_prevCalc >= calc)
+        {   // 전 연산자가 우선순위가 높을 때
+            m_result = Calculate(m_result, FindLastNum(), m_prevCalc);
+        }
+        else
+        {   // 현재 연산자가 우선순위가 높을 때
+            m_temp = FindLastNum();
+
+            if (calc == Calc.None)
+                m_result = Calculate(m_result, m_temp, m_prevCalc);
+            else
+                m_savedCalc = m_prevCalc;
+        }
+    }
+
+    private double Calculate(double n1, double n2, Calc calc)
+    {
+        switch (calc)
+        {
+            case Calc.Plus:
+                return n1 + n2;
+            case Calc.Minus:
+                return n1 - n2;
+            case Calc.Multi:
+                return n1 * n2;
+            case Calc.Subdiv:
+                return n1 / n2;
+            case Calc.Modular:
+                return n1 % n2;
+        }
+        return 0;
     }
 }
