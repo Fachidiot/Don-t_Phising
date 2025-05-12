@@ -1,15 +1,9 @@
+using Ink.Parsed;
+using System;
+using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-
-enum Calc
-{
-    None,
-    Plus,
-    Minus,
-    Multi,
-    Subdiv,
-    Modular
-}
 
 public class CalculateManager : MonoBehaviour
 {
@@ -18,104 +12,119 @@ public class CalculateManager : MonoBehaviour
     [SerializeField]
     private TMP_Text m_tmpHistory;
 
+    // -------n e w--------
+    private List<OPR> m_oprs;
+    private List<double> m_nums;
     [SerializeField]
-    private double m_result;
-    [SerializeField]
-    private string m_input;
-    private double m_temp;
-    private Calc m_prevCalc = Calc.None;
-    private Calc m_savedCalc = Calc.None;
+    private string m_last;
 
     public void Start()
     {
+        m_nums = new List<double>();
+        m_oprs = new List<OPR>();
         Clear();
     }
 
-    public void Multiply()
+    public void Input(string num)
     {
-        if (m_input != string.Empty)
+        m_last += num;
+        if (m_tmpInput.text == "0")
+            m_tmpInput.text = num;
+        else
         {
-            if (m_result == 0)
-                m_result = FindLastNum();
-            else
-            {
-                if (m_prevCalc != Calc.None)
-                    UpdateResult(Calc.Multi); 
-            }
+            m_tmpInput.text += num;
         }
-        m_tmpInput.text += "x";
-        m_prevCalc = Calc.Multi;
     }
 
-    public void Subdivide()
+    [VisibleEnum(typeof(OPR))]
+    public void EndInput(int _opr)
     {
-        if (m_input != string.Empty)
+        if (m_last == string.Empty)
         {
-            if (m_result == 0)
-                m_result = FindLastNum();
-            else
+            if (m_oprs.Count > 0)
             {
-                if (m_prevCalc != Calc.None)
-                    UpdateResult(Calc.Subdiv);
+                if (m_oprs[m_oprs.Count - 1] == OPR.MODULAR && (OPR)_opr == OPR.MULTIPLY)
+                {   // %x 일때만.
+                    Debug.Log("%x");
+                    m_tmpInput.text += "x";
+                    int lastindex = m_oprs.Count - 1;
+                    m_nums[lastindex] = m_nums[lastindex] * 0.01;
+                    m_oprs[lastindex] = OPR.MULTIPLY;
+                    return;
+                }
             }
+            return;
         }
-        m_tmpInput.text += "/";
-        m_prevCalc = Calc.Subdiv;
+        else if (m_oprs.Count == 0)
+        {
+            m_nums.Add(double.Parse(m_tmpInput.text));
+        }
+        else
+            m_nums.Add(double.Parse(m_last));
+        m_last = string.Empty;
+
+        OPR opr = (OPR)_opr;
+        m_tmpInput.text += (
+            opr == OPR.MODULAR ? "%" :
+            opr == OPR.MULTIPLY ? "x" :
+            opr == OPR.DIVIDE ? "/" :
+            opr == OPR.PLUS ? "+" : "-");
+        m_oprs.Add(opr);
     }
 
-    public void Plus()
+    public void Equal()
     {
-        if (m_input != string.Empty)
+        if (m_last != string.Empty)
         {
-            if (m_result == 0)
-                m_result = FindLastNum();
-            else
+            m_nums.Add(double.Parse(m_last));
+            m_last = string.Empty;
+        }
+        else
+        {
+            int lastindex = m_oprs.Count - 1;
+            if (m_oprs[lastindex] == OPR.MODULAR)
             {
-                if (m_prevCalc != Calc.None)
-                    UpdateResult(Calc.Plus);
+                m_oprs.RemoveAt(lastindex);
+                if (lastindex != 0)
+                {
+                    lastindex -= 1;
+                }
+                m_nums[lastindex] = m_nums[lastindex] * 0.01;
             }
         }
-        m_tmpInput.text += "+";
-        m_prevCalc = Calc.Plus;
-    }
+        double result = 0;
 
-    public void Minus()
-    {
-        if (m_input != string.Empty)
+        if (m_oprs.Count == 0)
+            result = m_nums[0];
+        while (m_oprs.Count > 0)
         {
-            if (m_result == 0)
-                m_result = FindLastNum();
-            else
-            {
-                if (m_prevCalc != Calc.None)
-                    UpdateResult(Calc.Minus);
-            }
-        }
-        m_tmpInput.text += "-";
-        m_prevCalc = Calc.Minus;
-    }
+            int index = 0;
+            if (m_oprs.Contains(OPR.MULTIPLY))
+                index = m_oprs.IndexOf(OPR.MULTIPLY);
+            else if (m_oprs.Contains(OPR.DIVIDE))
+                index = m_oprs.IndexOf(OPR.DIVIDE);
+            else if (m_oprs.Contains(OPR.MODULAR))
+                index = m_oprs.IndexOf(OPR.MODULAR);
 
-    public void Modular()
-    {
-        if (m_input != string.Empty)
-        {
-            if (m_result == 0)
-                m_result = FindLastNum();
-            else
-            {
-                if (m_prevCalc != Calc.None)
-                    UpdateResult(Calc.Modular);
-            }
-        }
-        m_tmpInput.text += "%";
-        m_prevCalc = Calc.Modular;
-    }
+            result = Calculate(m_nums[index], m_nums[index + 1], m_oprs[index]);
 
-    public void Result()
-    {
-        UpdateResult(Calc.None);
+            m_nums.RemoveAt(index);
+            m_nums[index] = result;
+            m_oprs.RemoveAt(index);
+        }
+
         m_tmpHistory.text = m_tmpInput.text;
-        m_tmpInput.text = m_result.ToString();
+        m_tmpInput.text = string.Format("{0:#,#0.##########}", result).ToString();
+        Clear();
+        m_last = m_tmpInput.text;
+    }
+
+    public void Reverse()
+    {
+        if (m_tmpInput.text[0] != '-')
+            m_tmpInput.text.Insert(0, "-");
+        else
+            m_tmpInput.text.Remove(0);
     }
 
     public void AllClear()
@@ -127,77 +136,36 @@ public class CalculateManager : MonoBehaviour
 
     private void Clear()
     {
-        m_result = 0;
-        m_input = string.Empty;
+        m_nums.Clear();
+        m_oprs.Clear();
+        m_last = string.Empty;
     }
 
-    public void InputNumber(float number)
+    private double Calculate(double n1, double n2, OPR opr)
     {
-        if (m_tmpInput.text == "0")
+        switch (opr)
         {
-            m_tmpInput.text = number.ToString();
-        }
-        else
-            m_tmpInput.text += number;
-
-        m_input += number;
-    }
-
-    private double FindLastNum()
-    {
-        double last = 0;
-        int length = m_input.Length;
-        for (int i = 0; i < length; i++)
-        {
-            last += double.Parse(m_input[i].ToString()) * (Mathf.Pow(10, length - (i + 1)));
-        }
-        m_input = string.Empty;
-
-        return last;
-    }
-
-    private void UpdateResult(Calc calc)
-    {
-        if (m_savedCalc != Calc.None)
-        {
-            m_temp = Calculate(m_temp, FindLastNum(), m_prevCalc);
-            m_result = Calculate(m_temp, m_result, m_savedCalc);
-            m_savedCalc = Calc.None;
-            //m_temp = 0;
-            return;
-        }
-
-        // 이전의 연산자와 현재 연산자를 비교
-        if (m_prevCalc >= calc)
-        {   // 전 연산자가 우선순위가 높을 때
-            m_result = Calculate(m_result, FindLastNum(), m_prevCalc);
-        }
-        else
-        {   // 현재 연산자가 우선순위가 높을 때
-            m_temp = FindLastNum();
-
-            if (calc == Calc.None)
-                m_result = Calculate(m_result, m_temp, m_prevCalc);
-            else
-                m_savedCalc = m_prevCalc;
-        }
-    }
-
-    private double Calculate(double n1, double n2, Calc calc)
-    {
-        switch (calc)
-        {
-            case Calc.Plus:
+            case OPR.PLUS:
                 return n1 + n2;
-            case Calc.Minus:
+            case OPR.MINUS:
                 return n1 - n2;
-            case Calc.Multi:
+            case OPR.MULTIPLY:
                 return n1 * n2;
-            case Calc.Subdiv:
+            case OPR.DIVIDE:
                 return n1 / n2;
-            case Calc.Modular:
+            case OPR.MODULAR:
                 return n1 % n2;
         }
         return 0;
     }
+}
+
+public enum OPR
+{
+    NONE,
+    PLUS,
+    MINUS,
+    MULTIPLY,
+    DIVIDE,
+    MODULAR
 }
