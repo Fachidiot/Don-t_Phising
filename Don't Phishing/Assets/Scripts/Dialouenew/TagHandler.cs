@@ -52,7 +52,7 @@ public class TagHandler
                     if (!float.TryParse(tagValue, out float waitTime) || waitTime <= 0)
                     {
                         Debug.LogWarning($"잘못된 WAIT 값: {tagValue}");
-                        waitTime = 1f;
+                        waitTime = 3f;
                     }
                     coroutineRunner.StartCoroutine(WaitCoroutine(waitTime, onComplete));
                     return;

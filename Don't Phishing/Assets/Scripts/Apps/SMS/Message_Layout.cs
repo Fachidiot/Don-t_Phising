@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Message_Layout : MonoBehaviour
-{ 
+{   
     [SerializeField]
     private TMP_Text m_TMPMessage;
     [SerializeField]

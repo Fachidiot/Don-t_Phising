@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06863b70fcd6ac64ea509cd21046ab25, type: 3}
+  m_Name: teststory - ch01_event
+  m_EditorClassIdentifier: 
+  eventName: testcsv
+  lines:
+  - id: 1
+    speaker: "\uC544\uC2DC\uB85C"
+    text: "\uC548\uB155\uD558\uC138\uC694! \uBC18\uAC11\uC2B5\uB2C8\uB2E4."
+    choices: 
+    nextId: 2
+    tag: WAIT:1
+  - id: 2
+    speaker: "\uBBF8\uC0AC\uD0A4"
+    text: "\uC774\uB984\uC774 \uC5B4\uB5BB\uAC8C \uB418\uC2DC\uB098\uC694?"
+    choices: "\uC544\uC2DC\uB85C\uC785\uB2C8\uB2E4:3,\uB9D0\uD558\uAE30 \uC2EB\uC5B4\uC694:4"
+    nextId: 0
+    tag: 
+  - id: 3
+    speaker: "\uC544\uC2DC\uB85C"
+    text: "\uC800\uB294 \uC544\uC2DC\uB85C\uC608\uC694."
+    choices: 
+    nextId: 5
+    tag: FLAG:Introduce
+  - id: 4
+    speaker: "\uC544\uC2DC\uB85C"
+    text: "\uC9C0\uAE08\uC740 \uB9D0\uD560 \uC218 \uC5C6\uC5B4\uC694."
+    choices: 
+    nextId: 5
+    tag: FLAG:Silent
+  - id: 4
+    speaker: "\uBBF8\uC0AC\uD0A4"
+    text: "\uC559\uAE30\uBAA8\uB760?"
+    choices: 
+    nextId: 4
+    tag: 
+  - id: 5
+    speaker: "\uBBF8\uC0AC\uD0A4"
+    text: "\uB9CC\uB098\uC11C \uBC18\uAC00\uC6E0\uC5B4\uC694."
+    choices: 
+    nextId: 0
+    tag: ANIM:Wave

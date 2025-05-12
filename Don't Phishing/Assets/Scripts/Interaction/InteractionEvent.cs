@@ -12,6 +12,6 @@ public class InteractionEvent : MonoBehaviour
     /// </summary>
     public void TriggerEvent()
     {
-        DialogueManager.Instance.StartDialogue(dialogueEvent);
+        DialogueManager.Instance.StartDialogue(dialogueEvent);  
     }
 }

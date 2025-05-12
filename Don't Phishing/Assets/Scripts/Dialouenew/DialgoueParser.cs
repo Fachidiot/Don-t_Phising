@@ -1,4 +1,3 @@
-// DialogueParser.cs (Editor 전용 CSV → SO 변환기)
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,31 +17,89 @@ public class DialogueParser : MonoBehaviour
         if (string.IsNullOrEmpty(path)) return;
 
         string[] data = File.ReadAllLines(path);
+        if (data.Length <= 1)
+        {
+            Debug.LogError("CSV 파일이 비어 있거나 헤더만 있습니다.");
+            return;
+        }
+
         DialogueEvent dialogueEvent = ScriptableObject.CreateInstance<DialogueEvent>();
         dialogueEvent.lines = new List<Dialogue>();
 
-        for (int i = 1; i < data.Length; i++)
+        for (int i = 1; i < data.Length; i++) // 첫 줄은 헤더
         {
-            var row = data[i].Split(',');
+            if (string.IsNullOrWhiteSpace(data[i])) continue;
+
+            var row = SplitCSVLine(data[i]);
+
+            if (row.Length < 6)
+            {
+                Debug.LogWarning($" 줄 무시됨 (열 부족): {data[i]}");
+                continue;
+            }
+
+            if (!int.TryParse(row[0].Trim(), out int id))
+            {
+                Debug.LogWarning($"잘못된 ID: '{row[0]}' → 건너뜀");
+                continue;
+            }
+
+            int nextId = int.TryParse(row[4].Trim(), out int parsedNextId) ? parsedNextId : 0;
 
             Dialogue line = new Dialogue
             {
-                id = int.Parse(row[0]),
-                speaker = row[1],
-                text = row[2],
-                choices = row[3],
-                nextId = int.TryParse(row[4], out var n) ? n : 0,
-                tag = row[5]
+                id = id,
+                speaker = row[1].Trim(),
+                text = row[2].Trim(),
+                choices = row[3].Trim(),
+                nextId = nextId,
+                tag = row[5].Trim()
             };
 
             dialogueEvent.lines.Add(line);
         }
 
-        string assetPath = "Assets/Resources/DialogueEvents/NewEvent.asset";
+        string fileName = Path.GetFileNameWithoutExtension(path);
+        string assetPath = $"Assets/Resources/DialogueEvents/{fileName}_event.asset";
+
+        Directory.CreateDirectory("Assets/Resources/DialogueEvents");
+
         AssetDatabase.CreateAsset(dialogueEvent, assetPath);
         AssetDatabase.SaveAssets();
 
-        Debug.Log("DialogueEvent 생성 완료: " + assetPath);
+        Debug.Log($" DialogueEvent 생성 완료: {assetPath}");
+        EditorUtility.FocusProjectWindow();
+        Selection.activeObject = dialogueEvent;
+    }
+
+    /// <summary>
+    /// 콤마 포함 문자열을 안전하게 파싱하는 유틸리티 (ex: "선택1:2,선택2:3")
+    /// </summary>
+    private static string[] SplitCSVLine(string line)
+    {
+        List<string> result = new();
+        bool inQuotes = false;
+        string current = "";
+
+        foreach (char c in line)
+        {
+            if (c == '"')
+            {
+                inQuotes = !inQuotes;
+            }
+            else if (c == ',' && !inQuotes)
+            {
+                result.Add(current);
+                current = "";
+            }
+            else
+            {
+                current += c;
+            }
+        }
+
+        result.Add(current);
+        return result.ToArray();
     }
 }
 #endif
