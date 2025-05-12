@@ -9,9 +9,9 @@ using UnityEngine.UI;
 public class CameraManager : BaseAppManager
 {
     [SerializeField]
-    private GameObject m_Camera;
+    private GameObject m_CameraScreen;
     [SerializeField]
-    private GameObject m_Photo;
+    private GameObject m_PhotoScreen;
     [SerializeField]
     private RenderTexture m_Texture;
     [SerializeField]
@@ -22,6 +22,8 @@ public class CameraManager : BaseAppManager
     private TMP_Text m_Title;
     [SerializeField]
     private ScrollSnap m_Snap;
+    [SerializeField]
+    private GameObject m_Camera;
 
     private List<GameObject> m_Photos;
     private List<string> m_Titles;
@@ -29,8 +31,9 @@ public class CameraManager : BaseAppManager
 
     private void Start()
     {
+        m_CameraScreen.SetActive(true);
         m_Camera.SetActive(true);
-        m_Photo.SetActive(false);
+        m_PhotoScreen.SetActive(false);
 
         m_Photos = new List<GameObject>();
         m_Titles = new List<string>();
@@ -38,7 +41,7 @@ public class CameraManager : BaseAppManager
 
     private void Update()
     {
-        if (m_Photo.activeSelf)
+        if (m_PhotoScreen.activeSelf)
         {
             if (m_CurIndex != m_Snap.GetContentPosition())
             {
@@ -143,5 +146,10 @@ public class CameraManager : BaseAppManager
     public override void ResetApp()
     {
         return;
+    }
+
+    private void OnDisable()
+    {
+        m_Camera.SetActive(false);
     }
 }
