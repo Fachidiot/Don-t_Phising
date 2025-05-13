@@ -1,51 +1,59 @@
-using Ink.Parsed;
-using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class CalculateManager : MonoBehaviour
+public class CalculateManager : BaseAppManager
 {
-    [SerializeField]
+    [SerializeField]    // 입력값 Text
     private TMP_Text m_tmpInput;
-    [SerializeField]
+    [SerializeField]    // 기록값 Text
     private TMP_Text m_tmpHistory;
 
-    // -------n e w--------
-    private List<OPR> m_oprs;
-    private List<double> m_nums;
-    [SerializeField]
-    private string m_last;
+    private List<OPR> m_oprs;   // 연산자 리스트
+    private List<double> m_nums;// 피연산자 리스트
+    private string m_last;      // 피연산자 입력
 
-    public void Start()
+    private void Start()
     {
         m_nums = new List<double>();
         m_oprs = new List<OPR>();
         Clear();
     }
 
+    /// <summary>
+    /// TODO: 지우기 기능 만들기.
+    /// 1. m_last의 value확인 (Empty or not)
+    /// 2. 비어있지 않다면 last값 지우기
+    /// 3. else 비어져 있다면 m_oprs 마지막값 지우기 + m_last에 m_nums의 마지막값 할당.
+    /// 4. 반복하다가 m_nums랑 m_oprs가 모두 비워지면 return;
+    /// </summary>
+    #region Button Funcs
+    // 수 입력 함수
     public void Input(string num)
     {
         m_last += num;
+
+        // Update TMP_text
         if (m_tmpInput.text == "0")
             m_tmpInput.text = num;
         else
         {
-            m_tmpInput.text += num;
+            m_last = FormattingNumber(m_last);
+            m_tmpInput.text = FormattingNumbers();
+            m_tmpInput.text += m_last;
         }
     }
 
+    // 연산자 입력 함수 -> 수 입력이 끝남.
     [VisibleEnum(typeof(OPR))]
     public void EndInput(int _opr)
     {
         if (m_last == string.Empty)
-        {
+        {   // 수가 입력이 안되어 있을 때
             if (m_oprs.Count > 0)
             {
                 if (m_oprs[m_oprs.Count - 1] == OPR.MODULAR && (OPR)_opr == OPR.MULTIPLY)
-                {   // %x 일때만.
-                    Debug.Log("%x");
+                {   // 연산자가 %x 일 때
                     m_tmpInput.text += "x";
                     int lastindex = m_oprs.Count - 1;
                     m_nums[lastindex] = m_nums[lastindex] * 0.01;
@@ -55,23 +63,19 @@ public class CalculateManager : MonoBehaviour
             }
             return;
         }
-        else if (m_oprs.Count == 0)
-        {
+        else if (m_oprs.Count == 0 && m_tmpInput.text != "0")
+        {   // 
             m_nums.Add(double.Parse(m_tmpInput.text));
         }
         else
             m_nums.Add(double.Parse(m_last));
         m_last = string.Empty;
 
-        OPR opr = (OPR)_opr;
-        m_tmpInput.text += (
-            opr == OPR.MODULAR ? "%" :
-            opr == OPR.MULTIPLY ? "x" :
-            opr == OPR.DIVIDE ? "/" :
-            opr == OPR.PLUS ? "+" : "-");
-        m_oprs.Add(opr);
+        m_tmpInput.text += OPRToString((OPR)_opr);
+        m_oprs.Add((OPR)_opr);
     }
 
+    // 계산 결과 실행 함수.
     public void Equal()
     {
         if (m_last != string.Empty)
@@ -114,11 +118,12 @@ public class CalculateManager : MonoBehaviour
         }
 
         m_tmpHistory.text = m_tmpInput.text;
-        m_tmpInput.text = string.Format("{0:#,#0.##########}", result).ToString();
+        m_tmpInput.text = FormattingNumber(result.ToString());
         Clear();
         m_last = m_tmpInput.text;
     }
 
+    // 음수 양수 전환 함수
     public void Reverse()
     {
         if (m_tmpInput.text[0] != '-')
@@ -127,20 +132,23 @@ public class CalculateManager : MonoBehaviour
             m_tmpInput.text.Remove(0);
     }
 
+    // AC함수
     public void AllClear()
     {
         m_tmpInput.text = "0";
         m_tmpHistory.text = "";
         Clear();
     }
-
+    #endregion
+    #region Local Funcs
+    // 초기값으로 Clear함수
     private void Clear()
     {
         m_nums.Clear();
         m_oprs.Clear();
         m_last = string.Empty;
     }
-
+    // 연산자 함수
     private double Calculate(double n1, double n2, OPR opr)
     {
         switch (opr)
@@ -157,6 +165,44 @@ public class CalculateManager : MonoBehaviour
                 return n1 % n2;
         }
         return 0;
+    }
+    // 연산자 -> String
+    private string OPRToString(OPR opr)
+    {
+        return (opr == OPR.MODULAR ? "%" : opr == OPR.MULTIPLY ? "x" : opr == OPR.DIVIDE ? "/" : opr == OPR.PLUS ? "+" : "-");
+    }
+    // 000,000.000 포멧 변환 함수
+    private string FormattingNumber(string num)
+    {
+        if (num.LastIndexOf('.') == num.Length - 1)
+            return num;
+        else
+            return string.Format("{0:#,#0.##########}", double.Parse(num)).ToString();
+    }
+    // 000,000.000 + 연산자 포멧 함#
+    private string FormattingNumbers()
+    {
+        string format = "";
+        for (int i = 0; i < m_nums.Count; i++)
+        {
+            format += FormattingNumber(m_nums[i].ToString());
+            if (m_oprs.Count > i)
+            {
+                format += OPRToString(m_oprs[i]);
+            }
+        }
+        return format;
+    }
+    #endregion
+
+    public override void SetText()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void ResetApp()
+    {
+        AllClear();
     }
 }
 
