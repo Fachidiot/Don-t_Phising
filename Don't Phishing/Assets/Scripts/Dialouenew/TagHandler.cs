@@ -3,27 +3,23 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 
-// 태그를 파싱하고 처리 (WAIT, FLAG, ANIM 등)
+/// <summary>
+/// 태그를 파싱하고 처리하는 유틸리티 클래스
+/// WAIT, FLAG, CHECK_FLAG, ANIM 등을 처리한다
+/// </summary>
 public class TagHandler
 {
-    // 플래그 상태 저장
     private readonly Dictionary<string, bool> flags;
-
-    // 애니메이터 참조
-    private readonly Animator animator;   // <- 대기 ... 애니메이션 같은 거 
-
-    // 코루틴 실행용
+    private readonly Animator animator;
     private readonly CoroutineRunner coroutineRunner;
 
-    // 생성자: Animator와 CoroutineRunner 초기화
     public TagHandler(Animator animator = null, CoroutineRunner coroutineRunner = null)
     {
-        flags = new Dictionary<string, bool>();
+        this.flags = new Dictionary<string, bool>();
         this.animator = animator;
         this.coroutineRunner = coroutineRunner ?? CoroutineRunner.Instance;
     }
 
-    // 태그 문자열 파싱 및 처리, 완료 시 콜백 호출
     public void ProcessTags(string tagString, Action onComplete)
     {
         if (string.IsNullOrEmpty(tagString))
@@ -39,7 +35,7 @@ public class TagHandler
             var parts = tag.Trim().Split(':');
             if (parts.Length == 0 || string.IsNullOrEmpty(parts[0]))
             {
-                Debug.LogWarning($"잘못된 태그: {tag}");
+                Debug.LogWarning($"[TagHandler] 잘못된 태그: {tag}");
                 continue;
             }
 
@@ -51,7 +47,7 @@ public class TagHandler
                 case "WAIT":
                     if (!float.TryParse(tagValue, out float waitTime) || waitTime <= 0)
                     {
-                        Debug.LogWarning($"잘못된 WAIT 값: {tagValue}");
+                        Debug.LogWarning($"[TagHandler] 잘못된 WAIT 값: {tagValue}, 기본값 사용 (3초)");
                         waitTime = 3f;
                     }
                     coroutineRunner.StartCoroutine(WaitCoroutine(waitTime, onComplete));
@@ -61,13 +57,13 @@ public class TagHandler
                     if (!string.IsNullOrEmpty(tagValue))
                         SetFlag(tagValue, true);
                     else
-                        Debug.LogWarning("FLAG 값 누락");
+                        Debug.LogWarning("[TagHandler] FLAG 값 누락");
                     break;
 
                 case "CHECK_FLAG":
                     if (!string.IsNullOrEmpty(tagValue) && !CheckFlag(tagValue))
                     {
-                        Debug.Log($"CHECK_FLAG 실패: {tagValue}");
+                        Debug.Log($"[TagHandler] CHECK_FLAG 실패: {tagValue}");
                         onComplete?.Invoke();
                         return;
                     }
@@ -77,11 +73,11 @@ public class TagHandler
                     if (animator != null && !string.IsNullOrEmpty(tagValue))
                         animator.SetTrigger(tagValue);
                     else
-                        Debug.LogWarning($"ANIM 실패: Animator 또는 값 없음 ({tagValue})");
+                        Debug.LogWarning($"[TagHandler] ANIM 실패: Animator 또는 값 없음 ({tagValue})");
                     break;
 
                 default:
-                    Debug.LogWarning($"지원하지 않는 태그: {tagType}");
+                    Debug.LogWarning($"[TagHandler] 지원하지 않는 태그: {tagType}");
                     break;
             }
         }
@@ -89,33 +85,31 @@ public class TagHandler
         onComplete?.Invoke();
     }
 
-    // 대기 시간 후 콜백 호출
     private IEnumerator WaitCoroutine(float seconds, Action onComplete)
     {
         yield return new WaitForSeconds(seconds);
         onComplete?.Invoke();
     }
 
-    // 플래그 설정
     private void SetFlag(string flagName, bool value)
     {
         flags[flagName] = value;
-        Debug.Log($"플래그 설정: {flagName} = {value}");
+        Debug.Log($"[TagHandler] 플래그 설정: {flagName} = {value}");
     }
 
-    // 플래그 상태 확인
     private bool CheckFlag(string flagName)
     {
         return flags.TryGetValue(flagName, out bool value) && value;
     }
 }
 
-// 코루틴 실행용 싱글톤
+/// <summary>
+/// 코루틴 실행용 싱글톤 (변경 없음)
+/// </summary>
 public class CoroutineRunner : MonoBehaviour
 {
     private static CoroutineRunner instance;
 
-    // 싱글톤 인스턴스, 없으면 생성
     public static CoroutineRunner Instance
     {
         get
@@ -123,7 +117,7 @@ public class CoroutineRunner : MonoBehaviour
             if (instance == null)
             {
                 instance = new GameObject("CoroutineRunner").AddComponent<CoroutineRunner>();
-                DontDestroyOnLoad(instance.gameObject);
+                UnityEngine.Object.DontDestroyOnLoad(instance.gameObject);
             }
             return instance;
         }

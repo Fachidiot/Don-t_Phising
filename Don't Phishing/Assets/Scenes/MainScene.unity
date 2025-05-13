@@ -914,6 +914,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343178861}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &361994132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8231079892919898177, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+  m_PrefabInstance: {fileID: 3396499080274569386}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &382476259
 GameObject:
   m_ObjectHideFlags: 0
@@ -925,7 +930,7 @@ GameObject:
   - component: {fileID: 382476260}
   - component: {fileID: 382476261}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: DialougeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -955,10 +960,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 382476259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cad88610931ff94681fd5eb704d9487, type: 3}
+  m_Script: {fileID: 11500000, guid: 82cba949c45b2dc4580d28bfbf3ab536, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueEvent: {fileID: 11400000, guid: 1575d63946462be45990e19ea23342c2, type: 2}
 --- !u!1001 &391187580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3634,6 +3638,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408663093}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!224 &1419883053 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9026794307983490625, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+  m_PrefabInstance: {fileID: 3396499080274569386}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1423933626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5474,7 +5483,7 @@ PrefabInstance:
       objectReference: {fileID: 636342462}
     - target: {fileID: 1898497940622241640, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_VersionIndex
-      value: 3066
+      value: 3069
       objectReference: {fileID: 0}
     - target: {fileID: 1959469957918344498, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5656,6 +5665,14 @@ PrefabInstance:
       propertyPath: m_AutoSave
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2491601845057041105, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+      propertyPath: m_ChoiceParent
+      value: 
+      objectReference: {fileID: 1419883053}
+    - target: {fileID: 2491601845057041105, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+      propertyPath: m_ChoiceButtonPrefab
+      value: 
+      objectReference: {fileID: 361994132}
     - target: {fileID: 2623104732552598977, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0

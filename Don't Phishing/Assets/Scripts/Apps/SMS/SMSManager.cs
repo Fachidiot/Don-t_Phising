@@ -4,6 +4,8 @@ using System;
 using TMPro;
 using UnityEngine;
 using static Message;
+using System.Collections;
+using UnityEngine.UI;
 
 [Serializable]
 public class Message
@@ -76,8 +78,15 @@ public class SMSManager : BaseAppManager
     private GameObject m_IMGMessagePrefab;
     [SerializeField]
     private GameObject m_PlayerMessagePrefab;
+    [SerializeField]
+    private Transform m_ChoiceParent;
+    [SerializeField]
+    private GameObject m_ChoiceButtonPrefab;
 
     private Message_Layout _lastNPCLayout;
+
+     private List<GameObject> m_ChoiceButtons;
+
 
     // TODO : 추후 게임 전체(휴대폰 제외) Localization을 위해 Messages-en, Messages-kr, Messages-jp이런식으로 구현하면 좋을듯 싶음.
     private string m_FileName = "Messages.json";
@@ -265,4 +274,86 @@ public class SMSManager : BaseAppManager
         Message_Layout layout = lastMessage.GetComponent<Message_Layout>();
         layout.UpdateText(message);
     }
+
+
+    #region Dialaouge
+
+    // CreateChoiceButton 메서드 개선
+    public void CreateChoiceButton(string text, int nextId)
+    {
+        if (m_ChoiceButtonPrefab == null || m_ChoiceParent == null)
+        {
+            Debug.LogWarning("선택지 버튼 생성 실패: 프리팹 또는 부모가 할당되지 않음");
+            return;
+        }
+
+        GameObject buttonObj = Instantiate(m_ChoiceButtonPrefab, m_ChoiceParent);
+        if (buttonObj == null) return;
+
+        SetupChoiceButton(buttonObj, text, nextId);
+        m_ChoiceButtons.Add(buttonObj);
+    }
+
+
+    public void ClearChoiceButtons()
+    {
+        foreach (var btn in m_ChoiceButtons)
+            Destroy(btn);
+        m_ChoiceButtons.Clear();
+    }
+
+    public void SetupChoiceButton(GameObject buttonObj, string text, int nextId)
+    {
+        if (buttonObj == null)
+        {
+            Debug.LogWarning("SetupChoiceButton 호출됨: buttonObj가 null입니다.");
+            return;
+        }
+
+        // 텍스트 설정
+        TMP_Text tmpText = buttonObj.GetComponentInChildren<TMP_Text>();
+        if (tmpText != null)
+            tmpText.text = text;
+        else
+            Debug.LogWarning("버튼에 TMP_Text 컴포넌트가 없습니다.");
+
+        // 버튼 클릭 이벤트 설정
+        Button button = buttonObj.GetComponent<Button>();
+        if (button == null)
+        {
+            Debug.LogWarning("버튼에 Button 컴포넌트가 없습니다.");
+            return;
+        }
+
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(() =>
+        {
+            // 플레이어 메시지 저장
+            SaveMessage(text, true);
+
+            // 선택지 버튼 제거
+            ClearChoiceButtons();
+
+            // 다음 대사로 진행
+            DialogueManager.Instance.ProceedNext(nextId);
+        });
+    }
+
+
+    IEnumerator TypeText(string message, bool isMine)
+    {
+        string currentText = "";
+        foreach (char c in message)
+        {
+            currentText += c;
+
+            yield return new WaitForSeconds(0.03f);
+        }
+        SaveMessage(currentText, isMine);
+    }
+
+
+
+
+    #endregion
 }
