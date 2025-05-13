@@ -54,9 +54,12 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void ProceedNext(int id)
     {
+        
         if (!dialogueMap.TryGetValue(id, out var line))
         {
             Debug.LogWarning($"[DialogueManager] ID {id}에 해당하는 대사가 없습니다.");
+
+            Debug.Log(line);
             return;
         }
 

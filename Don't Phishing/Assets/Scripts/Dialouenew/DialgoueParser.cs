@@ -59,6 +59,8 @@ public class DialogueParser : MonoBehaviour
             dialogueEvent.lines.Add(line);
         }
 
+        Debug.Log("dd");
+
         string fileName = Path.GetFileNameWithoutExtension(path);
         string assetPath = $"Assets/Resources/DialogueEvents/{fileName}_event.asset";
 
@@ -99,6 +101,8 @@ public class DialogueParser : MonoBehaviour
         }
 
         result.Add(current);
+
+        Debug.Log("d");
         return result.ToArray();
     }
 }
