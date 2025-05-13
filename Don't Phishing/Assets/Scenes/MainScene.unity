@@ -3622,7 +3622,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 705507995}
-  - {fileID: 1130812971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
@@ -6025,55 +6024,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8812374690774958912, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
   m_PrefabInstance: {fileID: 5528582708569677578}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1130812970
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1130812971}
-  - component: {fileID: 1130812972}
-  m_Layer: 0
-  m_Name: Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1130812971
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130812970}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 697885654}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1130812972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1130812970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 151f2bc375f864563a8143a42c9b71be, type: 2}
 --- !u!224 &1133667694 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7266368794137893635, guid: e62f30754bc70dd41b4f1709493c6433, type: 3}
@@ -13290,14 +13240,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AppName: 
-  m_CameraScreen: {fileID: 0}
-  m_PhotoScreen: {fileID: 0}
+  m_CameraScreen: {fileID: 3881382147708610540}
+  m_PhotoScreen: {fileID: 4117747361696885912}
   m_Texture: {fileID: 8400000, guid: f84a4f2a6577a194cbc6a44e4c6ecdb7, type: 2}
   m_PhotoPrefab: {fileID: 6248911659444812591, guid: 3c5ab30c68d1bc940ae26b676d0b8a28, type: 3}
   m_PhotoParent: {fileID: 9113265888012705184}
   m_Title: {fileID: 1854543709}
   m_Snap: {fileID: 3440689541202337090}
-  m_Camera: {fileID: 3881382147708610540}
+  m_Camera: {fileID: 7926929702161098817}
 --- !u!1 &547345826104320628
 GameObject:
   m_ObjectHideFlags: 0
@@ -26628,6 +26578,10 @@ PrefabInstance:
       propertyPath: m_SelectedVertices.Array.data[23]
       value: 135
       objectReference: {fileID: 0}
+    - target: {fileID: 3041660874539735483, guid: 6ccbe6b447d17674d9285603dd9a0178, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a080beaa1c43814589d6d21e7d6f6eb, type: 2}
     - target: {fileID: 3713410809171109643, guid: 6ccbe6b447d17674d9285603dd9a0178, type: 3}
       propertyPath: m_Name
       value: Model

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Ink.Runtime;
 using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
@@ -24,7 +23,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Animator dialogueAnimator;        // 대화창 애니메이션
 
     private TextMeshProUGUI[] choicesText;                     // 선택지 텍스트 캐싱
-    private Story currentStory;                                // 현재 Ink 스토리
+    //private Story currentStory;                                // 현재 Ink 스토리
     private Coroutine displayLineCoroutine;
     private bool canContinueToNextLine = false;
     public bool dialogueIsPlaying { get; private set; } = false;
@@ -57,7 +56,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void EnterDialogueMode(TextAsset inkJSON)
     {
-        currentStory = new Story(inkJSON.text);
+        //currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         //dialogueAnimator.Play("DialogueBox_Open");
@@ -70,19 +69,19 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void ContinueStory()
     {
-        if (currentStory.canContinue)
-        {
-            string nextLine = currentStory.Continue();
+        //if (currentStory.canContinue)
+        //{
+        //    string nextLine = currentStory.Continue();
 
-            if (displayLineCoroutine != null)
-                StopCoroutine(displayLineCoroutine);
+        //    if (displayLineCoroutine != null)
+        //        StopCoroutine(displayLineCoroutine);
 
-            displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
-        }
-        else
-        {
-            StartCoroutine(ExitDialogueMode());
-        }
+        //    displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
+        //}
+        //else
+        //{
+        //    StartCoroutine(ExitDialogueMode());
+        //}
     }
 
     /// <summary>
@@ -108,13 +107,13 @@ public class DialogueManager : MonoBehaviour
     {
         if (canContinueToNextLine)
         {
-            string selectedText = currentStory.currentChoices[choiceIndex].text;
+            //string selectedText = currentStory.currentChoices[choiceIndex].text;
 
             // 플레이어 말풍선 생성
-            SpawnPlayerMessage(selectedText);
+            //SpawnPlayerMessage(selectedText);
 
             // 선택 반영
-            currentStory.ChooseChoiceIndex(choiceIndex);
+            //currentStory.ChooseChoiceIndex(choiceIndex);
             StartCoroutine(WaitAndContinue());
         }
     }
@@ -142,18 +141,18 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void DisplayChoices()
     {
-        List<Choice> currentChoices = currentStory.currentChoices;
+        //List<Choice> currentChoices = currentStory.currentChoices;
 
-        for (int i = 0; i < currentChoices.Count; i++)
-        {
-            choices[i].SetActive(true);
-            choicesText[i].text = currentChoices[i].text;
-        }
+        //for (int i = 0; i < currentChoices.Count; i++)
+        //{
+        //    choices[i].SetActive(true);
+        //    choicesText[i].text = currentChoices[i].text;
+        //}
 
-        for (int i = currentChoices.Count; i < choices.Length; i++)
-        {
-            choices[i].SetActive(false);
-        }
+        //for (int i = currentChoices.Count; i < choices.Length; i++)
+        //{
+        //    choices[i].SetActive(false);
+        //}
 
         StartCoroutine(SelectFirstChoice());
     }
