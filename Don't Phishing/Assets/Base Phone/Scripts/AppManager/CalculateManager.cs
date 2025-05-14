@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public class CalculateManager : BaseAppManager
 {
@@ -31,27 +32,6 @@ public class CalculateManager : BaseAppManager
     /// 3. else 비어져 있다면 m_oprs 마지막값 지우기 + m_last에 m_nums의 마지막값 할당.
     /// 4. 반복하다가 m_nums랑 m_oprs가 모두 비워지면 return;
     /// </summary>
-
-    // 지우기 함수
-    public void Delete()
-    {
-        if (m_nums.Count == 0 && m_oprs.Count == 0)
-            return;
-        if (m_last != string.Empty)
-        {
-            m_last.Remove(m_last.Length - 1);
-            InputTextUpdate(m_last);
-            if (m_last.Length == 0)
-                m_last = string.Empty;
-        }
-        else
-        {
-            m_oprs.RemoveAt(m_oprs.Count - 1);
-            int lastIndex = m_nums.Count - 1;
-            m_last = m_nums[lastIndex].ToString();
-            m_nums.RemoveAt(lastIndex);
-        }
-    }
 
     #region Button Funcs
     // 수 입력 함수
@@ -142,13 +122,41 @@ public class CalculateManager : BaseAppManager
         m_last = m_tmpInput.text;
     }
 
+    // 지우기 함수
+    public void Delete()
+    {
+        if ((m_nums.Count == 0 && m_oprs.Count == 0) && m_last == string.Empty)
+            return;
+        if (m_last != string.Empty)
+        {
+            m_last = m_last.Substring(0, m_last.Length - 1);
+            InputTextUpdate(m_last);
+            if (m_last.Length == 0)
+                m_last = string.Empty;
+        }
+        else
+        {
+            m_oprs.RemoveAt(m_oprs.Count - 1);
+            int lastIndex = m_nums.Count - 1;
+            m_last = m_nums[lastIndex].ToString();
+            m_nums.RemoveAt(lastIndex);
+            InputTextUpdate(m_last);
+        }
+    }
+
     // 음수 양수 전환 함수
     public void Reverse()
     {
-        if (m_tmpInput.text[0] != '-')
-            m_tmpInput.text.Insert(0, "-");
-        else
-            m_tmpInput.text.Remove(0);
+        return;
+        if (m_last.StartsWith('('))
+        {   // 음수
+            m_last = m_last.Substring(2, m_last.Length - 1);
+            InputTextUpdate(m_last);
+        } else
+        {   // 양수
+            m_last = "(-" + m_last + ")";
+            InputTextUpdate(m_last);
+        }
     }
 
     // AC함수

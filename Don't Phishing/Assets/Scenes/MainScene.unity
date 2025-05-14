@@ -13239,7 +13239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3d49dff3d416342ad8dff15fdc3a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AppName: 
+  m_AppName: Camera
   m_CameraScreen: {fileID: 3881382147708610540}
   m_PhotoScreen: {fileID: 4117747361696885912}
   m_Texture: {fileID: 8400000, guid: f84a4f2a6577a194cbc6a44e4c6ecdb7, type: 2}
@@ -14312,6 +14312,7 @@ GameObject:
   - component: {fileID: 1470063525813663983}
   - component: {fileID: 7694451981102028951}
   - component: {fileID: 7348105077566440124}
+  - component: {fileID: 7694451981102028952}
   m_Layer: 5
   m_Name: Explorer
   m_TagString: Untagged
@@ -14837,7 +14838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4fd50c8ded2f241aaf7cab62c1695c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AppName: 
+  m_AppName: Call
   m_ContactParent: {fileID: 1050643775973279927}
   m_ContactPrefab: {fileID: 364463310390392794, guid: 86bc885841909d442a5ab27314b67a3f, type: 3}
   m_Horizontal_Snap: {fileID: 6466382416898232336}
@@ -23305,7 +23306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5bcac9de93f851488f9821010793c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AppName: 
+  m_AppName: Music
 --- !u!224 &2240153296873613401
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23591,7 +23592,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1919405561956805982, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_Name
-      value: Option
+      value: +/-
       objectReference: {fileID: 0}
     - target: {fileID: 3796010397152958436, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -23623,7 +23624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5665339450199566582, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_text
-      value: '#'
+      value: +/-
       objectReference: {fileID: 0}
     - target: {fileID: 5665339450199566582, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_fontSize
@@ -23664,10 +23665,18 @@ PrefabInstance:
     - target: {fileID: 6057387986689696070, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2293383794672873744}
+      objectReference: {fileID: 9076981111302961358}
     - target: {fileID: 6057387986689696070, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057387986689696070, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Reverse
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057387986689696070, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6746457114870271799, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_Type
@@ -24106,7 +24115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c47848ba49b2ac74b89728ec6c7cb589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AppName: 
+  m_AppName: SMS
   m_MainBar: {fileID: 7798568345303590090}
   m_MessageBar: {fileID: 465482109282954533}
   m_PopupView: {fileID: 1769487290}
@@ -38328,7 +38337,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1919405561956805982, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_Name
-      value: +/-
+      value: Delete
       objectReference: {fileID: 0}
     - target: {fileID: 3796010397152958436, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -38360,7 +38369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5665339450199566582, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_text
-      value: +/-
+      value: <-
       objectReference: {fileID: 0}
     - target: {fileID: 5665339450199566582, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_fontSize
@@ -38408,7 +38417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6057387986689696070, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Reverse
+      value: Delete
       objectReference: {fileID: 0}
     - target: {fileID: 6057387986689696070, guid: 01ef55b391e3c7c4ba6dcb3510c5c59c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -46719,7 +46728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9842a7982b9dcd84daa5812136341b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AppName: 
+  m_AppName: Youtube
   m_TabManager: {fileID: 4504632268497974736}
 --- !u!222 &6335479798739720018
 CanvasRenderer:
@@ -53722,6 +53731,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832305306985481152}
   m_CullTransparentMesh: 1
+--- !u!114 &7694451981102028952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832305306985481152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ccc3309d9ce4623af716e07692174e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AppName: Explorer
 --- !u!1 &7707041691787776755
 GameObject:
   m_ObjectHideFlags: 0
@@ -56579,6 +56601,7 @@ GameObject:
   - component: {fileID: 7749746706243415871}
   - component: {fileID: 1522841344755027783}
   - component: {fileID: 1879023384018441580}
+  - component: {fileID: 8387644421907092497}
   m_Layer: 5
   m_Name: Weather
   m_TagString: Untagged
@@ -56586,6 +56609,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &8387644421907092497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8387644421907092496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bb112d6c664146b49090f5557e5cf34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AppName: Weather
 --- !u!224 &8391822126210893974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -56778,7 +56814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0b764b104091045b1f89f47491a892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AppName: 
+  m_AppName: Setting
   m_SettingGroups:
   - {fileID: 6134535622378426023}
   - {fileID: 2813093053806347183}
@@ -60610,7 +60646,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55be829883f02e4c8a4f88955284241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AppName: 
+  m_AppName: Calculator
+  m_Title: {fileID: 0}
+  m_LTitle:
+    m_Text: []
   m_tmpInput: {fileID: 919208303}
   m_tmpHistory: {fileID: 187704393}
 --- !u!222 &9081662474484007129
