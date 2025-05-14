@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CalculateManager : BaseAppManager
 {
+    [SerializeField]    // Title Text
+    private TMP_Text m_Title;
+    [SerializeField]    // Title Language
+    private LText m_LTitle;
     [SerializeField]    // 입력값 Text
     private TMP_Text m_tmpInput;
     [SerializeField]    // 기록값 Text
@@ -27,6 +31,28 @@ public class CalculateManager : BaseAppManager
     /// 3. else 비어져 있다면 m_oprs 마지막값 지우기 + m_last에 m_nums의 마지막값 할당.
     /// 4. 반복하다가 m_nums랑 m_oprs가 모두 비워지면 return;
     /// </summary>
+
+    // 지우기 함수
+    public void Delete()
+    {
+        if (m_nums.Count == 0 && m_oprs.Count == 0)
+            return;
+        if (m_last != string.Empty)
+        {
+            m_last.Remove(m_last.Length - 1);
+            InputTextUpdate(m_last);
+            if (m_last.Length == 0)
+                m_last = string.Empty;
+        }
+        else
+        {
+            m_oprs.RemoveAt(m_oprs.Count - 1);
+            int lastIndex = m_nums.Count - 1;
+            m_last = m_nums[lastIndex].ToString();
+            m_nums.RemoveAt(lastIndex);
+        }
+    }
+
     #region Button Funcs
     // 수 입력 함수
     public void Input(string num)
@@ -34,14 +60,7 @@ public class CalculateManager : BaseAppManager
         m_last += num;
 
         // Update TMP_text
-        if (m_tmpInput.text == "0")
-            m_tmpInput.text = num;
-        else
-        {
-            m_last = FormattingNumber(m_last);
-            m_tmpInput.text = FormattingNumbers();
-            m_tmpInput.text += m_last;
-        }
+        InputTextUpdate(num);
     }
 
     // 연산자 입력 함수 -> 수 입력이 끝남.
@@ -171,6 +190,18 @@ public class CalculateManager : BaseAppManager
     {
         return (opr == OPR.MODULAR ? "%" : opr == OPR.MULTIPLY ? "x" : opr == OPR.DIVIDE ? "/" : opr == OPR.PLUS ? "+" : "-");
     }
+    // Input TMP_Text Refresh
+    private void InputTextUpdate(string num)
+    {
+        if (m_tmpInput.text == "0")
+            m_tmpInput.text = num;
+        else
+        {
+            m_last = FormattingNumber(m_last);
+            m_tmpInput.text = FormattingNumbers();
+            m_tmpInput.text += m_last;
+        }
+    }
     // 000,000.000 포멧 변환 함수
     private string FormattingNumber(string num)
     {
@@ -197,7 +228,7 @@ public class CalculateManager : BaseAppManager
 
     public override void SetText()
     {
-        throw new System.NotImplementedException();
+        m_Title.text = m_LTitle.GetText(OSManager.Instance.GetLanguage());
     }
 
     public override void ResetApp()
