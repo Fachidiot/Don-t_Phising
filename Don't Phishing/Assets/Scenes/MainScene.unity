@@ -5663,7 +5663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2491601845057041105, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_AutoSave
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2491601845057041105, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_ChoiceParent
