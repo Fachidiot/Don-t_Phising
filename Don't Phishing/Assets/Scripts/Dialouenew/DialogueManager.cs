@@ -34,9 +34,7 @@ public class DialogueManager : MonoBehaviour
             tagHandler = new TagHandler(); // Animator나 CoroutineRunner가 필요하면 주입
     }
 
-    /// <summary>
-    /// DialogueEvent 시작
-    /// </summary>
+    //DialogueEvent 시작
     public void StartDialogue(DialogueEvent dialogueEvent)
     {
         if (dialogueEvent == null)
@@ -47,12 +45,11 @@ public class DialogueManager : MonoBehaviour
 
         currentEvent = dialogueEvent;
         InitializeDialogueMap();
-        ProceedNext(1000); // 대화 ID 0번부터 시작
+        ProceedNext(1000); // 대화 ID ?부터 시작
     }
 
-    /// <summary>
-    /// 다음 대사 진행
-    /// </summary>
+
+    //다음 대사 시작
     public void ProceedNext(int id)
     {
         
@@ -72,9 +69,8 @@ public class DialogueManager : MonoBehaviour
         typewriterCoroutine = StartCoroutine(TypeTextCoroutine(line));
     }
 
-    /// <summary>
-    /// Typewriter 텍스트 출력 후 태그 처리 및 다음 대사 진행
-    /// </summary>
+
+    // Typewriter 텍스트 출력 후 태그 처리 및 다음 대사 진행
     private IEnumerator TypeTextCoroutine(Dialogue line)
     {
 
@@ -166,9 +162,8 @@ public class DialogueManager : MonoBehaviour
         return speaker.ToLower().Contains("player") || speaker == "나";
     }
 
-    /// <summary>
-    /// 태그 처리 등으로 대기 상태일 경우 true
-    /// </summary>
+
+    // 태그 처리 등으로 대기 상태일 경우 true
     public void SetWait(bool wait) => isWaiting = wait;
 
     /// <summary>
