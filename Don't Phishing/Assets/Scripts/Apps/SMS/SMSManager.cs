@@ -78,14 +78,10 @@ public class SMSManager : BaseAppManager
     private GameObject m_IMGMessagePrefab;
     [SerializeField]
     private GameObject m_PlayerMessagePrefab;
-    [SerializeField]
-    private Transform m_ChoiceParent;
-    [SerializeField]
-    private GameObject m_ChoiceButtonPrefab;
 
     private Message_Layout _lastNPCLayout;
 
-     private List<GameObject> m_ChoiceButtons;
+    [SerializeField] private Button[] m_ChoiceButtonsFixed;
 
 
     // TODO : 추후 게임 전체(휴대폰 제외) Localization을 위해 Messages-en, Messages-kr, Messages-jp이런식으로 구현하면 좋을듯 싶음.
@@ -105,6 +101,7 @@ public class SMSManager : BaseAppManager
             return;
         }
         m_Instance = this;
+
     }
 
     public void Start()
@@ -278,28 +275,45 @@ public class SMSManager : BaseAppManager
 
     #region Dialaouge
 
-    // CreateChoiceButton 메서드 개선
-    public void CreateChoiceButton(string text, int nextId)
+    // 버튼 선택
+    public void DisplayChoiceButtons(List<(string text, int nextId)> choices)
     {
-        if (m_ChoiceButtonPrefab == null || m_ChoiceParent == null)
+        ClearFixedButtons();
+
+        for (int i = 0; i < m_ChoiceButtonsFixed.Length; i++)
         {
-            Debug.LogWarning("선택지 버튼 생성 실패: 프리팹 또는 부모가 할당되지 않음");
-            return;
+            if (i < choices.Count)
+            {
+                var (text, nextId) = choices[i];
+                var button = m_ChoiceButtonsFixed[i];
+                TMP_Text tmp = button.GetComponentInChildren<TMP_Text>();
+
+                if (tmp != null)
+                    tmp.text = text;
+
+                button.gameObject.SetActive(true);
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() =>
+                {
+                    SaveMessage(text, true);
+                    ClearFixedButtons();
+                    DialogueManager.Instance.ProceedNext(nextId);
+                });
+            }
+            else
+            {
+                m_ChoiceButtonsFixed[i].gameObject.SetActive(false);
+            }
         }
-
-        GameObject buttonObj = Instantiate(m_ChoiceButtonPrefab, m_ChoiceParent);
-        if (buttonObj == null) return;
-
-        SetupChoiceButton(buttonObj, text, nextId);
-        m_ChoiceButtons.Add(buttonObj);
     }
 
-
-    public void ClearChoiceButtons()
+    public void ClearFixedButtons()
     {
-        foreach (var btn in m_ChoiceButtons)
-            Destroy(btn);
-        m_ChoiceButtons.Clear();
+        foreach (var button in m_ChoiceButtonsFixed)
+        {
+            button.onClick.RemoveAllListeners();
+            button.gameObject.SetActive(false);
+        }
     }
 
     public void SetupChoiceButton(GameObject buttonObj, string text, int nextId)
@@ -332,7 +346,6 @@ public class SMSManager : BaseAppManager
             SaveMessage(text, true);
 
             // 선택지 버튼 제거
-            ClearChoiceButtons();
 
             // 다음 대사로 진행
             DialogueManager.Instance.ProceedNext(nextId);

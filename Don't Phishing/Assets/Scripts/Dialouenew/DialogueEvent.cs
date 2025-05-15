@@ -11,3 +11,4 @@ public class DialogueEvent : ScriptableObject
     public string eventName;              // 이벤트 이름 (예: intro_1)
     public List<Dialogue> lines;          // 이 이벤트에 포함된 모든 대사
 }
+    

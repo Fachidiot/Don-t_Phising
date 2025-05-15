@@ -76,11 +76,12 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private IEnumerator TypeTextCoroutine(Dialogue line)
     {
+
         bool isMine = IsPlayer(line.speaker);
 
         string currentText = "";
         SMSManager.Instance.SaveMessage("", isMine); // 빈 메시지 먼저 생성
-        yield return null;
+        yield return new WaitForSeconds(1.5f);
 
         foreach (char c in line.text)
         {
@@ -103,44 +104,37 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// 선택지 문자열 파싱 (예: "알려준다:2,알려주지 않는다:3")
     /// </summary>
+    // DialogueManager.cs 내부
     private void ParseChoices(string raw)
     {
-        SMSManager.Instance.ClearChoiceButtons();
-
         if (string.IsNullOrEmpty(raw))
         {
-            Debug.LogWarning("[DialogueManager] 선택지 문자열이 비어 있습니다.");
+            SMSManager.Instance.ClearFixedButtons();
             return;
         }
 
+        var choices = new List<(string, int)>();
         var parts = raw.Split(',');
+
         foreach (var part in parts)
         {
             var split = part.Split(':');
-            if (split.Length != 2)
+            if (split.Length == 2 && int.TryParse(split[1], out int nextId))
             {
-                Debug.LogWarning($"[DialogueManager] 잘못된 선택지 형식: {part}");
-                continue;
-            }
-
-            string choiceText = split[0].Trim();
-            if (int.TryParse(split[1], out int nextId))
-            {
-                SMSManager.Instance.CreateChoiceButton(choiceText, nextId);
-            }
-            else
-            {
-                Debug.LogWarning($"[DialogueManager] 선택지 nextId 파싱 실패: {split[1]}");
+                choices.Add((split[0].Trim(), nextId));
             }
         }
+
+        SMSManager.Instance.DisplayChoiceButtons(choices);
     }
+
 
     /// <summary>
     /// 대화 종료
     /// </summary>
     private void EndDialogue()
     {
-        SMSManager.Instance.ClearChoiceButtons();
+        SMSManager.Instance.ClearFixedButtons();
         SMSManager.Instance.ResetApp();
         Debug.Log("[DialogueManager] 대화 종료됨");
     }

@@ -919,6 +919,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8231079892919898177, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
   m_PrefabInstance: {fileID: 3396499080274569386}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &361994135 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3011992942110928703, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+  m_PrefabInstance: {fileID: 3396499080274569386}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361994132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &382476259
 GameObject:
   m_ObjectHideFlags: 0
@@ -4652,6 +4663,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6184687658327489397, guid: 4343c522f48efe0438dca65d10544789, type: 3}
   m_PrefabInstance: {fileID: 1804138208}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1838808308 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1118528458632584062, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+  m_PrefabInstance: {fileID: 3396499080274569386}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1838917422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5483,7 +5505,7 @@ PrefabInstance:
       objectReference: {fileID: 636342462}
     - target: {fileID: 1898497940622241640, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_VersionIndex
-      value: 3069
+      value: 3075
       objectReference: {fileID: 0}
     - target: {fileID: 1959469957918344498, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5673,6 +5695,18 @@ PrefabInstance:
       propertyPath: m_ChoiceButtonPrefab
       value: 
       objectReference: {fileID: 361994132}
+    - target: {fileID: 2491601845057041105, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+      propertyPath: m_ChoiceButtonsFixed.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2491601845057041105, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+      propertyPath: m_ChoiceButtonsFixed.Array.data[0]
+      value: 
+      objectReference: {fileID: 361994135}
+    - target: {fileID: 2491601845057041105, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+      propertyPath: m_ChoiceButtonsFixed.Array.data[1]
+      value: 
+      objectReference: {fileID: 1838808308}
     - target: {fileID: 2623104732552598977, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
