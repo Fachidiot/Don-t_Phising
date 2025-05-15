@@ -37,7 +37,7 @@ MonoBehaviour:
     speaker: "\uC8FC\uC778\uACF5"
     text: "\uBB50\uC57C? \uB204\uAD70\uB370 \uB0A0 \uD314\uB85C\uC6B0\uD588\uC9C0?"
     choices: 
-    nextId: 0
+    nextId: 4
     tag: 
   - id: 4
     speaker: "\uC8FC\uC778\uACF5"
@@ -64,7 +64,7 @@ MonoBehaviour:
       \uAE30\uC5B5 \uBABB\uD558\uB824\uB098?"
     choices: "\uB204\uAD6C\uC600\uC9C0..? \uC798 \uC548 \uB09C\uB2E4\uACE0 \uB2F5\uD55C\uB2E4:8,\uC8C4\uC1A1\uD574\uC694..
       \uB204\uAD6C\uC2E0\uC9C0 \uBAA8\uB974\uACA0\uC5B4\uC694:8"
-    nextId: 0
+    nextId: 8
     tag: 
   - id: 8
     speaker: ???
