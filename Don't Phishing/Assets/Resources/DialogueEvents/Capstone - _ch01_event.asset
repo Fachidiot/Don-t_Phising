@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06863b70fcd6ac64ea509cd21046ab25, type: 3}
+  m_Name: Capstone - _ch01_event
+  m_EditorClassIdentifier: 
+  eventName: testv
+  lines:
+  - id: 1000
+    speaker: NPC1
+    text: "\uC548\uB155? \uD639\uC2DC \uB098 \uAE30\uC5B5 \uB098\uB824\uB098 \uBAA8\uB974\uACD8\uB124.."
+    choices: 
+    nextId: 1001
+    tag: 
+  - id: 1001
+    speaker: NPC1
+    text: "\uB098 \uB108 \uACE0\uB4F1\uD559\uAD50 \uB54C \uAC19\uC740 \uBC18\uC774\uC5C8\uB294\uB370..
+      \uAE30\uC5B5 \uBABB\uD558\uB824\uB098?"
+    choices: "\uB204\uAD6C\uC600\uC9C0..? \uC798 \uC548 \uB09C\uB2E4\uACE0 \uB2F5\uD55C\uB2E4:1,\uC8C4\uC1A1\uD574\uC694..
+      \uB204\uAD6C\uC2E0\uC9C0 \uBAA8\uB974\uACA0\uC5B4\uC694:2"
+    nextId: 1002
+    tag: 
+  - id: 1001
+    speaker: NPC1
+    text: "\uB108 00\uACE0\uB4F1\uD559\uAD50 \uB098\uC654\uC796\uC544! 2\uD559\uB144
+      \uB54C 3\uBC18\uC774\uC5C8\uACE0, \uC11C\uC6B4\uD55C\uB370? \uB098 \uAE30\uC5B5
+      \uBABB\uD574\uC918\uC11C"
+    choices: 
+    nextId: 1002
+    tag: 
+  - id: 1002
+    speaker: Player
+    text: "?! \uC5B4\uB5BB\uAC8C \uC544\uC2DC\uC8E0? \uC544\uB294 \uC0AC\uB78C\uC778\uAC00?"
+    choices: 
+    nextId: 1004
+    tag: 
+  - id: 1003
+    speaker: NPC1
+    text: "\uB2F9\uC5F0\uD558\uC9C0; \uC774 \uC0AC\uC9C4, \uAE30\uC5B5\uB098?"
+    choices: 
+    nextId: 1004
+    tag: 
+  - id: 1004
+    speaker: NPC1
+    text: "\uB098 \uC774\uB54C\uB294 \uC880 \uB0B4\uC131\uC801\uC774\uC5C8\uC5B4\uC11C..\u314E"
+    choices: 
+    nextId: 1006
+    tag: 
+  - id: 1005
+    speaker: NPC1
+    text: "\uC544\uB2CC\uAC00?"
+    choices: 
+    nextId: 1006
+    tag: 
+  - id: 1006
+    speaker: NPC1
+    text: "\uB098 \uC798\uBABB \uC5F0\uB77D\uD55C \uAC70 \uC544\uB2C8\uC9C0? \uC124\uB9C8
+      \uC81C\uAC00 \uC798\uBABB \uC5F0\uB7B5\uD588\uB098\uC694?"
+    choices: 
+    nextId: 1007
+    tag: 
+  - id: 1007
+    speaker: Player
+    text: "\uC544\uB2C8 \uBCF8\uC778\uC740 \uB9DE\uC544\uC694 \uC800\uAC70 \uC81C
+      \uC0AC\uC9C4\uC774\uB77C\uC11C.. \uAE30\uC5B5\uC774 \uC798 \uC548 \uB098\uB098
+      \uBD10\uC694"
+    choices: 
+    nextId: 1008
+    tag: 
+  - id: 1008
+    speaker: NPC1
+    text: "\uBB50\uC57C \uB9DE\uB124"
+    choices: 
+    nextId: 1009
+    tag: 
+  - id: 1009
+    speaker: NPC1
+    text: "\uC5B4\uC0C9\uD558\uAC8C \uC2DC\uB9AC \uBC18\uB9D0 \uC368 \uCE5C\uAD6C\uB07C\uB9AC"
+    choices: 
+    nextId: 1010
+    tag: 
+  - id: 1010
+    speaker: NPC1
+    text: "\uB108 \uC124\uB9C8 \uC804\uD654\uBC88\uD638 \uBC14\uAFE8\uC5B4?"
+    choices: 
+    nextId: 1011
+    tag: 
+  - id: 1011
+    speaker: NPC1
+    text: "\uCE74\uD1A1 \uD504\uB85C\uD544\uC774 \uC548\uBCF4\uC5EC\uC11C"
+    choices: 
+    nextId: 1012
+    tag: 
+  - id: 1012
+    speaker: NPC1
+    text: "\uB108 \uBC88\uD638 \uC880 \uC54C\uB824 \uC918"
+    choices: "010-...:20,\uC800 \uC544\uC9C1 \uD587\uAC08\uB824\uC11C\uC694.. \uD639\uC2DC
+      \uBA3C\uC800 \uC54C\uB824\uC8FC\uC2DC\uBA74 \uC81C\uAC00 \uBA3C\uC800 \uC54C\uB824\uB4DC\uB9B4\uAC8C\uC694:1"
+    nextId: 1013
+    tag: 
+  - id: 1013
+    speaker: NPC1
+    text: "\uADF8\uB7FC \uB0B4\uAC00 \uBA3C\uC800 \uCE74\uD1A1\uD560\uAC8C"
+    choices: 
+    nextId: 1014
+    tag: 

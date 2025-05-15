@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -46,7 +47,7 @@ public class DialogueManager : MonoBehaviour
 
         currentEvent = dialogueEvent;
         InitializeDialogueMap();
-        ProceedNext(0); // 대화 ID 0번부터 시작
+        ProceedNext(1000); // 대화 ID 0번부터 시작
     }
 
     /// <summary>
@@ -107,9 +108,11 @@ public class DialogueManager : MonoBehaviour
     // DialogueManager.cs 내부
     private void ParseChoices(string raw)
     {
-        if (string.IsNullOrEmpty(raw))
+        SMSManager.Instance.ClearFixedButtons();
+
+        if (string.IsNullOrWhiteSpace(raw))
         {
-            SMSManager.Instance.ClearFixedButtons();
+            Debug.LogWarning("[DialogueManager] 선택지 문자열이 비어 있음");
             return;
         }
 
@@ -119,14 +122,30 @@ public class DialogueManager : MonoBehaviour
         foreach (var part in parts)
         {
             var split = part.Split(':');
-            if (split.Length == 2 && int.TryParse(split[1], out int nextId))
+            if (split.Length == 2 && int.TryParse(split[1].Trim(), out int nextId))
             {
-                choices.Add((split[0].Trim(), nextId));
+                string choiceText = split[0].Trim();
+                choices.Add((choiceText, nextId));
+            }
+            else
+            {
+                Debug.LogWarning($"[DialogueManager] 선택지 파싱 실패: \"{part}\"");
             }
         }
 
-        SMSManager.Instance.DisplayChoiceButtons(choices);
+        if (choices.Count == 0)
+        {
+            Debug.LogWarning("[DialogueManager] 유효한 선택지가 없음");
+            return;
+        }
+
+        if (choices.Count > 2)
+            Debug.LogWarning("[DialogueManager] 선택지가 2개를 초과함. 앞 2개만 사용됩니다.");
+
+        SMSManager.Instance.DisplayChoiceButtons(choices.Take(2).ToList());
     }
+
+
 
 
     /// <summary>

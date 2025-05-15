@@ -280,32 +280,34 @@ public class SMSManager : BaseAppManager
     {
         ClearFixedButtons();
 
-        for (int i = 0; i < m_ChoiceButtonsFixed.Length; i++)
+        int max = Mathf.Min(choices.Count, m_ChoiceButtonsFixed.Length);
+
+        for (int i = 0; i < max; i++)
         {
-            if (i < choices.Count)
-            {
-                var (text, nextId) = choices[i];
-                var button = m_ChoiceButtonsFixed[i];
-                TMP_Text tmp = button.GetComponentInChildren<TMP_Text>();
+            var (text, nextId) = choices[i];
+            var button = m_ChoiceButtonsFixed[i];
+            TMP_Text tmp = button.GetComponentInChildren<TMP_Text>();
 
-                if (tmp != null)
-                    tmp.text = text;
+            if (tmp != null)
+                tmp.text = text;
 
-                button.gameObject.SetActive(true);
-                button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(() =>
-                {
-                    SaveMessage(text, true);
-                    ClearFixedButtons();
-                    DialogueManager.Instance.ProceedNext(nextId);
-                });
-            }
-            else
+            button.gameObject.SetActive(true);
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() =>
             {
-                m_ChoiceButtonsFixed[i].gameObject.SetActive(false);
-            }
+                SaveMessage(text, true);
+                ClearFixedButtons();
+                DialogueManager.Instance.ProceedNext(nextId);
+            });
+        }
+
+        // 남은 버튼은 비활성화
+        for (int i = max; i < m_ChoiceButtonsFixed.Length; i++)
+        {
+            m_ChoiceButtonsFixed[i].gameObject.SetActive(false);
         }
     }
+
 
     public void ClearFixedButtons()
     {
