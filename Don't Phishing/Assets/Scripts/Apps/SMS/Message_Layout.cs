@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Message_Layout : MonoBehaviour
-{   
+{
     [SerializeField]
     private TMP_Text m_TMPMessage;
     [SerializeField]
@@ -16,15 +16,48 @@ public class Message_Layout : MonoBehaviour
         if (m_TMPMessage)
         {
             m_TMPMessage.text = message.message;
-            if (message.message.Length < 12 && m_ContentSizeFitter != null)
-                m_ContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            if (m_ContentSizeFitter != null)
+            {
+                if (message.message.Length < 15)
+                    m_ContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+                else
+                    m_ContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            }
         }
-        else
+        else if (m_Image)
         {
-            if (m_Image)
-                m_Image.sprite = Resources.Load<Sprite>(message.message);
+            m_Image.sprite = Resources.Load<Sprite>(message.message);
+        }
+
+        ForceLayoutRefresh();
+    }
+
+    //새로 추가된 오버로드 함수
+    public void SetUp(string text)
+    {
+        if (m_TMPMessage)
+        {
+            m_TMPMessage.text = text;
+
+            if (m_ContentSizeFitter != null)
+            {
+                if (text.Length < 15)
+                    m_ContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+                else
+                    m_ContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            }
+
+            ForceLayoutRefresh();
         }
     }
+
+    private void ForceLayoutRefresh()
+    {
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+    }
+
     public void UpdateText(string updated)
     {
         if (m_TMPMessage)

@@ -269,7 +269,7 @@ public class SMSManager : BaseAppManager
 
         GameObject lastMessage = m_MessageList[m_MessageList.Count - 1];
         Message_Layout layout = lastMessage.GetComponent<Message_Layout>();
-        layout.UpdateText(message);
+        layout.SetUp(message);
     }
 
 
