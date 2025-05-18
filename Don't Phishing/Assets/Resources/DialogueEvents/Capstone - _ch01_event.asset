@@ -38,7 +38,7 @@ MonoBehaviour:
     tag: 
   - id: 1002
     speaker: player
-    text: "?! \uC5B4\uB5BB\uAC8C \uC544\uC2DC\uC8E0? \uC544\uB294 \uC0AC\uB78C\uC778\uAC00?"
+    text: "\uC5B4\uB5BB\uAC8C \uC544\uC2DC\uC8E0? \uC544\uB294 \uC0AC\uB78C\uC778\uAC00?"
     choices: 
     nextId: 1004
     tag: 
