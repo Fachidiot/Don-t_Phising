@@ -44,6 +44,7 @@ public class ScrollSnap : MonoBehaviour
 
     [SerializeField]
     private bool m_IsSnapped;
+    public bool IsSnapped { get { return m_IsSnapped; } }
     private float m_SnapSpeed;
     [SerializeField]
     private int m_CurrentItem;
@@ -116,7 +117,7 @@ public class ScrollSnap : MonoBehaviour
                 m_CurrentItem = item;
         }
 
-        if (m_ScrollRect.velocity.magnitude < 200 && !m_IsSnapped)
+        if (m_ScrollRect.velocity.magnitude < 1000 && !m_IsSnapped)
         {
             m_ScrollRect.velocity = Vector2.zero;
             m_SnapSpeed += m_SnapForce * Time.deltaTime;
@@ -127,7 +128,8 @@ public class ScrollSnap : MonoBehaviour
             SetItemName(m_CurrentItem);
             if (m_Indicator != null)
                 m_Indicator.ChangeIndicator(m_CurrentItem);
-            if (m_ContentPanel.localPosition.x == 0 - (m_CurrentItem * (m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing)))
+
+            if (Mathf.RoundToInt(m_ContentPanel.localPosition.x) == 0 - (m_CurrentItem * (m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing)))
             {
                 m_SnapSpeed = 0;
                 m_IsSnapped = true;
@@ -151,7 +153,7 @@ public class ScrollSnap : MonoBehaviour
                 m_CurrentItem = item;
         }
 
-        if (m_ScrollRect.velocity.magnitude < 200 && !m_IsSnapped)
+        if (m_ScrollRect.velocity.magnitude < 1000 && !m_IsSnapped)
         {
             m_ScrollRect.velocity = Vector2.zero;
             m_SnapSpeed += m_SnapForce * Time.deltaTime;
@@ -164,10 +166,7 @@ public class ScrollSnap : MonoBehaviour
             if (m_Indicator != null)
                 m_Indicator.ChangeIndicator(m_CurrentItem);
 
-            //if (m_BackgroundManager != null)
-            //    m_BackgroundManager.ChangeAlpha(0 - m_ContentPanel.localPosition.y / (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing));
-
-            if (m_ContentPanel.localPosition.y == 0 - (m_CurrentItem * (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing)))
+            if (Mathf.RoundToInt(m_ContentPanel.localPosition.y) == 0 - (m_CurrentItem * (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing)))
             {
                 m_SnapSpeed = 0;
                 m_IsSnapped = true;

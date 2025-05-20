@@ -40,8 +40,7 @@ public class OSManager : Subject
     private Language m_Language;
     [Header("Background")]
     [SerializeField]
-    private BackgroundManager[] m_Backgrounds;
-    public int m_BackgroundIndex = 0;
+    private BackgroundManager m_Background;
     [Header("Text Mesh Pro")]
     [SerializeField]
     private TMP_Text m_TDate;
@@ -78,14 +77,6 @@ public class OSManager : Subject
         SetDate(m_Language);
     }
 
-    private void Update()
-    {
-#if UNITY_EDITOR
-        if (m_Backgrounds[0].Index != m_BackgroundIndex)
-            ChangeBackground(m_BackgroundIndex);
-#endif
-    }
-
     public Profile GetProfile()
     {
         return m_profile;
@@ -108,10 +99,12 @@ public class OSManager : Subject
     #region Controls
     public void ChangeBackground(int index)
     {
-        foreach(var background in m_Backgrounds)
-        {
-            background.UpdateBackground(index);
-        }
+        m_Background.UpdateBackground(index);
+    }
+
+    public void BackgroundActive(bool active)
+    {
+        m_Background.gameObject.SetActive(active);
     }
 
     public void SetVolume(float volume)
@@ -196,9 +189,9 @@ public class TimeUtils
             case "en":
                 return DateTime.Now.ToString(("MM"));
             case "ja":
-                return DateTime.Now.ToString(("MM")) + "êÅ";
+                return DateTime.Now.ToString(("MM")) + "ï¿½ï¿½";
             case "ko":
-                return DateTime.Now.ToString(("MM")) + "¿ù";
+                return DateTime.Now.ToString(("MM")) + "ï¿½ï¿½";
             default:
                 return null;
 
@@ -212,9 +205,9 @@ public class TimeUtils
             case "en":
                 return DateTime.Now.ToString(("dd"));
             case "ja":
-                return DateTime.Now.ToString(("dd")) + "ìí";
+                return DateTime.Now.ToString(("dd")) + "ï¿½ï¿½";
             case "ko":
-                return DateTime.Now.ToString(("dd")) + "ÀÏ";
+                return DateTime.Now.ToString(("dd")) + "ï¿½ï¿½";
             default:
                 return null;
 
@@ -231,19 +224,19 @@ public class TimeUtils
                 switch (DateTime.Now.DayOfWeek)
                 {
                     case DayOfWeek.Monday:
-                        return "êÅèøìí";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Tuesday:
-                        return "ûýèøìí";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Wednesday:
-                        return "â©èøìí";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Thursday:
-                        return "ÙÊèøìí";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Friday:
-                        return "ÐÝèøìí";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Saturday:
-                        return "÷Ïèøìí";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Sunday:
-                        return "ìíèøìí";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     default:
                         return null;
                 }
@@ -251,19 +244,19 @@ public class TimeUtils
                 switch (DateTime.Now.DayOfWeek)
                 {
                     case DayOfWeek.Monday:
-                        return "¿ù¿äÀÏ";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Tuesday:
-                        return "È­¿äÀÏ";
+                        return "È­ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Wednesday:
-                        return "¼ö¿äÀÏ";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Thursday:
-                        return "¸ñ¿äÀÏ";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Friday:
-                        return "±Ý¿äÀÏ";
+                        return "ï¿½Ý¿ï¿½ï¿½ï¿½";
                     case DayOfWeek.Saturday:
-                        return "Åä¿äÀÏ";
+                        return "ï¿½ï¿½ï¿½ï¿½ï¿½";
                     case DayOfWeek.Sunday:
-                        return "ÀÏ¿äÀÏ";
+                        return "ï¿½Ï¿ï¿½ï¿½ï¿½";
                     default:
                         return null;
                 }

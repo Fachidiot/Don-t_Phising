@@ -79,8 +79,10 @@ public class App : Observer
     {
         AppManager.Instance.ResetApps();
         OSManager.Instance.MainScreen.gameObject.SetActive(false);
-        if (m_Target != null)
-            m_Target.gameObject.SetActive(true);
+
+        //if (m_Target != null)
+        //    m_Target.gameObject.SetActive(true);
+        AppManager.Instance.RunApp(gameObject.name);
     }
 
     public void EraseStack()

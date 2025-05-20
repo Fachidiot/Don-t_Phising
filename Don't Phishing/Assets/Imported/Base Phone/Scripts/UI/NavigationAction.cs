@@ -41,9 +41,9 @@ public class NavigationAction : MonoBehaviour
 
     public void EndApp()
     {
-        if (!m_TaskDone)    // Screen Capture CoroutineÁß¿£ return.
+        if (!m_TaskDone)    // Screen Capture Coroutineï¿½ß¿ï¿½ return.
             return;
-        if (m_ClickTime < m_MinClickTime)   // È¨È­¸é ÀÌµ¿
+        if (m_ClickTime < m_MinClickTime)   // È¨È­ï¿½ï¿½ ï¿½Ìµï¿½
         {
             m_AppName = AppManager.Instance.GetCurrentApp();
             if (m_AppName == string.Empty)
@@ -52,6 +52,7 @@ public class NavigationAction : MonoBehaviour
                 return;
             }
             StartCoroutine(ScreenCapture());
+            OSManager.Instance.BackgroundActive(true);
             m_TaskBar.transform.parent.gameObject.GetComponent<TaskManager>().AddTask(m_AppName);
         }
     }

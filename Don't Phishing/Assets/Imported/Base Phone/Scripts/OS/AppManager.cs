@@ -10,6 +10,8 @@ public class AppManager : Observer
 
     [SerializeField]
     private GameObject[] m_Apps;
+    [SerializeField]
+    private GameObject m_background;
 
     private void Awake()
     {
@@ -50,14 +52,16 @@ public class AppManager : Observer
 
     public void RunApp(string name)
     {
+        OSManager.Instance.BackgroundActive(false);
         foreach (var app in m_Apps)
         {
-            if (app.name == name)
+            if (app.name == name + " Screen")
             {
                 app.SetActive(true);
-                return;
+                break;
             }
         }
+        m_background.SetActive(true);
     }
 
     public void ResetApps()
@@ -66,6 +70,7 @@ public class AppManager : Observer
         {
             app.gameObject.SetActive(false);
         }
+        m_background.SetActive(false);
     }
 
     public override void Notify(Subject subject)
