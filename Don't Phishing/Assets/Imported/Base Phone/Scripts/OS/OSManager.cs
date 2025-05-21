@@ -52,6 +52,9 @@ public class OSManager : Subject
 
     private float m_Volume = 1f;
     private Profile m_profile;
+    private ScrollSnapEvent m_lockScreenEvent;
+    private ScrollSnapEvent m_controlScreenEvent;
+
 
     private void Awake()
     {
@@ -64,6 +67,9 @@ public class OSManager : Subject
         m_Instance = this;
         DontDestroyOnLoad(gameObject.transform.parent.gameObject);
 
+        m_lockScreenEvent = m_HomeScreen.GetComponent<ScrollSnapEvent>();
+        m_controlScreenEvent = m_ControlScreen.GetComponent<ScrollSnapEvent>();
+
         // Temp Profile
         m_profile = new Profile("User", "Sprites/Icons/channels4_profile");
     }
@@ -75,6 +81,20 @@ public class OSManager : Subject
         if (!m_MaskScreen.IsActive())
             m_MaskScreen.enabled = true;
         SetDate(m_Language);
+    }
+
+    private void Update()
+    {
+        if (m_lockScreenEvent.EventCheck())
+        {
+            m_MainScreen.SetActive(false);
+            m_MainScreen.GetComponent<Animator>().SetBool("IsLocked", true);
+        } else
+        {
+            m_MainScreen.SetActive(true);
+            m_MainScreen.GetComponent<Animator>().SetBool("IsLocked", false);
+        }
+        
     }
 
     public Profile GetProfile()

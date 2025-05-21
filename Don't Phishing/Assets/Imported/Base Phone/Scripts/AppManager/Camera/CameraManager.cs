@@ -41,9 +41,9 @@ public class CameraManager : BaseAppManager
     {
         if (m_PhotoScreen.activeSelf)
         {
-            if (m_CurIndex != m_Snap.GetContentPosition())
+            if (m_CurIndex != m_Snap.GetCurrentItem())
             {
-                m_CurIndex = m_Snap.GetContentPosition();
+                m_CurIndex = m_Snap.GetCurrentItem();
                 if (m_CurIndex != -1)
                     m_Title.text = m_Titles[m_CurIndex];
             }

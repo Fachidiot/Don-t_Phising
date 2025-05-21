@@ -48,7 +48,6 @@ public class ScrollSnap : MonoBehaviour
     private float m_SnapSpeed;
     [SerializeField]
     private int m_CurrentItem;
-    public int CurrentItem { get { return m_CurrentItem; } }
     public bool End = false;
 
     void Start()
@@ -102,7 +101,7 @@ public class ScrollSnap : MonoBehaviour
             Vertical(m_CurrentItem);
     }
 
-    public int GetContentPosition()
+    public int GetCurrentItem()
     {
         return m_CurrentItem;
     }

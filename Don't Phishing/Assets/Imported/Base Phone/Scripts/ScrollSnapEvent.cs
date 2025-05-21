@@ -14,18 +14,27 @@ public class ScrollSnapEvent : MonoBehaviour
         m_scrollSnap = GetComponent<ScrollSnap>();
     }
 
-    void Update()
+    public bool EventCheck()
     {
-        if (!m_scrollSnap.IsSnapped && m_scrollSnap.CurrentItem != m_enableIndex)
-        {
-            OSManager.Instance.MainScreen.SetActive(true);
-        }
+        // TODO : 인덱스에 따라서 애니메이션 결정해야함.
+        if (m_scrollSnap.GetCurrentItem() == m_enableIndex)
+            return false;    // 잠금
         else
-        {
-            if (m_scrollSnap.CurrentItem != m_enableIndex)
-            {
-                OSManager.Instance.MainScreen.SetActive(false);
-            }
-        }
+            return true;    // 잠금 해제
     }
+
+    //void Update()
+    //{
+    //    if (!m_scrollSnap.IsSnapped && m_scrollSnap.GetCurrentItem() != m_enableIndex)
+    //    {   // 
+    //        OSManager.Instance.MainScreen.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        if (m_scrollSnap.GetCurrentItem() != m_enableIndex)
+    //        {
+    //            OSManager.Instance.MainScreen.SetActive(false);
+    //        }
+    //    }
+    //}
 }

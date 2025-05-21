@@ -13,7 +13,7 @@ public class ShortsManager : MonoBehaviour
 
     void Update()   
     {
-        switch (-m_SnapManager.GetContentPosition())
+        switch (-m_SnapManager.GetCurrentItem())
         {
             case 0:
                 m_Layouts[0].Play();
