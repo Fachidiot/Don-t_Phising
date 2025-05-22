@@ -45,6 +45,7 @@ public class NavigationAction : MonoBehaviour
             return;
         if (m_ClickTime < m_MinClickTime)   // Ȩȭ�� �̵�
         {
+            OSManager.Instance.BackgroundActive(true);
             m_AppName = AppManager.Instance.GetCurrentApp();
             if (m_AppName == string.Empty)
             {
@@ -52,7 +53,6 @@ public class NavigationAction : MonoBehaviour
                 return;
             }
             StartCoroutine(ScreenCapture());
-            OSManager.Instance.BackgroundActive(true);
             m_TaskBar.transform.parent.gameObject.GetComponent<TaskManager>().AddTask(m_AppName);
         }
     }
@@ -60,9 +60,8 @@ public class NavigationAction : MonoBehaviour
     private void ResetApps()
     {
         AppManager.Instance.ResetApps();
-        if (!OSManager.Instance.HomeScreen.activeSelf)
-            OSManager.Instance.HomeScreen.SetActive(true);
-        OSManager.Instance.MainScreen.gameObject.SetActive(true);
+        OSManager.Instance.HomeScreenActive(true);
+        OSManager.Instance.MainScreenActive(true);
         m_TaskDone = true;
     }
 

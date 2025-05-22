@@ -53,6 +53,7 @@ public class AppManager : Observer
     public void RunApp(string name)
     {
         OSManager.Instance.BackgroundActive(false);
+        OSManager.Instance.MainScreenActive(false);
         foreach (var app in m_Apps)
         {
             if (app.name == name + " Screen")

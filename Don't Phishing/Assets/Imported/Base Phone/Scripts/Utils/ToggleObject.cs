@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Toggle : MonoBehaviour
+public class ToggleObject : MonoBehaviour
 {
     private bool m_Toggled = false;
     public void Toggled()

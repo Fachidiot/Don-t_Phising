@@ -8,6 +8,7 @@ public class ScrollSnapEvent : MonoBehaviour
     private int m_enableIndex = 1;
 
     private ScrollSnap m_scrollSnap;
+    private int m_curIndex;
 
     void Start()
     {
@@ -16,25 +17,18 @@ public class ScrollSnapEvent : MonoBehaviour
 
     public bool EventCheck()
     {
-        // TODO : ÀÎµ¦½º¿¡ µû¶ó¼­ ¾Ö´Ï¸ÞÀÌ¼Ç °áÁ¤ÇØ¾ßÇÔ.
-        if (m_scrollSnap.GetCurrentItem() == m_enableIndex)
-            return false;    // Àá±Ý
-        else
-            return true;    // Àá±Ý ÇØÁ¦
+        if (m_curIndex == m_scrollSnap.GetCurrentItem())
+            return false;
+        m_curIndex = m_scrollSnap.GetCurrentItem();
+        return true;
     }
 
-    //void Update()
-    //{
-    //    if (!m_scrollSnap.IsSnapped && m_scrollSnap.GetCurrentItem() != m_enableIndex)
-    //    {   // 
-    //        OSManager.Instance.MainScreen.SetActive(true);
-    //    }
-    //    else
-    //    {
-    //        if (m_scrollSnap.GetCurrentItem() != m_enableIndex)
-    //        {
-    //            OSManager.Instance.MainScreen.SetActive(false);
-    //        }
-    //    }
-    //}
+    public bool GetEvent()
+    {
+        // TODO : ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½.
+        if (m_scrollSnap.GetCurrentItem() == m_enableIndex)
+            return true;    // ï¿½ï¿½ï¿½
+        else
+            return false;    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    }
 }

@@ -2,8 +2,10 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-public class ScrollSnap : MonoBehaviour
+public class ScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 {
     [Header("SnapSetting")]
     [SerializeField]
@@ -49,6 +51,8 @@ public class ScrollSnap : MonoBehaviour
     [SerializeField]
     private int m_CurrentItem;
     public bool End = false;
+
+    private bool m_isDragging = false;
 
     void Start()
     {
@@ -116,6 +120,8 @@ public class ScrollSnap : MonoBehaviour
                 m_CurrentItem = item;
         }
 
+        if (m_isDragging)
+            return;
         if (m_ScrollRect.velocity.magnitude < 1000 && !m_IsSnapped)
         {
             m_ScrollRect.velocity = Vector2.zero;
@@ -152,6 +158,8 @@ public class ScrollSnap : MonoBehaviour
                 m_CurrentItem = item;
         }
 
+        if (m_isDragging)
+            return;
         if (m_ScrollRect.velocity.magnitude < 1000 && !m_IsSnapped)
         {
             m_ScrollRect.velocity = Vector2.zero;
@@ -189,5 +197,15 @@ public class ScrollSnap : MonoBehaviour
     {
         if (m_ItemNames.Length != 0)
             m_NameLabel.text = m_ItemNames[index];
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        m_isDragging = true;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        m_isDragging = false;
     }
 }

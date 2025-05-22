@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.ProBuilder.MeshOperations;
 
 public class CalculateManager : BaseAppManager
@@ -25,6 +26,54 @@ public class CalculateManager : BaseAppManager
         Clear();
     }
 
+    private void Update()
+    {
+        // Function Inputs
+        if (Input.GetKeyDown(KeyCode.Backspace))
+            Delete();
+        else if (Input.GetKeyDown(KeyCode.Return))
+            Equal();
+        else if (Input.GetKeyDown(KeyCode.Delete))
+            AllClear();
+        else
+            InputKeyCode();
+    }
+
+    private void InputKeyCode()
+    {
+        string temp = Input.inputString;
+        if (temp == string.Empty)
+            return;
+
+        int i = 0;
+        if (int.TryParse(temp, out i))
+            InputNum(temp);
+        else
+        {
+            switch (temp)
+            {
+                case "+":
+                    EndInput(1);
+                    break;
+                case "-":
+                    EndInput(2);
+                    break;
+                case "*":
+                    EndInput(3);
+                    break;
+                case "/":
+                    EndInput(4);
+                    break;
+                case "%":
+                    EndInput(5);
+                    break;
+                default:
+                    Debug.Log(temp);
+                    break;
+            }
+        }
+    }
+
     /// <summary>
     /// TODO: 지우기 기능 만들기.
     /// 1. m_last의 value확인 (Empty or not)
@@ -35,7 +84,7 @@ public class CalculateManager : BaseAppManager
 
     #region Button Funcs
     // 수 입력 함수
-    public void Input(string num)
+    public void InputNum(string num)
     {
         m_last += num;
 
@@ -198,7 +247,7 @@ public class CalculateManager : BaseAppManager
     {
         return (opr == OPR.MODULAR ? "%" : opr == OPR.MULTIPLY ? "x" : opr == OPR.DIVIDE ? "/" : opr == OPR.PLUS ? "+" : "-");
     }
-    // Input TMP_Text Refresh
+    // InputNum TMP_Text Refresh
     private void InputTextUpdate(string num)
     {
         if (m_tmpInput.text == "0")

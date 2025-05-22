@@ -23,13 +23,10 @@ public class OSManager : Subject
     private Mask m_MaskScreen;
     [SerializeField]
     private GameObject m_MainScreen;
-    public GameObject MainScreen { get { return m_MainScreen; } }
     [SerializeField]
     private GameObject m_HomeScreen;
-    public GameObject HomeScreen { get { return m_HomeScreen; } }
     [SerializeField]
     private GameObject m_ControlScreen;
-    public GameObject ControlScreen { get { return m_ControlScreen; } }
     [SerializeField]
     private Image m_Brightness;
     [SerializeField]
@@ -52,9 +49,6 @@ public class OSManager : Subject
 
     private float m_Volume = 1f;
     private Profile m_profile;
-    private ScrollSnapEvent m_lockScreenEvent;
-    private ScrollSnapEvent m_controlScreenEvent;
-
 
     private void Awake()
     {
@@ -66,9 +60,6 @@ public class OSManager : Subject
         }
         m_Instance = this;
         DontDestroyOnLoad(gameObject.transform.parent.gameObject);
-
-        m_lockScreenEvent = m_HomeScreen.GetComponent<ScrollSnapEvent>();
-        m_controlScreenEvent = m_ControlScreen.GetComponent<ScrollSnapEvent>();
 
         // Temp Profile
         m_profile = new Profile("User", "Sprites/Icons/channels4_profile");
@@ -83,18 +74,14 @@ public class OSManager : Subject
         SetDate(m_Language);
     }
 
-    private void Update()
+    public void HomeScreenActive(bool active)
     {
-        if (m_lockScreenEvent.EventCheck())
-        {
-            m_MainScreen.SetActive(false);
-            m_MainScreen.GetComponent<Animator>().SetBool("IsLocked", true);
-        } else
-        {
-            m_MainScreen.SetActive(true);
-            m_MainScreen.GetComponent<Animator>().SetBool("IsLocked", false);
-        }
-        
+        m_HomeScreen.SetActive(active);
+    }
+
+    public void MainScreenActive(bool active)
+    {
+        m_MainScreen.gameObject.SetActive(active);
     }
 
     public Profile GetProfile()
