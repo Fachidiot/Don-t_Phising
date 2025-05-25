@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06863b70fcd6ac64ea509cd21046ab25, type: 3}
+  m_Name: Capstone _ch01_Player_event
+  m_EditorClassIdentifier: 
+  eventName: 
+  lines:
+  - id: 9000
+    speaker: player
+    text: "\uC5D0\uD734 \uC800\uB7F0\uAC78 \uC544\uC9C1\uB3C4 \uB2F9\uD55C\uB2E4\uB294
+      \uB9D0\uC774\uB124?"
+    choices: 
+    nextId: 9001
+    tag: 
+  - id: 9001
+    speaker: player
+    text: "\uB09C \uBB50 \uAD1C\uCC2E\uACA0\uC9C0"
+    choices: 
+    nextId: 9002
+    tag: 
+  - id: 9002
+    speaker: player
+    text: "[@Water_A \uB2D8\uC774 \uD314\uB85C\uC6B0\uD588\uC2B5\uB2C8\uB2E4]"
+    choices: 
+    nextId: 9003
+    tag: ANIM:Wave
+  - id: 9003
+    speaker: player
+    text: "\uBB50\uC57C? \uB204\uAD70\uB370 \uB0A0 \uD314\uB85C\uC6B0\uD588\uC9C0?"
+    choices: 
+    nextId: 9004
+    tag: 
+  - id: 9004
+    speaker: player
+    text: "\uC5E5 \uC5C4\uCCAD \uC608\uC058\uB124? \uC65C \uB0A0 \uD314\uB85C\uC6B0\uD588\uC9C0..\uBAA8\uB974\uACA0\uB124
+      \uC798"
+    choices: 
+    nextId: 9005
+    tag: 
+  - id: 9005
+    speaker: player
+    text: "[@Water_A \uB2D8\uC5D0\uAC8C DM\uC774 \uB3C4\uCC29\uD588\uC2B5\uB2C8\uB2E4]"
+    choices: 
+    nextId: 0
+    tag: ANIM:Wave, Wait:Stop

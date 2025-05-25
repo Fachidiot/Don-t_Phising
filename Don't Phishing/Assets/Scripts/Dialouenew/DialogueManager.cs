@@ -104,11 +104,10 @@ public class DialogueManager : MonoBehaviour
     // DialogueManager.cs 내부
     private void ParseChoices(string raw)
     {
-        SMSManager.Instance.ClearFixedButtons();
-
         if (string.IsNullOrWhiteSpace(raw))
         {
             Debug.LogWarning("[DialogueManager] 선택지 문자열이 비어 있음");
+            SMSManager.Instance.ClearFixedButtons();
             return;
         }
 
@@ -140,9 +139,6 @@ public class DialogueManager : MonoBehaviour
 
         SMSManager.Instance.DisplayChoiceButtons(choices.Take(2).ToList());
     }
-
-
-
 
     /// <summary>
     /// 대화 종료
@@ -185,6 +181,16 @@ public class DialogueManager : MonoBehaviour
                 dialogueMap[line.id] = line;
             else
                 Debug.LogWarning($"[DialogueManager] 중복된 대사 ID 발견: {line.id}");
+        }
+    }
+
+    public void ShowSingleLine(Dialogue line)
+    {
+        if (typewriterCoroutine != null)
+        {
+            StopCoroutine(typewriterCoroutine);
+
+            typewriterCoroutine = StartCoroutine(TypeTextCoroutine(line));
         }
     }
 }

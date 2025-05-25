@@ -109,6 +109,7 @@ public class SMSManager : BaseAppManager
         SetText();
         ResetApp();
         Init();
+        ClearFixedButtons();
     }
 
     private void Init()
@@ -348,26 +349,29 @@ public class SMSManager : BaseAppManager
             SaveMessage(text, true);
 
             // 선택지 버튼 제거
+            ClearFixedButtons();
 
             // 다음 대사로 진행
             DialogueManager.Instance.ProceedNext(nextId);
         });
-    }
 
-
-    IEnumerator TypeText(string message, bool isMine)
-    {
-        string currentText = "";
-        foreach (char c in message)
+/*        button.onClick.AddListener(() =>
         {
-            currentText += c;
+            ClearFixedButtons();
 
-            yield return new WaitForSeconds(0.03f);
-        }
-        SaveMessage(currentText, isMine);
+            Dialogue reply = new Dialogue
+            {
+                id = -1, // 선택지엔 ID 없어도 됨
+                speaker = "player",
+                text = text,
+                choices = "",
+                nextId = nextId,
+                tag = ""
+            };
+
+            DialogueManager.Instance.ShowSingleLine(reply); // 이 안에서 코루틴 실행 + 다음 대사도 진행됨
+        });*/
     }
-
-
 
 
     #endregion
