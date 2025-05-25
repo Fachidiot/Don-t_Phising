@@ -122,7 +122,7 @@ public class ScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         if (m_isDragging)
             return;
-        if (m_ScrollRect.velocity.magnitude < 1000 && !m_IsSnapped)
+        if (m_ScrollRect.velocity.magnitude < 100 && !m_IsSnapped)
         {
             m_ScrollRect.velocity = Vector2.zero;
             m_SnapSpeed += m_SnapForce * Time.deltaTime;
@@ -134,13 +134,13 @@ public class ScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             if (m_Indicator != null)
                 m_Indicator.ChangeIndicator(m_CurrentItem);
 
-            if (Mathf.RoundToInt(m_ContentPanel.localPosition.x) == 0 - (m_CurrentItem * (m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing)))
+            if (Mathf.Round(m_ContentPanel.localPosition.x) == 0 - (m_CurrentItem * (m_SampleListItme.rect.width + m_HorizontalLayoutGroup.spacing)))
             {
                 m_SnapSpeed = 0;
                 m_IsSnapped = true;
             }
         }
-        if (m_ScrollRect.velocity.magnitude > 200)
+        if (m_ScrollRect.velocity.magnitude > 1)
         {
             SetItemName("_________");
             m_IsSnapped = false;
@@ -160,7 +160,7 @@ public class ScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         if (m_isDragging)
             return;
-        if (m_ScrollRect.velocity.magnitude < 1000 && !m_IsSnapped)
+        if (m_ScrollRect.velocity.magnitude < 100 && !m_IsSnapped)
         {
             m_ScrollRect.velocity = Vector2.zero;
             m_SnapSpeed += m_SnapForce * Time.deltaTime;
@@ -173,13 +173,13 @@ public class ScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             if (m_Indicator != null)
                 m_Indicator.ChangeIndicator(m_CurrentItem);
 
-            if (Mathf.RoundToInt(m_ContentPanel.localPosition.y) == 0 - (m_CurrentItem * (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing)))
+            if (Mathf.Round(m_ContentPanel.localPosition.y) == 0 - (m_CurrentItem * (m_SampleListItme.rect.height + m_VerticalLayoutGroup.spacing)))
             {
                 m_SnapSpeed = 0;
                 m_IsSnapped = true;
             }
         }
-        if (m_ScrollRect.velocity.magnitude > 200)
+        if (m_ScrollRect.velocity.magnitude > 1)
         {
             SetItemName("_________");
             m_IsSnapped = false;
@@ -202,6 +202,7 @@ public class ScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public void OnBeginDrag(PointerEventData eventData)
     {
         m_isDragging = true;
+        m_IsSnapped = false;
     }
 
     public void OnEndDrag(PointerEventData eventData)

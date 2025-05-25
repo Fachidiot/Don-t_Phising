@@ -78,10 +78,6 @@ public class App : Observer
     private void RunApp()
     {
         AppManager.Instance.ResetApps();
-        OSManager.Instance.MainScreenActive(false);
-
-        //if (m_Target != null)
-        //    m_Target.gameObject.SetActive(true);
         AppManager.Instance.RunApp(gameObject.name);
     }
 

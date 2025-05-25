@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.ProBuilder.MeshOperations;
 
 public class CalculateManager : BaseAppManager
 {
@@ -197,15 +195,15 @@ public class CalculateManager : BaseAppManager
     public void Reverse()
     {
         return;
-        if (m_last.StartsWith('('))
-        {   // 음수
-            m_last = m_last.Substring(2, m_last.Length - 1);
-            InputTextUpdate(m_last);
-        } else
-        {   // 양수
-            m_last = "(-" + m_last + ")";
-            InputTextUpdate(m_last);
-        }
+        //if (m_last.StartsWith('('))
+        //{   // 음수
+        //    m_last = m_last.Substring(2, m_last.Length - 1);
+        //    InputTextUpdate(m_last);
+        //} else
+        //{   // 양수
+        //    m_last = "(-" + m_last + ")";
+        //    InputTextUpdate(m_last);
+        //}
     }
 
     // AC함수

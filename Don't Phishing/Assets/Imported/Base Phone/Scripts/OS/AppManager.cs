@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class AppManager : Observer
@@ -45,15 +46,14 @@ public class AppManager : Observer
         foreach (var app in m_Apps)
         {
             if (app.activeSelf)
-                return app.name;
+                return app.GetComponent<BaseAppManager>().GetName();
         }
         return string.Empty;
     }
 
     public void RunApp(string name)
     {
-        OSManager.Instance.BackgroundActive(false);
-        OSManager.Instance.MainScreenActive(false);
+        OSManager.Instance.RunApp();
         foreach (var app in m_Apps)
         {
             if (app.name == name + " Screen")
