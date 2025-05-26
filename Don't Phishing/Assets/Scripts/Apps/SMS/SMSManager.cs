@@ -231,14 +231,26 @@ public class SMSManager : BaseAppManager
     private GameObject InstantiateMessage(Message message, bool isMine)
     {
         GameObject go;
+
         if (isMine)
+        {
             go = Instantiate(m_PlayerMessagePrefab, m_MessageParent.transform);
+        }
         else
         {
-            if (message.message.Contains('/'))
+            //  이미지 리소스가 존재하는지 검사
+            Sprite sprite = Resources.Load<Sprite>(message.message);
+
+            if (sprite != null)
+            {
+                // 이미지 메시지 프리팹
                 go = Instantiate(m_IMGMessagePrefab, m_MessageParent.transform);
+            }
             else
+            {
+                // 일반 텍스트 메시지 프리팹
                 go = Instantiate(m_NPCMessagePrefab, m_MessageParent.transform);
+            }
         }
 
         if (go != null)
@@ -249,6 +261,7 @@ public class SMSManager : BaseAppManager
 
         return go;
     }
+
     #endregion
 
     private void DeletePrev()

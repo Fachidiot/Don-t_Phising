@@ -46,7 +46,7 @@ MonoBehaviour:
     text: "\uB2F9\uC5F0\uD558\uC9C0; \uC774 \uC0AC\uC9C4, \uAE30\uC5B5\uB098?"
     choices: 
     nextId: 1005
-    tag: 
+    tag: 'Image:npc '
   - id: 1005
     speaker: NPC1
     text: "\uB098 \uC774\uB54C\uB294 \uC880 \uB0B4\uC131\uC801\uC774\uC5C8\uC5B4\uC11C..\u314E"

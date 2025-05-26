@@ -76,9 +76,20 @@ public class TagHandler
                         Debug.LogWarning($"[TagHandler] ANIM 실패: Animator 또는 값 없음 ({tagValue})");
                     break;
 
+                case "Image":
+                    if (!string.IsNullOrEmpty(tagValue))
+                    {
+                        SMSManager.Instance.SaveMessage(tagValue, false);   //이미지 이름을 메세지로
+                    }
+                    else Debug.Log("taghander 이미지 태그 누락");
+
+                    break;
+
                 default:
                     Debug.LogWarning($"[TagHandler] 지원하지 않는 태그: {tagType}");
                     break;
+
+
             }
         }
 
