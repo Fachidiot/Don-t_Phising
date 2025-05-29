@@ -15,15 +15,19 @@ public class SMS_Layout : MonoBehaviour
     private TMP_Text m_TMPMessage;
     [SerializeField]
     private TMP_Text m_TMPDate;
+    [SerializeField]
+    private DialogueEvent m_DialogueEvent;
     
-    private List<Message> m_Message;
+    private List<Message> m_Message; 
     private int m_Index = -1;
 
     private void Awake()
     {
         m_Message = new List<Message>();
         m_Button.onClick.AddListener(() => SMSManager.Instance.LoadMessage(m_Message));
+        m_Button.onClick.AddListener(() => DialogueManager.Instance.StartDialogue(m_DialogueEvent));
     }
+
 
     public void SetUp(Message message)
     {

@@ -65,7 +65,7 @@ public class CallManager : BaseAppManager
 
     // TODO : 추후 게임 전체(휴대폰 제외) Localization을 위해 Contacts-en, Contacts-kr, Contacts-jp이런식으로 구현하면 좋을듯 싶음.
     private string m_FileName = "Contacts.json";
-    private string m_Path = Application.dataPath + "/Json/Contacts/";
+    private string m_Path = Application.dataPath + "/Resources/Json/Contacts/";
 
     private ContactDB m_ContactDB = new ContactDB();
     private Dictionary<Contact, DateTime> m_Recents;
