@@ -15,8 +15,6 @@ public class SMS_Layout : MonoBehaviour
     private TMP_Text m_TMPMessage;
     [SerializeField]
     private TMP_Text m_TMPDate;
-    [SerializeField]
-    private TextAsset m_InkFile;
     
     private List<Message> m_Message;
     private int m_Index = -1;
@@ -25,12 +23,6 @@ public class SMS_Layout : MonoBehaviour
     {
         m_Message = new List<Message>();
         m_Button.onClick.AddListener(() => SMSManager.Instance.LoadMessage(m_Message));
-        m_Button.onClick.AddListener(() => DialogueManager.Instance.EnterDialogueMode(m_InkFile));
-    }
-
-    public void SetInkFile(TextAsset inkFile)
-    {
-        m_InkFile = inkFile;
     }
 
     public void SetUp(Message message)

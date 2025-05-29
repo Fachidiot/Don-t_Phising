@@ -14,7 +14,7 @@ public class NavigationAction : MonoBehaviour
     //private float m_ClickTime;
     //private float m_MinClickTime = 0.7f;
     //private bool m_IsClicked;
-    private bool m_TaskDone = true;
+    //private bool m_TaskDone = true;
     private string m_AppName;
 
     //private void Update()
