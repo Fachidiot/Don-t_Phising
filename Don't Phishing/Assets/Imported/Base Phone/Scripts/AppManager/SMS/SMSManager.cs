@@ -308,11 +308,8 @@ public class SMSManager : BaseAppManager
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() =>
             {
-                //Debug.Log(text);
-                /* 1. Message 타입 객체를 하나 생성해서 거기 값을 넣어줘. 그리고 그걸 
-                 * 2. 
-                 */
                 SaveMessage(text, true);
+
                 ClearFixedButtons();
                 DialogueManager.Instance.ProceedNext(nextId);
             });
@@ -344,10 +341,6 @@ public class SMSManager : BaseAppManager
 
         // 텍스트 설정
         TMP_Text tmpText = buttonObj.GetComponentInChildren<TMP_Text>();
-        if (tmpText != null)
-            tmpText.text = text;
-        else
-            Debug.LogWarning("버튼에 TMP_Text 컴포넌트가 없습니다.");
 
         // 버튼 클릭 이벤트 설정
         Button button = buttonObj.GetComponent<Button>();
@@ -363,29 +356,13 @@ public class SMSManager : BaseAppManager
             // 플레이어 메시지 저장
             SaveMessage(text, true);
 
+
             // 선택지 버튼 제거
             ClearFixedButtons();
 
             // 다음 대사로 진행
             DialogueManager.Instance.ProceedNext(nextId);
         });
-
-/*        button.onClick.AddListener(() =>
-        {
-            ClearFixedButtons();
-
-            Dialogue reply = new Dialogue
-            {
-                id = -1, // 선택지엔 ID 없어도 됨
-                speaker = "player",
-                text = text,
-                choices = "",
-                nextId = nextId,
-                tag = ""
-            };
-
-            DialogueManager.Instance.ShowSingleLine(reply); // 이 안에서 코루틴 실행 + 다음 대사도 진행됨
-        });*/
     }
 
 

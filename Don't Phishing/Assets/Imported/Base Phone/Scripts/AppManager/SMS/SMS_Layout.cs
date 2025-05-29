@@ -41,6 +41,7 @@ public class SMS_Layout : MonoBehaviour
             m_TMPMessage.text = m_Message[m_Index].message;
 
         m_TMPDate.text = m_Message[m_Index].date;
+        //m_DialogueEvent = 
     }
 
     public Message GetMessage()

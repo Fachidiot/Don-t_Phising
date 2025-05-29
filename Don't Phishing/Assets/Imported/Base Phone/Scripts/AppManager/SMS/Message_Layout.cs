@@ -34,13 +34,11 @@ public class Message_Layout : MonoBehaviour
         ForceLayoutRefresh();
     }
 
-    //새로 추가된 오버로드 함수
     public void SetUp(string text)
     {
         if (m_TMPMessage)
         {
             m_TMPMessage.text = text;
-            Debug.Log(text);
 
             if (m_ContentSizeFitter != null)
             {

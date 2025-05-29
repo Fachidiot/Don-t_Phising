@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,6 @@ public class DialogueManager : MonoBehaviour
     private int currentId;
     private bool isWaiting;
     private Coroutine typewriterCoroutine;
-    private SMSManager smsManager;
 
     private void Awake()
     {
@@ -37,8 +37,6 @@ public class DialogueManager : MonoBehaviour
 
         if (tagHandler == null)
             tagHandler = new TagHandler(); // Animator나 CoroutineRunner가 필요하면 주입
-        if (smsManager == null)
-            smsManager = GetComponent<SMSManager>();
     }
 
     //DialogueEvent 시작
@@ -91,7 +89,7 @@ public class DialogueManager : MonoBehaviour
         {
             currentText += c;
             SMSManager.Instance.UpdateLastNPCMessage(currentText);
-            Debug.Log(currentText);
+            //Debug.Log(currentText);
             yield return new WaitForSeconds(0.03f);
         }
 
@@ -192,7 +190,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void ShowSingleLine(Dialogue line)
+/*    public void ShowSingleLine(Dialogue line)
     {
         if (typewriterCoroutine != null)
         {
@@ -200,5 +198,5 @@ public class DialogueManager : MonoBehaviour
 
             typewriterCoroutine = StartCoroutine(TypeTextCoroutine(line));
         }
-    }
+    }*/
 }

@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TMPMessage: {fileID: 4579175704431863769}
+  m_Image: {fileID: 0}
   m_ContentSizeFitter: {fileID: 0}
 --- !u!1 &2604109491486974400
 GameObject:
