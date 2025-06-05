@@ -26,17 +26,13 @@ public class OSManager : Subject
     public static OSManager Instance { get { return m_Instance; } }
 
     [Header("Screens")]
-    [SerializeField]
-    private GameObject m_mainScreen;
-    [SerializeField]
-    private GameObject m_lockScreen;
-    [SerializeField]
-    private GameObject m_controlScreen;
-    [SerializeField]
-    private Image m_brightness;
+    [SerializeField] private Animator m_mainAnimator;
+    [SerializeField] private GameObject m_mainScreen;
+    [SerializeField] private GameObject m_lockScreen;
+    [SerializeField] private GameObject m_controlScreen;
+    [SerializeField] private Image m_brightness;
     [Header("Background")]
-    [SerializeField]
-    private BackgroundManager m_background;
+    [SerializeField] private BackgroundManager m_background;
 
     [Header("System Language")]
     [SerializeField]
@@ -86,33 +82,34 @@ public class OSManager : Subject
 
     private void Update()
     {
+        CheckLockStatus();
         CheckStatus();
 
         if (m_isLocked)
         {   // screen is locked.
-            m_mainScreen.GetComponent<Animator>().SetBool("IsLocked", m_isLocked);
+            m_mainAnimator.SetBool("IsLocked", m_isLocked);
         }
         else
         {   // screen is unlock.
-            m_mainScreen.GetComponent<Animator>().SetBool("IsLocked", m_isLocked);
+            m_mainAnimator.SetBool("IsLocked", m_isLocked);
         }
 
         switch (m_currentStatus)
         {
             case Status.Idle:
-                m_bottombar.SetActive(false);
+                //m_bottombar.SetActive(false);
                 m_mainScreen.SetActive(true);
                 break;
             case Status.Notification:
-                m_bottombar.SetActive(true);
+                //m_bottombar.SetActive(true);
                 m_mainScreen.SetActive(false);
                 break;
             case Status.Control:
-                m_bottombar.SetActive(true);
+                //m_bottombar.SetActive(true);
                 m_mainScreen.SetActive(false);
                 break;
             case Status.RunApp:
-                m_bottombar.SetActive(true);
+                //m_bottombar.SetActive(true);
                 m_mainScreen.SetActive(false);
                 break;
         }
@@ -121,6 +118,14 @@ public class OSManager : Subject
     public Profile GetProfile()
     {
         return m_profile;
+    }
+
+    private void CheckLockStatus()
+    {
+        if (m_isLocked && m_lockSnap.GetCurrentItem() == 1)
+        {
+            m_isLocked = false;
+        }
     }
 
     private void CheckStatus()
@@ -199,7 +204,7 @@ public class OSManager : Subject
     }
     public float GetCurrentBrightness()
     {
-        return m_brightness.color.a;
+        return 1 - m_brightness.color.a;
     }
     #endregion
     #region Times

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class StatusBar : MonoBehaviour
 {
-    [SerializeField]
-    private TMP_Text m_Time;
+    [SerializeField] private TMP_Text m_Time;
+    [SerializeField] private GameObject m_wifi;
 
     void Update()
     {

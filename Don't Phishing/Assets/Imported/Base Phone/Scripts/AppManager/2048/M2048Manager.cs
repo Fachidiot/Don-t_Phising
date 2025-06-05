@@ -53,7 +53,7 @@ public class M2048Manager : BaseAppManager
                 winScreen.SetActive(true);
                 break;
             case Game2048State.Lose:
-                winScreen.SetActive(true);
+                loseScreen.SetActive(true);
                 break;
             default:
                 break;
@@ -101,7 +101,7 @@ public class M2048Manager : BaseAppManager
             SpawnBlock(node, UnityEngine.Random.value > 0.8f ? 4 : 2);
         }
 
-        if (freeNodes.Count() == 1)
+        if (freeNodes.Count() == 1 && !CanMerge())
         {   // Lose the game.
             ChangeState(Game2048State.Lose);
             return; 
@@ -172,6 +172,45 @@ public class M2048Manager : BaseAppManager
 
             ChangeState(Game2048State.SpawningBlocks);
         });
+    }
+
+    bool CanMerge()
+    {
+        List<Block> orderedBlocks = blockList.OrderBy(b => b.Pos.x).ThenBy(b => b.Pos.y).ToList();
+
+        return CheckDirection(Vector2.left, orderedBlocks) || CheckDirection(Vector2.right, orderedBlocks)
+            || CheckDirection(Vector2.up, orderedBlocks) || CheckDirection(Vector2.down, orderedBlocks); 
+    }
+
+    bool CheckDirection(Vector2 _direction, List<Block> _orderedBlocks)
+    {
+        if (_direction == Vector2.right || _direction == Vector2.up) _orderedBlocks.Reverse();
+
+        foreach (Block block in _orderedBlocks)
+        {
+            Node next = block.node;
+            do
+            {
+                block.SetBlock(next);
+
+                Node possibleNode = GetNodeAtPosition(next.Pos + _direction * scale);
+                if (possibleNode != null)
+                {
+                    // If it's possible to merge
+                    if (possibleNode.OccupiedBlock != null && possibleNode.OccupiedBlock.CanMerge(block.value))
+                        return true;
+                    // Otherwise, can we move to this spot?
+                    else if (possibleNode.OccupiedBlock == null)
+                        next = possibleNode;
+
+                    // None hit? End do while loop.
+                }
+
+            }
+            while (next != block.node);
+        }
+
+        return false;
     }
 
     void MergeBlocks(Block baseBlock, Block mergingBlock)

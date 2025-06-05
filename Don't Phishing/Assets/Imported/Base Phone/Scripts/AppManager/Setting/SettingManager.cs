@@ -14,9 +14,18 @@ public class SettingManager : BaseAppManager
     [SerializeField]
     private LText m_SettingTitleText;
 
+    [SerializeField] private Setting m_setting;
+    public Setting Setting { get { return m_setting; } set { m_setting = value; } }
+
     private void Start()
     {
         SetText();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 
     public override void ResetApp()
@@ -33,10 +42,41 @@ public class SettingManager : BaseAppManager
         m_SettingTitle.text = m_SettingTitleText.GetText(OSManager.Instance.GetLanguage());
         m_Profile.SetProfile();
     }
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public struct Setting
+{
+    bool AirplaneMode;
+
+    bool WiFi;
+    List<string> WiFiList;
+
+    bool Bluetooth;
+    List<string> BluetoothList;
+
+    bool Cellular;
+
+    bool Battery_Percent;
+    bool Battery_LowMode;
+    List<short> BatteryGraph;
+
+    bool DarkMode;
+    bool AutoMode;
+    short TextSize;
+    bool TextBold;
+
+    List<string> BackgroundList;
+    // Control Center Presets
+
+    // Camera Presets
+
+    // Notification Settings
+
+    bool Haptic;
+    AudioClip CallRing;
+    AudioClip SMSRing;
+    bool LockSound;
+
+    bool UsingPassword;
+    string Password;
 }

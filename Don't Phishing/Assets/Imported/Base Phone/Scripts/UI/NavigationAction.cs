@@ -75,6 +75,8 @@ public class NavigationAction : MonoBehaviour
         m_BackgroundCaptureCamera.gameObject.SetActive(false);
 
         byte[] byteArray = texture2D.EncodeToPNG();
+        Debug.Log(m_AppName);
+        Debug.Log(m_AppName[0]);
         string savePath = Application.dataPath + "/Resources/Background/" + m_AppName + ".png";
         File.WriteAllBytes(savePath, byteArray);
 
