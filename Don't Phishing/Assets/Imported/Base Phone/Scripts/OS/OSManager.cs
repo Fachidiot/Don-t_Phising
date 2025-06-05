@@ -90,11 +90,11 @@ public class OSManager : Subject
 
         if (m_isLocked)
         {   // screen is locked.
-
+            m_mainScreen.GetComponent<Animator>().SetBool("IsLocked", m_isLocked);
         }
         else
         {   // screen is unlock.
-
+            m_mainScreen.GetComponent<Animator>().SetBool("IsLocked", m_isLocked);
         }
 
         switch (m_currentStatus)

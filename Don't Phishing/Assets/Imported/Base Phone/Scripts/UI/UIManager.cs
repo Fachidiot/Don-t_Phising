@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
 
     private void Inputs()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (!m_Init)
             {
