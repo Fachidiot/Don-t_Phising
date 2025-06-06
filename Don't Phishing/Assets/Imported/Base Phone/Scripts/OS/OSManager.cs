@@ -101,15 +101,15 @@ public class OSManager : Subject
                 m_mainScreen.SetActive(true);
                 break;
             case Status.Notification:
-                //m_bottombar.SetActive(true);
+                m_bottombar.SetActive(true);
                 m_mainScreen.SetActive(false);
                 break;
             case Status.Control:
-                //m_bottombar.SetActive(true);
+                m_bottombar.SetActive(true);
                 m_mainScreen.SetActive(false);
                 break;
             case Status.RunApp:
-                //m_bottombar.SetActive(true);
+                m_bottombar.SetActive(true);
                 m_mainScreen.SetActive(false);
                 break;
         }

@@ -1,22 +1,21 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Setting_Layout : MonoBehaviour
 {
+    [Header("LText")]
     [SerializeField] private TMP_Text m_TMPText;
     [SerializeField] private LText m_Text;
 
-    [SerializeField] private List<string> m_settingList;
-    public List<string> Name { get { return m_settingList; } set { m_settingList = value; } }
-    private List<bool> m_valueList;
-    public List<bool> Value { get { return m_valueList; } set { m_valueList = value; } }
+    [Header("Settings")]
+    [SerializeField] private GameObject m_ViewPanel;
 
     private void Start()
     {
-        m_valueList = new List<bool>();
-        for (int i = 0; i < m_settingList.Count; i++)
-            m_valueList.Add(false);
+        if (null != m_ViewPanel)    // Toggle is not need to ViewPanel Event.
+            GetComponentInChildren<Button>().onClick.AddListener(() => m_ViewPanel.SetActive(true));
     }
 
     public void SetText()
