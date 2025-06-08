@@ -939,6 +939,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 382476260}
+  - component: {fileID: 382476262}
   - component: {fileID: 382476261}
   m_Layer: 0
   m_Name: DialougeManager
@@ -971,9 +972,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 382476259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82cba949c45b2dc4580d28bfbf3ab536, type: 3}
+  m_Script: {fileID: 11500000, guid: 1906fb2be6280a343854aee8f1cccae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerMessagePrefab: {fileID: 2127931506144988297, guid: 58f304d42fda38f4a975bcc854f92f72, type: 3}
+  npcMessagePrefab: {fileID: 3866570590280776911, guid: 1be7a0a7c6b20314bb03829ef5c5a938, type: 3}
+  imageMessagePrefab: {fileID: 7706378937992769510, guid: 8673f8a686c1aff4bb2db372365317c4, type: 3}
+  messageParent: {fileID: 1080798597}
+  choiceButtons:
+  - {fileID: 361994135}
+  - {fileID: 1838808308}
+--- !u!114 &382476262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382476259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4b0b746248cb54eba050e801ddae04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiManager: {fileID: 382476261}
+  delayAfterLine: 2
 --- !u!1001 &391187580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2965,6 +2987,11 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3030528197980923971, guid: 96d4e8c6d581c2943864c7a7c810d240, type: 3}
   m_PrefabInstance: {fileID: 1074848747}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1080798597 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1247134033160746372, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+  m_PrefabInstance: {fileID: 3396499080274569386}
   m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &1091060054
 LightingSettings:
@@ -5732,7 +5759,7 @@ PrefabInstance:
       objectReference: {fileID: 636342462}
     - target: {fileID: 1898497940622241640, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_VersionIndex
-      value: 3075
+      value: 3078
       objectReference: {fileID: 0}
     - target: {fileID: 1959469957918344498, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5918,6 +5945,10 @@ PrefabInstance:
       propertyPath: m_ChoiceParent
       value: 
       objectReference: {fileID: 1419883053}
+    - target: {fileID: 2491601845057041105, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
+      propertyPath: dialogueController
+      value: 
+      objectReference: {fileID: 382476262}
     - target: {fileID: 2491601845057041105, guid: 5517001062a7c554a969ea1fbd76f194, type: 3}
       propertyPath: m_ChoiceButtonPrefab
       value: 

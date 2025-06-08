@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
     // 게임 시작 시 인트로 확인 유무 후 텍스트 출력
     private void Start()
     {
-        if(introEnd = true) ProceedNext();
+        if (introEnd == true) ProceedNext();
     }
 
     // 현재 ID의 대사를 불러와 타이핑 시작
