@@ -4,6 +4,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using static Message;
+using System.Collections;
 using UnityEngine.UI;
 
 [Serializable]
@@ -81,6 +82,8 @@ public class SMSManager : BaseAppManager
     private Message_Layout _lastNPCLayout;
 
     [SerializeField] private Button[] m_ChoiceButtonsFixed;
+    [SerializeField] private DialogueController dialogueController;
+
 
 
     // TODO : 추후 게임 전체(휴대폰 제외) Localization을 위해 Messages-en, Messages-kr, Messages-jp이런식으로 구현하면 좋을듯 싶음.
@@ -123,7 +126,7 @@ public class SMSManager : BaseAppManager
     {
         var type = isMine ? MsgType.Mine : MsgType.None;
         Message _message = new Message(m_CurrentName, message, type, DateTime.Now.ToString("yyyy-MM-dd-HH:mm"));
-        
+
         GameObject go = InstantiateMessage(_message, isMine);
 
         m_MessageDB.messages.Add(_message);
@@ -137,14 +140,13 @@ public class SMSManager : BaseAppManager
 
     public void LoadMessage(List<Message> list)
     {
-        Debug.Log("LoadMessage 실행");
-        Debug.Log(list);
         DeletePrev();
 
         // View 설정
         m_MainBar.SetActive(false);
         m_MessageBar.SetActive(true);
         m_HorizontalSnapScrollView.GetComponent<ScrollSnap>().SetContentPosition(1);
+
         // 메세지 생성
         for (int i = 0; i < list.Count; i++)
         {
@@ -228,10 +230,10 @@ public class SMSManager : BaseAppManager
         m_TopMsgList.Add(go);
     }
 
-    public GameObject InstantiateMessage(Message message, bool isMine)
+    private GameObject InstantiateMessage(Message message, bool isMine)
     {
         GameObject go;
-        
+
         if (isMine)
         {
             go = Instantiate(m_PlayerMessagePrefab, m_MessageParent.transform);
@@ -286,6 +288,7 @@ public class SMSManager : BaseAppManager
         layout.SetUp(message);
     }
 
+
     #region Dialaouge
 
     // 버튼 선택
@@ -306,21 +309,21 @@ public class SMSManager : BaseAppManager
 
             button.gameObject.SetActive(true);
             button.onClick.RemoveAllListeners();
+
             button.onClick.AddListener(() =>
             {
                 SaveMessage(text, true);
-
                 ClearFixedButtons();
-                DialogueManager.Instance.ProceedNext(nextId);
+
+                if (dialogueController != null)
+                    dialogueController.ProceedNext(nextId);
+                else
+                    Debug.LogWarning("DialogueController가 연결되어 있지 않습니다.");
             });
         }
-
-        // 남은 버튼은 비활성화
-        for (int i = max; i < m_ChoiceButtonsFixed.Length; i++)
-        {
-            m_ChoiceButtonsFixed[i].gameObject.SetActive(false);
-        }
     }
+
+
 
     public void ClearFixedButtons()
     {
@@ -339,10 +342,12 @@ public class SMSManager : BaseAppManager
             return;
         }
 
-        // 텍스트 설정
         TMP_Text tmpText = buttonObj.GetComponentInChildren<TMP_Text>();
+        if (tmpText != null)
+            tmpText.text = text;
+        else
+            Debug.LogWarning("버튼에 TMP_Text 컴포넌트가 없습니다.");
 
-        // 버튼 클릭 이벤트 설정
         Button button = buttonObj.GetComponent<Button>();
         if (button == null)
         {
@@ -353,16 +358,38 @@ public class SMSManager : BaseAppManager
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() =>
         {
-            // 플레이어 메시지 저장
             SaveMessage(text, true);
-
-
-            // 선택지 버튼 제거
             ClearFixedButtons();
 
-            // 다음 대사로 진행
-            DialogueManager.Instance.ProceedNext(nextId);
+            if (dialogueController != null)
+                dialogueController.ProceedNext(nextId);
+            else
+                Debug.LogWarning("DialogueController가 연결되어 있지 않습니다.");
         });
+    }
+
+    // 대화 저장 슬롯 저장
+    public void SaveDialogueSlot(string eventName, int currentId, int slotIndex)
+    {
+        DialogueSaveData saveData = new DialogueSaveData(eventName, currentId);
+        string path = Path.Combine(Application.persistentDataPath, $"save_slot_{slotIndex}.json");
+        string json = JsonUtility.ToJson(saveData, true);
+        File.WriteAllText(path, json);
+        Debug.Log($"[SMSManager] 저장 완료: 슬롯 {slotIndex} / 이벤트: {eventName} / ID: {currentId}");
+    }
+
+    // 대화 저장 슬롯 불러오기
+    public DialogueSaveData LoadDialogueSlot(int slotIndex)
+    {
+        string path = Path.Combine(Application.persistentDataPath, $"save_slot_{slotIndex}.json");
+        if (!File.Exists(path))
+        {
+            Debug.LogWarning($"[SMSManager] 슬롯 {slotIndex}에 저장된 데이터가 없습니다.");
+            return null;
+        }
+
+        string json = File.ReadAllText(path);
+        return JsonUtility.FromJson<DialogueSaveData>(json);
     }
 
 
