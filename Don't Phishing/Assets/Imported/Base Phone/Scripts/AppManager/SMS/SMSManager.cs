@@ -155,8 +155,6 @@ public class SMSManager : BaseAppManager
 
         m_CurrentName = list[0].name;
         m_SMSProfile.SetProfile(m_CurrentName);
-
-        Debug.LogWarning("메세지 로드 실패");
     }
 
     #region BASE_APP
@@ -190,32 +188,20 @@ public class SMSManager : BaseAppManager
             m_TopMsgList.Clear();
         }
 
-        // JSON 파일이 실제로 존재하는지 확인
-        if (!File.Exists(m_Path + m_FileName))
+        if (File.Exists(m_Path + m_FileName))
         {
-            Debug.LogWarning("[SMSManager] Messages.json 파일이 존재하지 않습니다: " + m_Path + m_FileName);
-            return;
+            string data = File.ReadAllText(m_Path + m_FileName);
+            m_MessageDB = JsonUtility.FromJson<MessageDB>(data);
+
+            foreach (var message in m_MessageDB.messages)
+            {
+                InstantiatePreview(message);
+            }
         }
-
-        // 파일 읽기 시도
-        string data = File.ReadAllText(m_Path + m_FileName);
-        m_MessageDB = JsonUtility.FromJson<MessageDB>(data);
-
-        // 메시지 리스트가 비어 있거나 구조가 잘못된 경우
-        if (m_MessageDB == null || m_MessageDB.messages == null || m_MessageDB.messages.Count == 0)
+        else
         {
-            Debug.LogError("[SMSManager] 메시지를 불러올 수 없습니다. JSON 구조 또는 messages 필드 확인 필요");
-            Debug.LogError("Raw JSON:\n" + data); // 원본 로그도 출력해두면 추적에 도움됨
-            return;
+            Debug.LogWarning("There is no Messages");
         }
-
-        // 메시지 프리뷰 생성
-        foreach (var message in m_MessageDB.messages)
-        {
-            InstantiatePreview(message);
-        }
-
-        Debug.Log($"[SMSManager] 메시지 {m_MessageDB.messages.Count}개 로드 완료");
     }
 
     private void SaveMessages()
@@ -408,4 +394,4 @@ public class SMSManager : BaseAppManager
 
 
     #endregion
-}
+}   
