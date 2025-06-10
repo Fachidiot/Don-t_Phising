@@ -190,19 +190,39 @@ public class SMSManager : BaseAppManager
 
         if (File.Exists(m_Path + m_FileName))
         {
+            // 1. JSON 읽기
             string data = File.ReadAllText(m_Path + m_FileName);
+            Debug.Log("[SMSManager] Raw JSON:\n" + data);
+
+            // 2. 파싱 시도
             m_MessageDB = JsonUtility.FromJson<MessageDB>(data);
 
+            // 3. 파싱 검증
+            if (m_MessageDB == null)
+            {
+                Debug.LogError("FromJson 실패: m_MessageDB == null");
+                return;
+            }
+            if (m_MessageDB.messages == null)
+            {
+                Debug.LogError("FromJson 실패: messages 필드가 null");
+                return;
+            }
+
+            // 4. 정상적으로 로드된 경우
             foreach (var message in m_MessageDB.messages)
             {
                 InstantiatePreview(message);
             }
+
+            Debug.Log($"[SMSManager] 메시지 {m_MessageDB.messages.Count}개 로드 완료");
         }
         else
         {
             Debug.LogWarning("There is no Messages");
         }
     }
+
 
     private void SaveMessages()
     {

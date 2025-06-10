@@ -16,7 +16,7 @@ public class SMS_Layout : MonoBehaviour
     [SerializeField] private TMP_Text m_TMPDate;
     [SerializeField] private DialogueEvent m_DialogueEvent;
 
-    private List<Message> m_Message;
+    [SerializeField] private List<Message> m_Message;
     private int m_Index = -1;
 
     private void Awake()
