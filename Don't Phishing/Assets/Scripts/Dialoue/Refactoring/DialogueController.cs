@@ -31,6 +31,7 @@ public class DialogueController : MonoBehaviour
     /// </summary>
     public void StartDialogue(DialogueEvent dialogueEvent)
     {
+        Debug.Log("대화 초기화 및 대사 출력");
         currentEvent = dialogueEvent;
         BuildDialogueMap(dialogueEvent);
         ProceedNext(dialogueEvent.lines[0].id); // 시작 ID는 0번째 라인 기준
