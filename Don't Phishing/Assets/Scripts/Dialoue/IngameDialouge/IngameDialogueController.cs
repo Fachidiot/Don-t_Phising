@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// 인게임 내에서 출력되는 대사 흐름을 제어하는 컨트롤러
@@ -50,12 +51,15 @@ public class IngameDialogueController : MonoBehaviour
     {
         readyForNext = false;
 
-        // UI에 메시지 출력 (타자 애니메이션)
-        ui.ShowMessage(d.text, () =>
+        // type 기반으로 메시지 연출 분기
+        string type = d.type?.ToLowerInvariant(); // null-safe 소문자 처리
+
+        // 다음 대사 진행 또는 선택지 처리용 콜백
+        Action onComplete = () =>
         {
-            // 선택지가 있는 경우
             if (!string.IsNullOrEmpty(d.choices))
             {
+                // 선택지 있는 경우 버튼 표시
                 ui.ShowChoices(ParseChoices(d.choices), id =>
                 {
                     ui.HideChoices();
@@ -65,15 +69,25 @@ public class IngameDialogueController : MonoBehaviour
             }
             else if (d.nextId != 0)
             {
-                // 다음 대사 ID가 있을 경우 → 다음 입력까지 대기
+                // 다음 대사가 있는 경우: 사용자 입력 대기
                 readyForNext = true;
             }
             else
             {
-                // 종료
+                // 마지막 대사면 종료 처리
                 ui.HideChoices();
             }
-        });
+        };
+
+        // 시스템 메시지인지 확인하고 분기
+        if (type == "system")
+        {
+            ui.ShowSystemMessage(d.text, onComplete); // 시스템 스타일 출력
+        }
+        else
+        {
+            ui.ShowMessage(d.text, onComplete);       // 일반 대사 출력
+        }
     }
 
     /// <summary>
@@ -97,10 +111,14 @@ public class IngameDialogueController : MonoBehaviour
         var list = new List<(string, int)>();
         foreach (var s in raw.Split(','))
         {
-            var parts = s.Split(':');
+            var parts = s.Trim().Split(':'); // trim으로 공백 제거
             if (parts.Length == 2 && int.TryParse(parts[1], out int id))
-                list.Add((parts[0], id));
+            {
+                string choiceText = parts[0].Trim().Trim('[', ']', '"');
+                list.Add((choiceText, id));
+            }
         }
         return list;
     }
+
 }

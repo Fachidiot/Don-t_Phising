@@ -19,10 +19,22 @@ public class IngameDialogueUIManager : MonoBehaviour
     private bool isTyping = false; // 현재 타자 애니메이션 중 여부
 
     /// <summary>
-    /// 메시지를 출력하고 타자 효과 적용
+    /// 일반 메시지 출력 (플레이어)
     /// </summary>
     public void ShowMessage(string text, Action onComplete)
     {
+        messageText.color = Color.white; // 기본 색
+        dialogueBox.SetActive(true);
+        StartCoroutine(TypeLine(text, onComplete));
+    }
+
+    /// <summary>
+    /// 시스템 메시지 출력
+    /// </summary>
+    public void ShowSystemMessage(string text, Action onComplete)
+    {
+        messageText.color = new Color(1f, 0.85f, 0.2f);
+        dialogueBox.SetActive(true);
         StartCoroutine(TypeLine(text, onComplete));
     }
 
