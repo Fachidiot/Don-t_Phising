@@ -30,7 +30,7 @@ public class OSManager : Subject
     [SerializeField] private GameObject m_mainScreen;
     [SerializeField] private GameObject m_lockScreen;
     [SerializeField] private GameObject m_controlScreen;
-    [SerializeField] private Image m_brightness;
+    [SerializeField] private Camera m_BackgroundCaptureCamera;
     [Header("Background")]
     [SerializeField] private BackgroundManager m_background;
 
@@ -55,7 +55,6 @@ public class OSManager : Subject
     [SerializeField]
     private bool m_Debug;
 
-    private float m_Volume = 1f;
     private Profile m_profile;
 
     private ScrollSnap m_lockSnap;
@@ -109,6 +108,7 @@ public class OSManager : Subject
                 m_mainScreen.SetActive(false);
                 break;
             case Status.RunApp:
+                m_BackgroundCaptureCamera.gameObject.SetActive(true);
                 m_bottombar.SetActive(true);
                 m_mainScreen.SetActive(false);
                 break;
@@ -165,6 +165,7 @@ public class OSManager : Subject
     {
         return m_language;
     }
+
     #endregion
     #region Screen_Controls
     public void ChangeBackground(int index)
@@ -180,37 +181,12 @@ public class OSManager : Subject
         m_background.gameObject.SetActive(active);
     }
     #endregion
-    #region Media_Controls
-    public void SetVolume(float volume)
-    {
-#if UNITY_EDITOR
-        if (m_Debug)
-            Debug.Log($"Volume: {volume}");
-#endif
-        m_Volume = volume;
-    }
-    public float GetCurrentVolume()
-    {
-        return m_Volume;
-    }
-    public void SetBrightness(float brightness)
-    {
-#if UNITY_EDITOR
-        if (m_Debug)
-            Debug.Log($"Brightness: {brightness}");
-#endif
-        Color color = new Color(0, 0, 0, (1 - Mathf.Clamp(brightness, 0.1f, 1)));
-        m_brightness.color = color;
-    }
-    public float GetCurrentBrightness()
-    {
-        return 1 - m_brightness.color.a;
-    }
-    #endregion
     #region Times
     public string GetTime()
     {
-        return TimeUtils.GetTime();
+        string time = TimeUtils.GetHour();
+        time += ":" + TimeUtils.GetHour();
+        return time;
     }
     private void SetDate(Language language)
     {
@@ -236,11 +212,6 @@ public class OSManager : Subject
 
 public class TimeUtils
 {
-    public static string GetTime()
-    {
-        return GetHour() + ":" + GetMinute();
-    }
-
     public static string GetDate(CultureInfo cultureInfo)
     {
         switch (cultureInfo.TwoLetterISOLanguageName)
@@ -341,7 +312,10 @@ public class TimeUtils
 
     public static string GetHour()
     {
-        return DateTime.Now.ToString(("HH"));
+        if (TimeFormat.Army == SystemSetting.Instance.GetTimeSetting())
+            return DateTime.Now.ToString(("HH"));
+        else
+            return DateTime.Now.ToString(("hh"));
     }
 
     public static string GetMinute()
