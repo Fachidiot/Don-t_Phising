@@ -220,7 +220,6 @@ GameObject:
   - component: {fileID: 9126240817473190817}
   - component: {fileID: 6651567584905965530}
   - component: {fileID: 4229774009832380256}
-  - component: {fileID: 1248517368635638396}
   m_Layer: 5
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -399,20 +398,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!114 &1248517368635638396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7975613214257055932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd97ce3c5fe81dc4e88adfc4e81994be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_plcaeholdertext: {fileID: 5078096967112865914}
-  m_text: {fileID: 3287726124729597797}
 --- !u!1 &8183507807118576990
 GameObject:
   m_ObjectHideFlags: 0

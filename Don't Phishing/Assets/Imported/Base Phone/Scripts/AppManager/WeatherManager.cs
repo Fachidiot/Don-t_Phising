@@ -16,11 +16,11 @@ public class WeatherManager : BaseAppManager
 
     public override void ResetApp()
     {
-        return;
+        throw new System.NotImplementedException();
     }
 
     public override void SetText()
     {
-        return;
+        throw new System.NotImplementedException();
     }
 }

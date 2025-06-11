@@ -10,6 +10,7 @@ public class Message_Layout : MonoBehaviour
     private Image m_Image;
     [SerializeField]
     private ContentSizeFitter m_ContentSizeFitter;
+    
 
     public void SetUp(Message message)
     {
@@ -33,7 +34,6 @@ public class Message_Layout : MonoBehaviour
         ForceLayoutRefresh();
     }
 
-    //새로 추가된 오버로드 함수
     public void SetUp(string text)
     {
         if (m_TMPMessage)

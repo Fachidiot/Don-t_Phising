@@ -23,9 +23,9 @@ public class VolumeScrollImageChanger : MonoBehaviour
 
     private void Update()
     {
-        if (currentVolume != SystemSetting.Instance.GetCurrentVolume())
+        if (currentVolume != OSManager.Instance.GetCurrentVolume())
         {
-            currentVolume = SystemSetting.Instance.GetCurrentVolume();
+            currentVolume = OSManager.Instance.GetCurrentVolume();
             SetValue(currentVolume);
         }
     }

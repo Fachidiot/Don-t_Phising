@@ -11,9 +11,9 @@ public class Shorts_Layout : MonoBehaviour
 
     private void Update()
     {
-        if (m_CurrentVolume != SystemSetting.Instance.GetCurrentVolume())
+        if (m_CurrentVolume != OSManager.Instance.GetCurrentVolume())
         {
-            m_CurrentVolume = SystemSetting.Instance.GetCurrentVolume();
+            m_CurrentVolume = OSManager.Instance.GetCurrentVolume();
             m_Player.SetDirectAudioVolume(0, m_CurrentVolume);
         }
     }

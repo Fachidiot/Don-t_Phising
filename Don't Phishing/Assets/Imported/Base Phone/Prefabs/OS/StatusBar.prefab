@@ -391,7 +391,6 @@ GameObject:
   - component: {fileID: 7980079277990222407}
   - component: {fileID: 3563299953642440487}
   - component: {fileID: 2621006103355935684}
-  - component: {fileID: 2491333410844488319}
   m_Layer: 5
   m_Name: Time
   m_TagString: Untagged
@@ -517,18 +516,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2491333410844488319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099531336177580654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5583703a16069545b6f48b49a932026, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3132607746441601615
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,7 +527,6 @@ GameObject:
   - component: {fileID: 5095086491372759042}
   - component: {fileID: 2531904835546834873}
   - component: {fileID: 7680160546798974523}
-  - component: {fileID: 5131114960275146985}
   m_Layer: 5
   m_Name: Percent
   m_TagString: Untagged
@@ -664,18 +650,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5131114960275146985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3132607746441601615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5583703a16069545b6f48b49a932026, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3472099842592892605
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,14 +702,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Time: {fileID: 2621006103355935684}
-  m_airplane: {fileID: 0}
-  m_connection: {fileID: 6801407336543314997}
-  m_connnectionSlider: {fileID: 117141166240001142}
-  m_wifi: {fileID: 1957116478115420632}
-  m_wifiSlider: {fileID: 6170092028290467071}
-  m_cellular: {fileID: 0}
-  m_batteryPercent: {fileID: 3132607746441601615}
-  m_batterySlider: {fileID: 8645214814771047712}
 --- !u!1 &4243274541579707634
 GameObject:
   m_ObjectHideFlags: 0

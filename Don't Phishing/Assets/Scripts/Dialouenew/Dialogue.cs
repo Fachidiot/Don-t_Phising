@@ -14,8 +14,15 @@ public class Dialogue
     public string speaker;         // 말하는 캐릭터 이름
     [TextArea] public string text; // 대사 내용
     public string choices;         // 선택지 텍스트: "선택지1:3,선택지2:4"
+   // public Choices[] choices;
     public int nextId;             // 다음 대사 ID (선택지 없을 때)
     public string tag;             // 대사에 포함된 태그 (WAIT, FLAG_ 등)
-    public string type;            // System, Player 등
-   
+    
 }
+
+/*public class Choices
+{
+    public string text;
+    public string nextid;
+}
+*/
