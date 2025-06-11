@@ -22,11 +22,20 @@ public class IngameDialogueController : MonoBehaviour
 
     private void Update()
     {
-        // 대사 진행 중이 아니고, 사용자가 입력한 경우 다음으로 진행
-        if (readyForNext && !ui.IsTyping() &&
-           (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)))
+        if (!ui.IsTyping())
         {
-            ProceedNext();
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
+            {
+                if (readyForNext)
+                {
+                    Debug.Log("입력 성공 대사 출력해야함");
+                    ProceedNext();
+                }
+                else
+                {
+                   // ui.SkipTyping(); // 입력 시 타이핑 모두 출력
+                }
+            }
         }
     }
 
@@ -51,15 +60,13 @@ public class IngameDialogueController : MonoBehaviour
     {
         readyForNext = false;
 
-        // type 기반으로 메시지 연출 분기
-        string type = d.type?.ToLowerInvariant(); // null-safe 소문자 처리
+        string type = d.type?.ToLowerInvariant(); // system, etc.
+        string speaker = d.speaker?.ToLowerInvariant();
 
-        // 다음 대사 진행 또는 선택지 처리용 콜백
         Action onComplete = () =>
         {
             if (!string.IsNullOrEmpty(d.choices))
             {
-                // 선택지 있는 경우 버튼 표시
                 ui.ShowChoices(ParseChoices(d.choices), id =>
                 {
                     ui.HideChoices();
@@ -69,30 +76,28 @@ public class IngameDialogueController : MonoBehaviour
             }
             else if (d.nextId != 0)
             {
-                // 다음 대사가 있는 경우: 사용자 입력 대기
                 readyForNext = true;
             }
             else
             {
-                // 마지막 대사면 종료 처리
                 ui.HideChoices();
             }
         };
 
-        // 시스템 메시지인지 확인하고 분기
+        // 시스템 메시지
         if (type == "system")
         {
-            ui.ShowSystemMessage(d.text, onComplete); // 시스템 스타일 출력
+            ui.ShowSystemMessage(d.text, onComplete);
+            return;
         }
-        else
-        {
-            ui.ShowMessage(d.text, onComplete);       // 일반 대사 출력
-        }
+
+        // 캐릭터 이미지 연출용 (스피커 이름 기준)
+        //ui.UpdateCharacterVisual(speaker, d.tag); // tag 통해 emotion 처리 가능
+
+        // 일반 메시지 출력
+        ui.ShowMessage(d.text, onComplete);
     }
 
-    /// <summary>
-    /// 다음 ID로 진행 (사용자 입력에 의해 호출)
-    /// </summary>
     private void ProceedNext()
     {
         if (map.ContainsKey(currentId) && map[currentId].nextId != 0)
@@ -102,16 +107,12 @@ public class IngameDialogueController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 선택지 텍스트를 파싱하여 (텍스트, 다음 ID) 리스트로 반환
-    /// ex: "네:2,아니오:3"
-    /// </summary>
     private List<(string, int)> ParseChoices(string raw)
     {
         var list = new List<(string, int)>();
         foreach (var s in raw.Split(','))
         {
-            var parts = s.Trim().Split(':'); // trim으로 공백 제거
+            var parts = s.Trim().Split(':');
             if (parts.Length == 2 && int.TryParse(parts[1], out int id))
             {
                 string choiceText = parts[0].Trim().Trim('[', ']', '"');
@@ -120,5 +121,4 @@ public class IngameDialogueController : MonoBehaviour
         }
         return list;
     }
-
 }
