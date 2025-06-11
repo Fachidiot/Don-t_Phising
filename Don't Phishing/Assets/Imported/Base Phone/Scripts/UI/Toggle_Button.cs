@@ -40,6 +40,6 @@ public class Toggle_Button : MonoBehaviour
             m_OffImg.SetActive(true);
         }
 
-        SettingManager.m_Instance.UpdateSetting(m_settingType, m_toggle, m_settingTypeNum);
+        SystemSetting.Instance.UpdateSetting(m_settingType, m_toggle, m_settingTypeNum);
     }
 }

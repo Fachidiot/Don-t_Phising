@@ -16,7 +16,7 @@ public class M2048Manager : BaseAppManager
 
     [SerializeField] private GameObject nodeParent;
     [SerializeField] private List<BlockType> typeList;
-    [SerializeField] private float travelTime = 0.2f;
+    //[SerializeField] private float travelTime = 0.2f;
     [SerializeField] private int windCondition = 2048;
 
     [SerializeField] private GameObject winScreen, loseScreen;

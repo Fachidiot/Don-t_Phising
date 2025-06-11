@@ -18,9 +18,9 @@ public class BrightnessScrollImageChanger : MonoBehaviour
 
     private void Update()
     {
-        if (currentBrightness != OSManager.Instance.GetCurrentBrightness())
+        if (currentBrightness != SystemSetting.Instance.GetCurrentBrightness())
         {
-            currentBrightness = OSManager.Instance.GetCurrentBrightness();
+            currentBrightness = SystemSetting.Instance.GetCurrentBrightness();
             SetValue(currentBrightness);
         }
     }

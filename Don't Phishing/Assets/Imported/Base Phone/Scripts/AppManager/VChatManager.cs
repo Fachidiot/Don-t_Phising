@@ -18,11 +18,11 @@ public class VChatManager : BaseAppManager
     }
     public override void ResetApp()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 
     public override void SetText()
     {
-        throw new System.NotImplementedException();
+        return;
     }
 }

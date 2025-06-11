@@ -32,9 +32,9 @@ public class DialogueParser : MonoBehaviour
 
             var row = SplitCSVLine(data[i]);
 
-            if (row.Length < 6)
+            if (row.Length < 7)
             {
-                Debug.LogWarning($" 줄 무시됨 (열 부족): {data[i]}");
+                Debug.LogWarning($"줄 무시됨 (열 부족): {data[i]}");
                 continue;
             }
 
@@ -53,13 +53,12 @@ public class DialogueParser : MonoBehaviour
                 text = row[2].Trim(),
                 choices = row[3].Trim(),
                 nextId = nextId,
-                tag = row[5].Trim()
+                tag = row[5].Trim(),
+                type = row[6].Trim()
             };
 
             dialogueEvent.lines.Add(line);
         }
-
-        Debug.Log("dd");
 
         string fileName = Path.GetFileNameWithoutExtension(path);
         string assetPath = $"Assets/Resources/DialogueEvents/{fileName}_event.asset";
@@ -69,7 +68,7 @@ public class DialogueParser : MonoBehaviour
         AssetDatabase.CreateAsset(dialogueEvent, assetPath);
         AssetDatabase.SaveAssets();
 
-        Debug.Log($" DialogueEvent 생성 완료: {assetPath}");
+        Debug.Log($"[DialogueParser] DialogueEvent 생성 완료: {assetPath}");
         EditorUtility.FocusProjectWindow();
         Selection.activeObject = dialogueEvent;
     }
@@ -101,8 +100,6 @@ public class DialogueParser : MonoBehaviour
         }
 
         result.Add(current);
-
-        Debug.Log("d");
         return result.ToArray();
     }
 }
