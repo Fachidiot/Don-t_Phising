@@ -10,7 +10,7 @@ public class LTextManager : Observer
 
     private void Start()
     {
-        SystemSetting.Instance.Attach(this);
+        //SystemSetting.Instance.Attach(this);
     }
 
     private void TextBold()

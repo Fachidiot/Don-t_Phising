@@ -9,7 +9,7 @@ public class LTextInputManager : Observer
     private void Awake()
     {
         m_inputField = GetComponent<TMP_InputField>();
-        OSManager.Instance.Attach(this);
+        //OSManager.Instance.Attach(this);
     }
 
     private void TextBold()
