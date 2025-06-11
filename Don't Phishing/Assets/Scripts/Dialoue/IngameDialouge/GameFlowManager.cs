@@ -1,127 +1,100 @@
 using UnityEngine;
-using System;
-using System.Collections;
+using System.Collections.Generic;
 
-/// <summary>
-/// 전체 스토리 흐름 상태를 관리하고, 실행은 각 컨트롤러에 위임하는 FSM 구조
-/// </summary>
 public class GameFlowManager : MonoBehaviour
 {
-    public enum GameState
-    {
-        Intro,
-        Story,
-        Message,
-        PostMessage
-    }
+    public enum GameState { Day1, Day2, Day3 }
 
-    [SerializeField] private GameState startState = GameState.Intro;
-    [SerializeField] private IngameDialogueController storyController;
-    [SerializeField] private DialogueController messageController;
-    [SerializeField] private DialogueEvent[] dialogueEvents; // 다중 이벤트 지원
+    [Header("Controllers")]
+    public IngameDialogueController storyController;
+    public DialogueController messageController; // 안 쓰지만 참조만 남겨둠
+
+    [Header("Events")]
+    public List<DialogueEvent> dialogueEvents;
 
     private GameState currentState;
+
     public static GameFlowManager Instance { get; private set; }
+    public GameState _CurrentState => currentState;
+
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
-
     private void Start()
     {
-        if (storyController == null || messageController == null)
-        {
-            Debug.LogError("[GameFlowManager] 컨트롤러가 할당되지 않았습니다.");
-            return;
-        }
-        TransitionToState(startState);
+        Debug.Log("[GameFlowManager] 게임 시작됨 - Start() 호출");
+        SetState(GameState.Day1);
     }
 
-    public void TransitionToState(GameState newState)
+    public void SetState(GameState newState)
     {
-        if (currentState == newState) return; // 동일 상태 무시
-
         currentState = newState;
-        Debug.Log($"[GameFlowManager] 상태 전환됨: {currentState}");
+        Debug.Log($"[GameFlowManager] 상태 전환됨 → {newState}");
 
-        switch (currentState)
+        switch (newState)
         {
-            case GameState.Intro:
-                HandleIntro();
+            case GameState.Day1:
+                StartStory("ch01");
                 break;
-
-            case GameState.Story:
-                StartDialogue(storyController, GetDialogueEvent("Capstone - ch01_event"));
+            case GameState.Day2:
+                StartStory("ch02");
                 break;
-
-            case GameState.Message:
-                StartDialogue(messageController, GetDialogueEvent("Message_Event"));
-                break;
-
-            case GameState.PostMessage:
-                StartDialogue(storyController, GetDialogueEvent("Capstone - ch01_Post"));
-                break;
-
-            default:
-                Debug.LogWarning($"[GameFlowManager] 처리되지 않은 상태: {currentState}");
+            case GameState.Day3:
+                StartStory("ch03");
                 break;
         }
     }
 
-    private void HandleIntro()
+    private void StartStory(string chapterKeyword)
     {
-        Debug.Log("[GameFlowManager] 인트로 상태 진입");
-        // 인트로 연출 로직 (예: 애니메이션, 대기)
-        StartCoroutine(IntroCoroutine());
-    }
-
-    private IEnumerator IntroCoroutine()
-    {
-        yield return new WaitForSeconds(2f); // 예: 2초 대기
-        TransitionToState(GameState.Story);
-    }
-
-    private void StartDialogue(MonoBehaviour controller, DialogueEvent dialogueEvent)
-    {
-        if (controller is IngameDialogueController ingameController && dialogueEvent != null)
+        var story = GetDialogueEvent(chapterKeyword);
+        if (story != null && storyController != null)
         {
-            ingameController.StartDialogue(dialogueEvent);
-        }
-        else if (controller is DialogueController dialogueController && dialogueEvent != null)
-        {
-            dialogueController.StartDialogue(dialogueEvent);
+            Debug.Log($"[GameFlowManager] 스토리 시작: {chapterKeyword}");
+            storyController.StartDialogue(story);
         }
         else
         {
-            Debug.LogError("[GameFlowManager] 컨트롤러 또는 DialogueEvent가 null입니다.");
+            Debug.LogError($"[GameFlowManager] 스토리 데이터 또는 컨트롤러 없음: {chapterKeyword}");
         }
     }
 
-    private DialogueEvent GetDialogueEvent(string eventName)
+    private DialogueEvent GetDialogueEvent(string partialName)
     {
         foreach (var evt in dialogueEvents)
         {
-            if (evt.name == eventName)
+            Debug.Log("[GameFlowManager] 이벤트 검색 중: " + (evt != null ? evt.name : "null"));
+            if (evt != null && evt.name.ToLower().Contains(partialName.ToLower()))
                 return evt;
         }
-        Debug.LogError($"[GameFlowManager] DialogueEvent '{eventName}'를 찾을 수 없습니다.");
+        Debug.LogError("[GameFlowManager] 이벤트를 찾을 수 없음: " + partialName);
         return null;
     }
 
     public void OnAppMessageTag()
     {
-        TransitionToState(GameState.Message);
+        // 메시지 시작 태그 (app:message_start) → 실행 중단
+        Debug.Log("[GameFlowManager] 메시지 시작 태그 감지됨 → 스토리 정지 (대사 흐름은 유지)");
+        // 아무 동작 없음
     }
 
     public void OnMessageDialogueEnd()
     {
-        TransitionToState(GameState.PostMessage);
+        Debug.Log("[GameFlowManager] 메시지 종료 → 스토리 복귀");
+
+        // 기존 인게임 흐름 재시작
+        var story = GetDialogueEvent("ch01"); // 혹은 복귀할 챕터
+        if (story != null && storyController != null)
+        {
+            storyController.StartDialogue(story);
+        }
+        else
+        {
+            Debug.LogError("[GameFlowManager] 스토리 복귀 실패: 이벤트 또는 컨트롤러 없음");
+        }
     }
+
 }

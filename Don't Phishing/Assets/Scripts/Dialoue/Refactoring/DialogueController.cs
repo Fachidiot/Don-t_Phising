@@ -16,6 +16,9 @@ public class DialogueController : MonoBehaviour
     private Dictionary<int, Dialogue> dialogueMap;
     private int currentId;
 
+    // 태그 처리 후 2초 대기
+    bool tagComplete = false;
+
     [SerializeField] private float delayAfterLine = 2f; // 메시지 출력 후 고정 딜레이
 
     private void Awake()
@@ -67,6 +70,15 @@ public class DialogueController : MonoBehaviour
             uiManager.UpdateLastMessage(typed);
             yield return new WaitForSeconds(0.03f);
         }
+
+        // 메시지 종료 태그 감지 → GameFlowManager 호출
+        if (line.tag?.ToLowerInvariant() == "app:message_end")
+        {
+            Debug.Log("[DialogueController] 메시지 종료 태그 감지됨 → 스토리 복귀 요청");
+            GameObject.FindObjectOfType<GameFlowManager>()?.OnMessageDialogueEnd();
+        }
+
+
 
         // 태그 처리 후 2초 대기
         bool tagComplete = false;

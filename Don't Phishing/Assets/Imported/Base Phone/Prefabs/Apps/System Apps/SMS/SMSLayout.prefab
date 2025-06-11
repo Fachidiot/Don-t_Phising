@@ -291,7 +291,9 @@ MonoBehaviour:
   m_TMPName: {fileID: 1519859506402416329}
   m_TMPMessage: {fileID: 2720556350785322720}
   m_TMPDate: {fileID: 9118945988056720551}
-  m_InkFile: {fileID: 4900000, guid: aeb3186897efc3a48a5bebfc54aeca49, type: 3}
+  m_DialogueEvent: {fileID: 0}
+  dialogueController: {fileID: 0}
+  m_Message: []
 --- !u!1 &3444466328935094412
 GameObject:
   m_ObjectHideFlags: 0

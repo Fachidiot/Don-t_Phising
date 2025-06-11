@@ -16,10 +16,10 @@ MonoBehaviour:
   lines:
   - id: 1000
     speaker: player_System
-    text: "\uBBFC\uC9C0 \uBB38\uC790 \uC54C\uB9BC"
+    text: "\uBBFC\uC9C0 \uBB38\uC790 \uC54C\uB9BC\n"
     choices: 
     nextId: 2000
-    tag: 
+    tag: message_start
     type: system
   - id: 1001
     speaker: player_System
@@ -167,7 +167,7 @@ MonoBehaviour:
     text: "\uB0B4\uAC83\uB3C4 \uC0AC\uC640"
     choices: 
     nextId: 2008
-    tag: 
+    tag: App:Message_End
     type: player
   - id: 2008
     speaker: player
@@ -473,10 +473,10 @@ MonoBehaviour:
   - id: 2047
     speaker: player
     text: "(\uB3D9\uC0DD\uC758 \uBC29 \uC55E\uC5D0 \uACFC\uC790\uB97C \uD719 \uB358\uC838\uB450\uACE0\uB294
-      \uBB38\uC790\uB97C \uBCF4\uB0C8\uB2E4)"
+      \uBB38\uC790\uB97C \uBCF4\uB0B8\uB2E4)"
     choices: 
     nextId: 2048
-    tag: 
+    tag: App:Message_Start
     type: player
   - id: 2048
     speaker: player
@@ -497,7 +497,7 @@ MonoBehaviour:
     text: "\u3133"
     choices: 
     nextId: 2051
-    tag: 
+    tag: App:Message_Stop
     type: player
   - id: 2051
     speaker: player
@@ -945,7 +945,7 @@ MonoBehaviour:
       \uCF1C\uC11C QR\uCF54\uB4DC \uCD2C\uC6A9\uD558\uC790)"
     choices: 
     nextId: 2111
-    tag: App:Carmera
+    tag: Dialouge_Stop,App:Camera
     type: system
   - id: 2111
     speaker: player
@@ -1001,7 +1001,7 @@ MonoBehaviour:
       \uD655\uC778\uD558\uC790)"
     choices: 
     nextId: 2118
-    tag: App:Message
+    tag: Dialouge_Stop, App:alarm
     type: player
   - id: 2118
     speaker: player
@@ -1295,7 +1295,7 @@ MonoBehaviour:
       \uC9D1\uC5D0 \uB3CC\uC544\uC654\uB2E4)"
     choices: 
     nextId: 2157
-    tag: 
+    tag: ch01_end
     type: player
   - id: 2157
     speaker: player

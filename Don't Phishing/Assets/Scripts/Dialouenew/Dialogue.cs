@@ -17,5 +17,5 @@ public class Dialogue
     public int nextId;             // 다음 대사 ID (선택지 없을 때)
     public string tag;             // 대사에 포함된 태그 (WAIT, FLAG_ 등)
     public string type;            // System, Player 등
-   
+
 }

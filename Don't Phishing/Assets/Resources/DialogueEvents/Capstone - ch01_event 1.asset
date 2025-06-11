@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06863b70fcd6ac64ea509cd21046ab25, type: 3}
+  m_Name: Capstone - ch01_event 1
+  m_EditorClassIdentifier: 
+  eventName: ch01_message
+  lines:
+  - id: 1000
+    speaker: player_System
+    text: "\uBBFC\uC9C0 \uBB38\uC790 \uC54C\uB9BC\n"
+    choices: 
+    nextId: 2000
+    tag: message_start
+    type: system
+  - id: 2000
+    speaker: minji
+    text: "\uC57C \uC5C4\uB9C8\uAC00 \uB450\uBD80\uC0AC\uC624\uB798"
+    choices: 
+    nextId: 2001
+    tag: 
+    type: player
+  - id: 2001
+    speaker: player
+    text: "\uB10C \uC65C \uC9D1\uC5D0\uC788\uB294\uB370 \uB098\uD55C\uD14C \uD1A1\uC744\uBCF4\uB0B4\uB0D0
+      \uB610"
+    choices: 
+    nextId: 2002
+    tag: 
+    type: player
+  - id: 2002
+    speaker: minji
+    text: "\uB2C8\uAC00 \uBCF4\uACE0\uC2F6\uACA0\uB0D0? \uAC70\uC2E4 \uD0C1\uC790\uC704\uC5D0
+      \uCE74\uB4DC\uC788\uC74C \uAC14\uB2E4\uC624\uC148"
+    choices: 
+    nextId: 2003
+    tag: 
+    type: player
+  - id: 2003
+    speaker: player
+    text: "\u3157 \uB2C8\uAC00\uAC14\uB2E4\uC640"
+    choices: 
+    nextId: 2004
+    tag: 
+    type: player
+  - id: 2004
+    speaker: player
+    text: "\uD558 \uB2C8\uACFC\uC790\uB294 \uC548\uC0AC\uC628\uB2E4"
+    choices: 
+    nextId: 2005
+    tag: 
+    type: player
+  - id: 2005
+    speaker: minji
+    text: "\uC5C4\uB9C8\uB3C8\uC73C\uB85C \uB2C8\uACFC\uC790\uB97C \uC65C\uC0BC?"
+    choices: 
+    nextId: 2006
+    tag: 
+    type: player
+  - id: 2006
+    speaker: player
+    text: "\uBB50\uB798 \uBC29\uAD6C\uC11D\uC5D0\uC11C \uB098\uC624\uC9C0\uB3C4 \uC54A\uB294\uAC8C"
+    choices: 
+    nextId: 2007
+    tag: 
+    type: player
+  - id: 2007
+    speaker: minji
+    text: "\uB0B4\uAC83\uB3C4 \uC0AC\uC640"
+    choices: 
+    nextId: 2008
+    tag: App:Message_End
+    type: player
+  - id: 2008
+    speaker: player
+    text: "(\uADF8\uB807\uAC8C \uB09C \uC2EC\uBD80\uB984\uC744 \uD558\uB824 \uC9D1\uC744
+      \uB098\uC130\uB2E4.)"
+    choices: 
+    nextId: 2009
+    tag: 
+    type: player

@@ -23,10 +23,17 @@ public class IngameDialogueUIManager : MonoBehaviour
     /// </summary>
     public void ShowMessage(string text, Action onComplete)
     {
-        messageText.color = Color.white; // 기본 색
+        Debug.Log($"[ShowMessage] 출력할 텍스트: {text}");
+
+        messageText.color = Color.white;
         dialogueBox.SetActive(true);
+
+        // 강제로 텍스트 세팅해보기
+        messageText.text = "[TEST] " + text;
+
         StartCoroutine(TypeLine(text, onComplete));
     }
+
 
     /// <summary>
     /// 시스템 메시지 출력
@@ -93,4 +100,11 @@ public class IngameDialogueUIManager : MonoBehaviour
             b.gameObject.SetActive(false);
         }
     }
+
+    // uiManager 쪽에도 아래 메서드가 필요
+    public void HideDialogueBox()
+    {
+        dialogueBox.SetActive(false);
+    }
+
 }
